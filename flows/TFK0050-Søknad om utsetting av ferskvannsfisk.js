@@ -119,7 +119,7 @@ string Epost
             ResponsiblePersonEmail: 'jamila.synnove.saber@telemarkfylke.no',
             AccessCode: '7',
             Paragraph: 'Offl. § 7d',
-            AccessGroup: 'Klima og miljø'
+            AccessGroup: 'Team klima, miljø og internasjonalt arbeid'
           }
         }
       }
