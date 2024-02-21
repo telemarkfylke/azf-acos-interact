@@ -42,11 +42,14 @@ ArchiveData {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         let caseNumber
         let archiveTitle
+        let publicTitle
         if (flowStatus.parseXml.result.ArchiveData.Kategori === 'Toppidrettsstipend') {
-          archiveTitle = `Søknad om idrettsstipend - ${xmlData.Idrettsgren}`
+          archiveTitle = `Søknad om idrettsstipend - ${xmlData.ForNavn}`
+          publicTitle = 'Søknad om idrettsstipend'
           caseNumber = nodeEnv === 'production' ? '24/05839' : '24/00074'
         } else if (flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend') {
-          archiveTitle = ` Søknad om kunstnerstipend - ${xmlData.Idrettsgren}`
+          archiveTitle = ` Søknad om kunstnerstipend - ${xmlData.ForNavn}`
+          publicTitle = 'Søknad om kunstnerstipend'
           caseNumber = nodeEnv === 'production' ? '24/05842' : '24/00075'
         } else {
           throw new Error('Kategori må være enten Toppidrettsstipend eller Kunstnerstipend')
@@ -86,7 +89,8 @@ ArchiveData {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: archiveTitle,
+            UnofficialTitle: archiveTitle,
+            Title: publicTitle,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
