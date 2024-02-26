@@ -83,7 +83,7 @@ string Egendefinert2 // OrgNavn
   },
 
   signOff: {
-    enabled: true
+    enabled: false
   },
 
   closeCase: {
