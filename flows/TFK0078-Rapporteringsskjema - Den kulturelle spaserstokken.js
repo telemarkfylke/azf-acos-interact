@@ -73,7 +73,7 @@ string Egendefinert2 // OrgNavn
             Title: `Rapportering - den kulturelle spaserstokken - ${xmlData.Egendefinert2}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200028' : '200023', // Seksjon Kultur
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur
             Paragraph: '',
             AccessGroup: 'Alle'
           }
