@@ -140,11 +140,11 @@ string Fnr
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.Soker,
-              field_2: xmlData.Tilskuddsordning, //Tilskuddsordning
-              field_3: xmlData.Prosjektnavn, //Prosjektnavn
-              field_4: xmlData.Beskr, //Prosjektbeskrivelse
-              field_5: xmlData.Soknadssum, //Søknadssum
-              field_8: xmlData.Totalkostnad //Totalkostnad
+              field_2: xmlData.Tilskuddsordning, // Tilskuddsordning
+              field_3: xmlData.Prosjektnavn, // Prosjektnavn
+              field_4: xmlData.Beskr, // Prosjektbeskrivelse
+              field_5: xmlData.Soknadssum, // Søknadssum
+              field_8: xmlData.Totalkostnad // Totalkostnad
             }
           }
         ]

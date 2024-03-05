@@ -125,13 +125,13 @@ ArchiveData {
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.ForNavn,
-              field_2: xmlData.Kategori, //Kategori
-              field_3: xmlData.Idrettsgren, //Idrettsgren / Kunstuttrykk
-              field_4: xmlData.Fdato, //Fødselsdato
-              field_5: xmlData.Hva, //Hva
-              field_8: xmlData.Soknadssum, //Søknadssum
-              field_6: xmlData.Maalsetting, //Målsetting
-              field_7: xmlData.Fjoraaret //Fjoråret
+              field_2: xmlData.Kategori, // Kategori
+              field_3: xmlData.Idrettsgren, // Idrettsgren / Kunstuttrykk
+              field_4: xmlData.Fdato, // Fødselsdato
+              field_5: xmlData.Hva, // Hva
+              field_8: xmlData.Soknadssum, // Søknadssum
+              field_6: xmlData.Maalsetting, // Målsetting
+              field_7: xmlData.Fjoraaret // Fjoråret
             }
           }
         ]
