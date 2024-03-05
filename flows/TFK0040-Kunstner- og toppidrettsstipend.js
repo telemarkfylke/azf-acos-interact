@@ -119,8 +119,8 @@ ArchiveData {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-KunstogKultur-teamet/Lists/SoknadKunstnerToppidrettsstipend/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-KunstogKultur-teamet/Lists/SoknadKunstnerToppidrettsstipend/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20Kunstner%20og%20toppidrettsstipend/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20Kunstner%20og%20toppidrettsstipend/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

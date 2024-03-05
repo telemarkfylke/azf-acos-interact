@@ -134,8 +134,8 @@ string Fnr
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-KunstogKultur-teamet/Lists/Sknad%20om%20sttte%20til%20kunstproduksjon/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-KunstogKultur-teamet/Lists/Sknad%20om%20sttte%20til%20kunstproduksjon/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20sttte%20til%20kunstproduksjon/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20sttte%20til%20kunstproduksjon/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
