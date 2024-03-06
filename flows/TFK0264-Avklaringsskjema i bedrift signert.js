@@ -2,7 +2,7 @@ const description = 'Sender til elevmappe'
 const { nodeEnv } = require('../config')
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -77,7 +77,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200016' : '200019', // Seksjon Fag- og yrkesopplæring
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200249', // Team fag-, yrkes- og voksenopplæring
             // ResponsiblePersonEmail: '',
             Status: 'J',
             Title: 'Referat fra veiledning i bedrift - Signert',
