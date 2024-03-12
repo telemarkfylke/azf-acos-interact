@@ -1,24 +1,19 @@
-const description = 'Søknad om fritak fra norsk sidemål som privatist - til elevmappa'
-const { nodeEnv } = require('../config')
-
+const description = 'Sender til elevmappe'
 module.exports = {
   config: {
     enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
-    enabled: true
+    enabled: true,
+    options: {
+    }
   },
 
   // Synkroniser elevmappe
   syncElevmappe: {
     enabled: true,
     options: {
-      /*
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
-      */
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
@@ -27,7 +22,8 @@ module.exports = {
       }
     }
   },
-  // Arkiverer dokumentet i 360
+
+  // Arkiverer dokumentet i elevmappa
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
@@ -48,7 +44,7 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: 'Eksamen',
+            // AccessGroup: 'Elev inntak', Automatisk
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -64,22 +60,24 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Søknad om fritak fra norsk sidemål som privatist',
+                Title: 'Søknad om agronomutdanning for voksne',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200471' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
-            ResponsiblePersonEmail: 'line.eilertsen@telemarkfylke.no',
+            ResponsibleEnterpriseNumber: 974568187, // Nome VGS
+            // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Søknad om fritak fra norsk sidemål som privatist',
-            Archive: 'Sensitivt elevdokument',
+            Title: `Søknad om agronomutdanning for voksne - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
+            UnofficialTitle: 'Søknad om agronomutdanning for voksne',
+            Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
       }
     }
+
   },
 
   signOff: {
@@ -97,17 +95,18 @@ module.exports = {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'Opplæring',
-          department: 'Eksamen',
-          description, // Required. A description of what the statistic element represents
-          type: 'Søknad om fritak fra norsk sidemål som privatist', // Required. A short searchable type-name that distinguishes the statistic element
+          company: 'OF',
+          department: 'Utdanning, folkehelse og tannhelse',
+          description,
+          type: 'Søknad om agronomutdanning for voksne', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
-          // skole: xmlData.SkoleNavn
+          tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
+          documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
         }
       }
     }
   },
+
   failOnPurpose: {
     enabled: false
   }
