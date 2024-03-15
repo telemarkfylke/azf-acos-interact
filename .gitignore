@@ -115,3 +115,7 @@ cert/*
 .pem
 .key
 .cer
+
+# Test- & cachefiles
+flows/TFK0276-TJ-testeskjema.js
+.file-cache
