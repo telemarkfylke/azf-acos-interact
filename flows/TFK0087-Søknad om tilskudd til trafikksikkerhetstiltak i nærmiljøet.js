@@ -7,7 +7,7 @@ const { nodeEnv } = require('../config')
     string OrgNr
     string Navn
     string Epost
-    string Type	
+    string Type
     string Tiltak
     int Totalkostnad
     int Soknadsbelop
@@ -23,7 +23,7 @@ const { nodeEnv } = require('../config')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true
@@ -39,7 +39,7 @@ module.exports = {
         return {
           ssn: flowStatus.parseXml.result.Soknad.Fnr
         }
-      },
+      }
     }
   },
   syncEnterprise: {
@@ -172,7 +172,7 @@ module.exports = {
             fields: {
               Navn: xmlData.Navn,
               Epost: xmlData.Epost,
-              Soknadstype: xmlData.Type,	
+              Soknadstype: xmlData.Type,
               Tiltak: xmlData.Tiltak,
               Totalkostnad: xmlData.Totalkostnad,
               Soknadsbelop: xmlData.Soknadsbelop,
@@ -181,7 +181,7 @@ module.exports = {
               Forslag: xmlData.Forslag,
               AndreOpplysninger: xmlData.AndreOpplysninger,
               OrgNavn: xmlData.OrgNavn,
-              reserve2: xmlData.reserve2,
+              reserve2: xmlData.reserve2
             }
           }
         ]
