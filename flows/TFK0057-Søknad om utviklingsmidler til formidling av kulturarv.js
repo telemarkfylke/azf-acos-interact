@@ -1,7 +1,22 @@
 const description = 'Søknad om utviklingsmidler til formidling av kulturarv'
 const { nodeEnv } = require('../config')
 
-// TODO - Avlevering til SharePoint-list
+/* 
+XML from Acos:
+AArchiveData {
+    string Fnr
+    string OrgNr
+    string TypeSoker
+    string ProsjekBeskrivelse
+    string OrgNavn
+    string Fornavn
+    string Etternavn
+    string Telefonnummer
+    string Epost
+    string ProsjektNavn
+    string Beløp
+}
+*/
 
 module.exports = {
   config: {
@@ -12,19 +27,6 @@ module.exports = {
     enabled: true
   },
 
-  /* XML from Acos:
-ArchiveData {
-    string Fnr
-    string OrgNr
-    string TypeSoker
-    string ProsjekBeskrivelse
-    string OrgNavn
-    string PersonNavn
-    string ProsjektNavn
-    string Beløp
-}
-
-  */
   syncPrivatePerson: {
     enabled: true,
     options: {
@@ -138,7 +140,7 @@ ArchiveData {
             Status: 'J',
             DocumentDate: new Date().toISOString(),
             Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.ProsjektNavn}`,
-            // UnofficialTitle: 'Søknad om utsetting av ferskvannsfisk',
+            // UnofficialTitle: 'Søknad om.....',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
@@ -176,6 +178,8 @@ ArchiveData {
               Title: xmlData.TypeSoker === 'på vegne av en organisasjon' ? xmlData.OrgNavn : `${xmlData.Fornavn} + ${xmlData.Etternavn}`, // Søker feltet
               Prosjektnavn: xmlData.ProsjektNavn,
               Beskrivelse: xmlData.ProsjekBeskrivelse,
+              Telefonnummer: xmlData.Telefonnummer,
+              Epost: xmlData.Epost,
               S_x00f8_knadsbel_x00f8_p: xmlData.Beløp
             }
           }
