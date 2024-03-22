@@ -11,17 +11,23 @@ module.exports = {
   },
 
   /* XML from Acos:
-ArchiveData {
-    string Fnr
-    string Fdato
-    string OrgNr
-    string TypeSoker
-    string OmProsjektet
-    string Kategori // Toppidrettsstipend eller Kunstnerstipend
-    string Idrettsgren
+ArchiveData{
+  string ForNavn
+  string Etternavn
+  string Telefonnummer
+  string Epost
+  string Kategori
+  string Fnr
+  string Kunstart
+  string Idrettsgren
+  string Hva
+  string Maalsetting
+  string Fjoraaret
+  string Soknadssum
+  string Fdato
 }
-
   */
+
   syncPrivatePerson: {
     enabled: true,
     options: {
@@ -125,6 +131,8 @@ ArchiveData {
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.ForNavn,
+              Telefonnummer: xmlData.Telefonnummer,
+              Epost: xmlData.Epost,
               field_2: xmlData.Kategori, // Kategori
               field_3: xmlData.Idrettsgren, // Idrettsgren / Kunstuttrykk
               field_4: xmlData.Fdato, // Fødselsdato
