@@ -1,7 +1,7 @@
 const description = 'Søknad om utviklingsmidler til formidling av kulturarv'
 const { nodeEnv } = require('../config')
 
-/* 
+/*
 XML from Acos:
 AArchiveData {
     string Fnr
