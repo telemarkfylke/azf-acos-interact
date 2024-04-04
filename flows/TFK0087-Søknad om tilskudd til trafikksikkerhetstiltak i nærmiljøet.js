@@ -46,7 +46,7 @@ module.exports = {
     enabled: true,
     options: {
       condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return !flowStatus.parseXml.result.Soknad.OrgNr !== ''
+        return flowStatus.parseXml.result.Soknad.OrgNr !== ''
       },
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
@@ -180,8 +180,8 @@ module.exports = {
               Beskrivelse: xmlData.Beskrivelse,
               Forslag: xmlData.Forslag,
               AndreOpplysninger: xmlData.AndreOpplysninger,
-              OrgNavn: xmlData.OrgNavn,
-              reserve2: xmlData.reserve2
+              OrgNavn: xmlData.OrgNavn
+              // reserve2: xmlData.reserve2
             }
           }
         ]
