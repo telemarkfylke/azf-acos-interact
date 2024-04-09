@@ -3,13 +3,16 @@ const description = 'Sender til Sharepoint'
 
 module.exports = {
   config: {
-    enabled: false,
-    doNotRemoveBlobs: false
+    enabled: true,
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true,
     options: {
     }
+  },
+  groundControl: {
+    enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
   },
 
   sharepointList: {
@@ -20,7 +23,7 @@ module.exports = {
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: '',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/EKOMsknader',
             prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/EKOMsknader',
             uploadFormPdf: true,
             uploadFormAttachments: true,
@@ -39,7 +42,9 @@ module.exports = {
               Sted: xmlData.Sted,
               Org_x002e_nummer: xmlData.Orgnr,
               Fakturaadresse: xmlData.Firmaadresse,
-              Kurs: 'Energirådgiver elektro'
+              Kurs: 'Energirådgiver elektro',
+              nelfo: xmlData.nelfo,
+              oppstartmnd: xmlData.oppstartmnd
             }
           }
         ]
@@ -48,7 +53,7 @@ module.exports = {
   },
 
   statistics: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
@@ -57,7 +62,7 @@ module.exports = {
           company: 'NIK',
           department: 'Fagskolen',
           description,
-          type: 'Energirådgiver elektro' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Energirådgiver Elektro' // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           // documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like

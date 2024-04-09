@@ -16,14 +16,14 @@ module.exports = {
   },
 
   sharepointList: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.Skjema
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: '',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/EKOMsknader',
             prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/EKOMsknader',
             uploadFormPdf: true,
             uploadFormAttachments: true,
@@ -42,7 +42,9 @@ module.exports = {
               Sted: xmlData.Sted,
               Org_x002e_nummer: xmlData.Orgnr,
               Fakturaadresse: xmlData.Firmaadresse,
-              Kurs: 'Ekom-ENA'
+              Kurs: 'Ekom-ENA',
+              nelfo: xmlData.nelfomedlem,
+              oppstartmnd: xmlData.oppstartmnd
             }
           }
         ]
