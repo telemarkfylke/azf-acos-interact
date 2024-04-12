@@ -1,6 +1,4 @@
 const description = 'Sender til elevmappe'
-const { nodeEnv } = require('../config')
-const title = 'Klage - vurdering/manglende vurdering'
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 module.exports = {
   config: {
@@ -17,11 +15,6 @@ module.exports = {
   syncElevmappe: {
     enabled: true,
     options: {
-      /*
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
-      */
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
@@ -43,6 +36,8 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
+        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
+        if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -52,11 +47,12 @@ module.exports = {
             VersionFormat: att.versionFormat
           }
         })
-        const documentData = {
+        return {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
+            AccessGroup: school.tilgangsgruppe,
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -72,38 +68,21 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: title,
+                Title: 'Søknad om studiedag før eksamen',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+            ResponsibleEnterpriseNumber: xmlData.SkoleOrgNr,
+            // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: title,
+            Title: 'Søknad om studiedag før eksamen',
             // UnofficialTitle: '',
-            Archive: 'Sensitivt elevdokument',
+            Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
-
-        if (xmlData.Egendefinert1 === 'Privatist') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200471' : '200250' // Seksjon Sektorstøtte, inntak og eksamen
-          documentData.parameter.AccessGroup = 'Eksamen'
-        } else if (xmlData.Egendefinert1 === 'Elev') {
-          const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
-          if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
-          documentData.parameter.ResponsibleEnterpriseNumber = xmlData.SkoleOrgNr
-          documentData.parameter.AccessGroup = school.tilgangsgruppe
-        } else if (xmlData.Egendefinert1 === 'Lærling/lærekandidat/praksiskandidat') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200472' : '200249' // Seksjon Fag- og yrkesopplæring
-          documentData.parameter.AccessGroup = 'Fagopplæring'
-        } else if (xmlData.Egendefinert1 === 'Voksen (Talenthuset)') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200693' : 'Finnes ikke i test' // Talenthuset // denne er ikke verifisert
-          documentData.parameter.AccessGroup = 'Elev Talenthuset'
-        } else {
-          throw new Error('Fikk ukjent verdi inn i Egendefinert1 fra skjemaets xml-fil. Trenger "Privatist", "Elev", "Lærling/lærekandidat/praksiskandidat" eller "Voksen (Kompetansebyggeren)"')
-        }
-        return documentData
       }
     }
 
@@ -125,9 +104,9 @@ module.exports = {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'Opplæring',
-          department: 'FAGOPPLÆRING',
+          department: 'Eksamen',
           description,
-          type: title, // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Søknad om studiedag før eksamen', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
