@@ -1,10 +1,10 @@
 const description = 'Sender til elevmappe'
-// const { nodeEnv } = require('../config')
-const { schoolInfo } = require('../lib/data-sources/tfk-schools')
+const { nodeEnv } = require('../config')
+
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true,
@@ -33,11 +33,8 @@ ArchiveData {
 
   // Synkroniser elevmappe
   syncElevmappe: {
-    enabled: false,
+    enabled: true,
     options: {
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
@@ -49,16 +46,11 @@ ArchiveData {
 
   // Arkiverer dokumentet i elevmappa
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: false,
+    enabled: true,
     options: {
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
-        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.AnsVirksomhet)
-        if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.AnsVirksomhet}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -73,7 +65,7 @@ ArchiveData {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: school.tilgangsgruppe,
+            AccessGroup: 'Eksamen',
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -89,18 +81,18 @@ ArchiveData {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Bestilling av dokumentasjon for privatister',
+                Title: 'Avmelding privatisteksamen',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseNumber: xmlData.AnsVirksomhet,
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200027' : '200021', // Seksjon skoleutvikling og folkehelse
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Bestilling av dokumentasjon for privatister',
+            Title: 'Avmelding privatisteksamen',
             // UnofficialTitle: '',
-            Archive: 'Elevdokument',
+            Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
