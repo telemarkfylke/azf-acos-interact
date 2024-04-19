@@ -19,35 +19,23 @@ module.exports = {
     enabled: false,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.Skjema
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/InnsokingEldrehelse',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/TJssharepointverksted/Lists/TestlisteTFK0212/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/TJssharepointverksted/Lists/TestlisteTFK0212/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: xmlData.Fnr,
+              Fodt: xmlData.InnsenderFNR.slice(0, 6), // Henter kun de 6 første sifrene i fødselsnummeret
               Fornavn: xmlData.Fornavn,
               Etternavn: xmlData.Etternavn,
-              E_x002d_post: xmlData.Epost,
-              Mobil: xmlData.Mobilnr,
-              Gateadresse: xmlData.Gateadresse,
-              Navnp_x00e5_arbeidssted: xmlData.Hovedarbeidssted,
-              Kommune: xmlData.Kommune,
-              Hovedarbeidssted: xmlData.Hovedarbeidssted,
-              Utdanningsbakgrunn: xmlData.Utdanningsbakgrunn,
-              _x0031__x002e_prioritet: xmlData.Pri1,
-              _x0032__x002e_prioritet: xmlData.Pri2,
-              Postnr: xmlData.PostNr,
-              Sted: xmlData.Sted,
-              ModHostPri1: xmlData.ModHostPri1,
-              ModHostPri2: xmlData.ModHostPri2,
-              ModVinterPri1: xmlData.ModVinterPri1,
-              ModVinterPri2: xmlData.ModVinterPri2,
-              ModVaarPri1: xmlData.ModVaarPri1,
-              ModVaarPri2: xmlData.ModVaarPri2
+              Title: xmlData.Tittel,
+              Epost: xmlData.Epost,
+              Virksomhet: xmlData.Virksomhet,
+              Avtaletype: xmlData.Avtaletype,
+              Utdanning: xmlData.Utdanning
             }
           }
         ]
@@ -56,7 +44,7 @@ module.exports = {
   },
 
   statistics: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
@@ -65,7 +53,7 @@ module.exports = {
           company: 'NIK',
           department: 'Fagskolen',
           description,
-          type: 'Eldrehelse' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'EKOM-ENA' // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           // documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
@@ -73,7 +61,6 @@ module.exports = {
       }
     }
   },
-
   failOnPurpose: {
     enabled: false
   }
