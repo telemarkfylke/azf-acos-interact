@@ -93,7 +93,7 @@ module.exports = {
     }
   },
   archive: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.Soknad
