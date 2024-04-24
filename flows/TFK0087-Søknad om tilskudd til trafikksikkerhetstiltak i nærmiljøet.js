@@ -131,7 +131,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Søknad om tilskudd til rafikksikkerhetstiltak i nærmiljøet 2024',
+                Title: 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet 2024',
                 VersionFormat: 'A'
               },
               ...p360Attachments
