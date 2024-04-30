@@ -62,7 +62,7 @@ module.exports = {
           parameter: {
             AccessCode: 'U',
             AccessGroup: 'Alle',
-            Category: 'M',
+            Category: 'Dokument inn',
             Contacts: [
               {
                 ReferenceNumber: xmlData.Orgnr.replaceAll(' ', ''),
@@ -85,7 +85,7 @@ module.exports = {
             // Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200249', // Seksjon Fag- og yrkesopplæring
             // ResponsiblePersonEmail: '',
-            Status: 'J',
+            Status: 'M',
             Title: 'Lokal kompetanseutvikling for fag- og yrkesopplæringen (DEKOMP-Y)',
             // UnofficialTitle: '',
             Archive: 'Saksdokument',
