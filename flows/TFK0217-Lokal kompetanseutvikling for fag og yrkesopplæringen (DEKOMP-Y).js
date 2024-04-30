@@ -62,7 +62,7 @@ module.exports = {
           parameter: {
             AccessCode: 'U',
             AccessGroup: 'Alle',
-            Category: 'Dokument inn',
+            Category: 'Midlertidig journalført',
             Contacts: [
               {
                 ReferenceNumber: xmlData.Orgnr.replaceAll(' ', ''),
