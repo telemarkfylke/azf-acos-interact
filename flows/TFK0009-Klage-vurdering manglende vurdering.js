@@ -1,6 +1,6 @@
 const description = 'Sender til elevmappe'
 const { nodeEnv } = require('../config')
-const title = 'Klage - vurdering/manglende vurdering'
+const title = 'Klage - standpunkt og eksamen'
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 module.exports = {
   config: {
@@ -35,11 +35,6 @@ module.exports = {
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
-      /*
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
-      */
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
@@ -86,22 +81,16 @@ module.exports = {
           }
         }
 
-        if (xmlData.Egendefinert1 === 'Privatist') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200471' : '200250' // Seksjon Sektorstøtte, inntak og eksamen
-          documentData.parameter.AccessGroup = 'Eksamen'
-        } else if (xmlData.Egendefinert1 === 'Elev') {
+        if (xmlData.Egendefinert1 === 'Eleveksamen eller standpunkt') {
           const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
           if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
           documentData.parameter.ResponsibleEnterpriseNumber = xmlData.SkoleOrgNr
           documentData.parameter.AccessGroup = school.tilgangsgruppe
-        } else if (xmlData.Egendefinert1 === 'Lærling/lærekandidat/praksiskandidat') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200472' : '200249' // Seksjon Fag- og yrkesopplæring
-          documentData.parameter.AccessGroup = 'Fagopplæring'
-        } else if (xmlData.Egendefinert1 === 'Voksen (Talenthuset)') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200693' : 'Finnes ikke i test' // Talenthuset // denne er ikke verifisert
-          documentData.parameter.AccessGroup = 'Elev Talenthuset'
+        } else if (xmlData.Egendefinert1 === 'Privatisteksamen') {
+          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200471' : '200250' // Seksjon Sektorstøtte, inntak og eksamen
+          documentData.parameter.AccessGroup = 'Eksamen'
         } else {
-          throw new Error('Fikk ukjent verdi inn i Egendefinert1 fra skjemaets xml-fil. Trenger "Privatist", "Elev", "Lærling/lærekandidat/praksiskandidat" eller "Voksen (Kompetansebyggeren)"')
+          throw new Error('Fikk ukjent verdi inn i Egendefinert1 fra skjemaets xml-fil. Trenger "Privatisteksamen" eller "Eleveksamen eller standpunkt"')
         }
         return documentData
       }
@@ -115,6 +104,33 @@ module.exports = {
 
   closeCase: {
     enabled: false
+  },
+
+  // SP-info er kun template. Venter på info om avlevering
+  sharepointList: {
+    enabled: true,
+    options: {
+      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
+        return flowStatus.parseXml.result.ArchiveData.Egendefinert1 === 'Privatisteksamen'
+      },
+      mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: false,
+            fields: {
+              Title: xmlData.Fnr,
+              Navn: `${xmlData.Fornavn} + ${xmlData.Etternavn}`,
+              Mobilnummer: xmlData.mobilnr,
+              Fagkode: xmlData.Egendefinert2
+            }
+          }
+        ]
+      }
+    }
   },
 
   statistics: {
