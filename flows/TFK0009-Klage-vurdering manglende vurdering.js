@@ -117,8 +117,8 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/OPT-TAN-Utdanningfolkehelseogtannhelse/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/OPT-TAN-Utdanningfolkehelseogtannhelse/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: false,
             fields: {
