@@ -3,7 +3,7 @@ const { nodeEnv } = require('../config')
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -82,7 +82,7 @@ string Epost
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            ResponsiblePersonEmail: 'jamila.synnove.saber@telemarkfylke.no',
+            ResponsiblePersonEmail: 'ole.bjorn.barnes@telemarkfylke.no',
             AccessCode: 'U',
             Paragraph: '',
             AccessGroup: 'Alle'
