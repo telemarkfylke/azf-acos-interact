@@ -1,6 +1,6 @@
+const title = 'Registering av kontaktinformasjon til foresatte-pårørende'
 const description = 'Sender til elevmappe'
-const { nodeEnv } = require('../config')
-const title = 'Klage - standpunkt og eksamen'
+// const { nodeEnv } = require('../config')
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 module.exports = {
   config: {
@@ -12,6 +12,37 @@ module.exports = {
     options: {
     }
   },
+
+  /* Felter fra Acos:
+      ArchiveData {
+    string Fnr
+    string Fornavn
+    string Etternavn
+    string Adresse
+    string Postnr
+    string Poststed
+    string Mobilnr
+    string Epost
+    string AnsVirksomhet
+    string Tilgangsgruppe
+    string Tittel
+    string Navn
+    string Fdato
+    string Skole
+    string Klasse
+    string MobilElev
+    string EpostElev
+    string NavnP1
+    string RelasjonP1
+    string MobilP1
+    string EpostP1
+    string NavnP2
+    string RelasjonP2
+    string MobilP2
+    string EpostP2
+    string Opprettet
+}
+  */
 
   // Synkroniser elevmappe
   syncElevmappe: {
@@ -35,9 +66,16 @@ module.exports = {
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
+      /*
+      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
+        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
+      },
+      */
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
+        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
+        if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -47,11 +85,12 @@ module.exports = {
             VersionFormat: att.versionFormat
           }
         })
-        const documentData = {
+        return {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
+            AccessGroup: school.tilgangsgruppe,
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -73,64 +112,25 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+            ResponsibleEnterpriseNumber: xmlData.SkoleOrgNr,
+            // ResponsiblePersonEmail: '',
             Status: 'J',
             Title: title,
-            // UnofficialTitle: '',
-            Archive: 'Sensitivt elevdokument',
+            // UnofficialTitle: `Kontaktinformasjon - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
+            Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
-
-        if (xmlData.Egendefinert1 === 'Eleveksamen eller standpunkt') {
-          const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
-          if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
-          documentData.parameter.ResponsibleEnterpriseNumber = xmlData.SkoleOrgNr
-          documentData.parameter.AccessGroup = school.tilgangsgruppe
-        } else if (xmlData.Egendefinert1 === 'Privatisteksamen') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200471' : '200250' // Seksjon Sektorstøtte, inntak og eksamen
-          documentData.parameter.AccessGroup = 'Eksamen'
-        } else {
-          throw new Error('Fikk ukjent verdi inn i Egendefinert1 fra skjemaets xml-fil. Trenger "Privatisteksamen" eller "Eleveksamen')
-        }
-        return documentData
       }
     }
-
   },
 
   signOff: {
-    enabled: false
+    enabled: true
   },
 
   closeCase: {
     enabled: false
-  },
-
-  // SP-info er kun template. Venter på info om avlevering
-  sharepointList: {
-    enabled: true,
-    options: {
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.Egendefinert1 === 'Privatisteksamen'
-      },
-      mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
-        return [
-          {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Utdanningfolkehelseogtannhelse-Eksamen-mottakdigitaleskjemaer/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
-            uploadFormPdf: true,
-            uploadFormAttachments: false,
-            fields: {
-              Title: xmlData.Fnr,
-              Navn: `${xmlData.Fornavn} ${xmlData.Etternavn}`,
-              Mobilnummer: xmlData.Mobilnr,
-              Fagkode: xmlData.Egendefinert2
-            }
-          }
-        ]
-      }
-    }
   },
 
   statistics: {
@@ -141,12 +141,12 @@ module.exports = {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'Opplæring',
-          department: 'FAGOPPLÆRING',
+          department: '',
           description,
-          type: title, // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Kontaktinformasjon', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
-          documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
+          // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
+          documentNumber: flowStatus.archive?.result?.DocumentNumber //  || 'tilArkiv er false' // Optional. anything you like
         }
       }
     }
