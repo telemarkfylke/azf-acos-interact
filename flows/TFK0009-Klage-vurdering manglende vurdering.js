@@ -76,7 +76,7 @@ module.exports = {
             Status: 'J',
             Title: title,
             // UnofficialTitle: '',
-            Archive: 'Sensitivt elevdokument',
+            Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
@@ -87,7 +87,7 @@ module.exports = {
           documentData.parameter.ResponsibleEnterpriseNumber = xmlData.SkoleOrgNr
           documentData.parameter.AccessGroup = school.tilgangsgruppe
         } else if (xmlData.Egendefinert1 === 'Privatisteksamen') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200471' : '200250' // Seksjon Sektorstøtte, inntak og eksamen
+          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200027' : '200021' // Seksjon Skoleutvikling og folkehelse
           documentData.parameter.AccessGroup = 'Eksamen'
         } else {
           throw new Error('Fikk ukjent verdi inn i Egendefinert1 fra skjemaets xml-fil. Trenger "Privatisteksamen" eller "Eleveksamen')
@@ -119,7 +119,7 @@ module.exports = {
           {
             testListUrl: 'https://telemarkfylke.sharepoint.com/sites/OPT-TAN-Utdanningfolkehelseogtannhelse/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
             prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/OPT-TAN-Utdanningfolkehelseogtannhelse/Lists/Privatisteksamen%20%20Klager/AllItems.aspx',
-            uploadFormPdf: true,
+            uploadFormPdf: false,
             uploadFormAttachments: false,
             fields: {
               Title: xmlData.Fnr,
