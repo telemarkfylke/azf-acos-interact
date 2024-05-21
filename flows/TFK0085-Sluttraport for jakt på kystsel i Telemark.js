@@ -59,7 +59,7 @@ string Epost
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Fnr,
+                ReferenceNumber: xmlData.fnr,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
