@@ -8,7 +8,7 @@ module.exports = {
     doNotRemoveBlobs: false
   },
   parseXml: {
-    enabled: true,
+    enabled: true
   },
   /* Felter fra Acos:
 ArchiveData {
@@ -121,7 +121,7 @@ ArchiveData {
   closeCase: {
     enabled: false
   },
- 
+
   statistics: {
     enabled: true,
     options: {

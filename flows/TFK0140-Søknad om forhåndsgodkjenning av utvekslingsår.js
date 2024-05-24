@@ -8,7 +8,7 @@ module.exports = {
     doNotRemoveBlobs: false
   },
   parseXml: {
-    enabled: true,
+    enabled: true
   },
 
   /* Felter fra Acos:
