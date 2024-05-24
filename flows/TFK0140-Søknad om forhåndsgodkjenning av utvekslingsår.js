@@ -9,8 +9,6 @@ module.exports = {
   },
   parseXml: {
     enabled: true,
-    options: {
-    }
   },
 
   /* Felter fra Acos:
