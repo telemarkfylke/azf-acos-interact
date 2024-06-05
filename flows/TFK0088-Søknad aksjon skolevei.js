@@ -60,7 +60,7 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseXml.result.Soknad.Fnr,
+          ssn: flowStatus.parseXml.result.Soknad.Fnr
         }
       }
     }
@@ -197,7 +197,7 @@ module.exports = {
               Beskrevetitiltakslista: xmlData.BeskrevetITiltakslista || 'Ikke sendt inn',
               Godkjentreguleringsplan: xmlData.GodkjentReguleringsplan || 'Ikke sendt inn',
               Ferdigbyggeplan: xmlData.FerdigByggeplan || 'Ikke sendt inn',
-              Forventetprosjektstart: xmlData.ForventetProsjektstart || 'Ikke sendt inn',
+              Forventetprosjektstart: xmlData.ForventetProsjektstart || 'Ikke sendt inn'
             }
           }
         ]
