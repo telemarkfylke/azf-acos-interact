@@ -194,10 +194,10 @@ module.exports = {
       mapper: (flowStatus) => {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'Kultur',
+          company: 'Vegforvaltning og transport',
           department: '',
           description, // Required. A description of what the statistic element represents
-          type: 'Tilskudd til idrettsarrangement og regionale idrettsanlegg', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Tilskudd til trafikksikkerhetstiltak i nærmiljøet', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
