@@ -103,9 +103,9 @@ ArchiveData {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
-            AccessCode: '7',
-            Paragraph: 'Offl. § 7d',
-            AccessGroup: 'Seksjon vegforvaltning',
+            AccessCode: 'U',
+            Paragraph: '',
+            AccessGroup: 'Alle',
             Category: 'Dokument inn',
             Contacts: [
               {
