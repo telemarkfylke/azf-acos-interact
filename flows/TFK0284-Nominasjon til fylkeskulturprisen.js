@@ -24,7 +24,7 @@ module.exports = {
 
   // Arkiverer dokumentet i 360
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: false, //  !!! Husk å aktivere denne !!!!
+    enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
