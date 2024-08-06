@@ -64,7 +64,7 @@ module.exports = {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: `Nominasjon til Fylkeskulturprisen 2024`,
+            Title: 'Nominasjon til Fylkeskulturprisen 2024',
             // UnofficialTitle: 'Søknad om utsetting av ferskvannsfisk',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
