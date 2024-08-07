@@ -16,15 +16,15 @@ module.exports = {
   },
 
   sharepointList: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/TJssharepointverksted/Lists/TestlisteTFK0212/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/TJssharepointverksted/Lists/TestlisteTFK0212/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/Avtaler%20fra%20Acos%20skjema/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/Avtaler%20fra%20Acos%20skjema/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
