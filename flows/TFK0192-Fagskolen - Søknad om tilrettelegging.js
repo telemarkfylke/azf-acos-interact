@@ -13,6 +13,31 @@ module.exports = {
   groundControl: {
     enabled: false // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
   },
+
+  sharepointList: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: xmlData.Navn,
+              E_x002d_post: xmlData.Epost,
+              S_x00f8_knadstype: xmlData.Soknadstype,
+              Klasse: xmlData.Klasse
+            }
+          }
+        ]
+      }
+    }
+  },
+
   statistics: {
     enabled: true,
     options: {
