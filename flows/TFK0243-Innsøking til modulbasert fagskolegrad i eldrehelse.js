@@ -24,7 +24,7 @@ module.exports = {
         return [
           {
             testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/InnsokingEldrehelse',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Elektroniskeskjemaer/Lists/InnsokingEldrehelse/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
