@@ -40,7 +40,7 @@ module.exports = {
               Adresse: xmlData.Adresse,
               Postnummer: xmlData.PostNr,
               Sted: xmlData.Sted,
-              Telefonnummer: xmlData.Mobilnr,
+              Telefonnummer: xmlData.Mobilnr
             }
           }
         ]
