@@ -23,28 +23,24 @@ module.exports = {
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Elektroniskeskjemaer/Lists/EKOMsknader',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Elektroniskeskjemaer/Lists/EKOMsknader',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Elektroniskeskjemaer/Lists/Bransjeprogram/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Elektroniskeskjemaer/Lists/Bransjeprogram/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.Fnr,
+              Bransjeprogram: xmlData.Bransjeprogram,
+              Utdanning: xmlData.Utdanning,
               Fornavn: xmlData.Fornavn,
               Etternavn: xmlData.Etternavn,
               E_x002d_postadresse: xmlData.Epost,
-              Mobilnummer: xmlData.Mobilnr,
-              Fag_x002d_ogsvennebrev: xmlData.FagSvennebrev,
+              Fag_x002d__x002f_svennebrev: xmlData.FagSvennebrev,
               Annenutdanning: xmlData.AnnenUtdanning,
-              // Firmanavn: xmlData.Firmanavn,
               Praksis_x002f_fartstid: xmlData.PraksisFartstid,
               Adresse: xmlData.Adresse,
               Postnummer: xmlData.PostNr,
               Sted: xmlData.Sted,
-              // Org_x002e_nummer: xmlData.Orgnr,
-              // Fakturaadresse: xmlData.Firmaadresse,
-              Kurs: `Bransjeprogram - ${xmlData.Bransjeprogram}`
-              // nelfo: xmlData.nelfomedlem || '',
-              // oppstartmnd: xmlData.oppstartmnd || ''
+              Telefonnummer: xmlData.Mobilnr,
             }
           }
         ]
