@@ -71,7 +71,7 @@ module.exports = {
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
             ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
             AccessCode: '5',
-            Paragraph: '§5 - utsatt innsyn',
+            Paragraph: 'Offl. § 5',
             AccessGroup: 'Seksjon kultur'
           }
         }
