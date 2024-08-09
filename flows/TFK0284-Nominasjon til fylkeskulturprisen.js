@@ -10,13 +10,13 @@ module.exports = {
     enabled: true
   },
 
-  syncEnterprise: {
-    enabled: false,
+  syncPrivatePerson: {
+    enabled: true,
     options: {
-      mapper: (flowStatus) => { // for å opprette/oppdatere en virksomhet i P3360
-        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier for å opprette privatperson med fiktivt fødselsnummer
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          orgnr: flowStatus.parseXml.result.ArchiveData.OrgNr.replaceAll(' ', '')
+          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
         }
       }
     }
