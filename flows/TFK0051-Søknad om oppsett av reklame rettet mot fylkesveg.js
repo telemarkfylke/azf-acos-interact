@@ -105,7 +105,7 @@ ArchiveData {
           parameter: {
             AccessCode: '7',
             Paragraph: 'Offl. § 7d',
-            AccessGroup: 'Seksjon Vegforvaltning',
+            AccessGroup: 'Vegutbygging',
             Category: 'Dokument inn',
             Contacts: [
               {
