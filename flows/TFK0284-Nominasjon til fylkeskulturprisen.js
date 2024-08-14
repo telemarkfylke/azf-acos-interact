@@ -48,7 +48,7 @@ module.exports = {
               {
                 ReferenceNumber: xmlData.Fnr.split(' ').join(''),
                 Role: 'Avsender',
-                IsUnofficial: false
+                IsUnofficial: true // Skjermer avsender av skjemaet i p360
               }
             ],
             Files: [
