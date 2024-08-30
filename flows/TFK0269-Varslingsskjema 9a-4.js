@@ -97,9 +97,9 @@ module.exports = {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
-            CaseType: '9A4-Sak',
+            CaseType: '12-4-Sak',
             Title: 'Elevsak',
-            UnofficialTitle: `§9A4-sak - ${xmlData.krenketElevNavn}`,
+            UnofficialTitle: `12-4-sak - ${xmlData.krenketElevNavn}`,
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
@@ -171,15 +171,15 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Varslingsskjema oppll. § 9A-4',
+                Title: 'Varslingsskjema opplæringsloven § 12-4',
                 VersionFormat: 'A'
               }
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
             Title: 'Varsling',
-            UnofficialTitle: 'Varslingsskjema § 9A-4',
-            Archive: nodeEnv === 'production' ? '9A4 Dokument' : '9A4 Dokument', //
+            UnofficialTitle: 'Varslingsskjema § 12-4',
+            Archive: nodeEnv === 'production' ? '12-4 Dokument' : '12-4 Dokument', //
             CaseNumber: flowStatus.handleCase.result.CaseNumber,
             ResponsibleEnterpriseNumber: school.orgNr,
             AccessCode: '13',
