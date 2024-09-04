@@ -123,7 +123,6 @@ module.exports = {
     enabled: false
   },
 
-
   statistics: {
     enabled: true,
     options: {
