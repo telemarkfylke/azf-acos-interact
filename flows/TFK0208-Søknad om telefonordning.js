@@ -39,7 +39,7 @@ ArchiveData {
 */
 
   syncEmployee: {
-  enabled: true,
+    enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person med fiktivt fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier for å opprette privatperson med fiktivt fødselsnummer
