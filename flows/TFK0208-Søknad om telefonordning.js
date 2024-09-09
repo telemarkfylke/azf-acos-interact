@@ -37,6 +37,20 @@ ArchiveData {
 }
 
 */
+
+  syncEmployee: {
+  enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette person med fiktivt fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier for å opprette privatperson med fiktivt fødselsnummer
+        return {
+          ssn: flowStatus.parseXml.result.ArchiveData.Fnr,
+          forceUpdate: false // optional - forces update of privatePerson instead of quick return if it exists
+        }
+      }
+    }
+  },
+
   handleCase: {
     enabled: true,
     options: {
