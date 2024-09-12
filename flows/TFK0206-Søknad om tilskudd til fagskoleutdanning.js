@@ -125,7 +125,7 @@ ArchiveData {
               Omr_x00e5_de: tilbud.Omrade,
               Tilbudstype: tilbud.Tilbudstype,
               Tilbudsnavn: tilbud.Tilbudsnavn,
-              Studiested: tilbud.Studiested, 
+              Studiested: tilbud.Studiested,
               Studieform: tilbud.Studieform,
               Forventetant_x002e_st_x002e_plas: tilbud.ForventetAntStudieplasser,
               Studiepoengtotalt: tilbud.StudiepoengTotalt,
@@ -135,11 +135,11 @@ ArchiveData {
               Start_x00e5_r: tilbud.Startar,
               Sluttm_x00e5_ned: tilbud.Sluttmaned,
               Slutt_x00e5_r: tilbud.Sluttar,
-              Fagskolenummer: xmlData.Skolenummer, 
-              Tilbudskode: tilbud.Tilbudskode, 
-              Alterendesamlinger: tilbud.Alterende, 
+              Fagskolenummer: xmlData.Skolenummer,
+              Tilbudskode: tilbud.Tilbudskode,
+              Alterendesamlinger: tilbud.Alterende,
               Alterendefylker: tilbud.AlterendeFylker,
-              Dokumentnummeri360: flowStatus.archive.result.DocumentNumber 
+              Dokumentnummeri360: flowStatus.archive.result.DocumentNumber
             }
           }
           sharepointElements.push(sharepointElement)
