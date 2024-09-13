@@ -24,19 +24,19 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseXml.result.ArchiveData.fnr
+          ssn: flowStatus.parseXml.result.Skjema.fnr
         }
       }
     }
   },
   syncEnterprise: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
-        console.log(flowStatus.parseXml.result.ArchiveData.Egendefinert1.replaceAll(' ', ''))
+        console.log(flowStatus.parseXml.result.Skjema.Egendefinert1.replaceAll(' ', ''))
         return {
-          orgnr: flowStatus.parseXml.result.ArchiveData.Egendefinert1.replaceAll(' ', '')
+          orgnr: flowStatus.parseXml.result.Skjema.Egendefinert1.replaceAll(' ', '')
         }
       }
     }
@@ -51,7 +51,7 @@ module.exports = {
       },
       */
       mapper: (flowStatus, base64, attachments) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.Skjema
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
         const p360Attachments = attachments.map(att => {
           return {
@@ -71,7 +71,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Egendefinert1.replaceAll(' ', ''),
+                ReferenceNumber: xmlData.fnr,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -111,15 +111,15 @@ module.exports = {
     enabled: false
   },
   sharepointList: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.Skjema
         let programomrade = ''
         if (xmlData.gjennomfortMote === 'Nei') programomrade = xmlData.programomrade
         return [
           {
-            testListUrl: '',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/TJssharepointverksted/Lists/TFK0022/AllItems.aspx',
             prodListUrl: '',
             uploadFormPdf: true,
             uploadFormAttachments: true,
