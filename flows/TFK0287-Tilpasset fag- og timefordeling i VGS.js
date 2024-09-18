@@ -33,7 +33,7 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
-        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
+        // const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -74,7 +74,7 @@ module.exports = {
             Title: title,
             // UnofficialTitle: '',
             Archive: 'Sensitivt elevdokument',
-            CaseNumber: elevmappe.CaseNumber,
+            CaseNumber: elevmappe.CaseNumber
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? xmlData.SkoleOrgNr : xmlData.SkoleOrgNr, // Team fag-, yrkes- og voksenopplæring
           }
         }
