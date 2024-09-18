@@ -69,13 +69,13 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+            ResponsibleEnterpriseNumber: xmlData.SkoleOrgNr,
             Status: 'J',
             Title: title,
             // UnofficialTitle: '',
             Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber,
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? xmlData.SkoleOrgNr : xmlData.SkoleOrgNr, // Team fag-, yrkes- og voksenopplæring
-            AccessGroup: school.tilgangsgruppe
           }
         }
         return documentData
