@@ -1,6 +1,6 @@
 const description = 'Sender til elevmappe'
 // const { nodeEnv } = require('../config')
-const { schoolInfo } = require('../lib/data-sources/tfk-schools')
+// const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 const title = 'Tilpasset fag- og timefordeling i VGS'
 
 module.exports = {
