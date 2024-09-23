@@ -156,7 +156,6 @@ module.exports = {
           description,
           type: `Søknad om støtte til tilretteleggingsmidler for opplæring i bedrift - ${getSchoolYear()}`, // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
         }
       }
