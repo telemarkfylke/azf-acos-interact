@@ -70,7 +70,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200471' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200027' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
             ResponsiblePersonEmail: 'line.eilertsen@telemarkfylke.no',
             Status: 'J',
             Title: 'Søknad om fritak fra norsk sidemål som privatist',
