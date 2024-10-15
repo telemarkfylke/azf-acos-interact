@@ -23,8 +23,8 @@ module.exports = {
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/Avtaler%20fra%20Acos%20skjema/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/Avtaler%20fra%20Acos%20skjema/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/AvtalerFraSkjema/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Habiliteringogatferdssttte/Lists/AvtalerFraSkjema/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

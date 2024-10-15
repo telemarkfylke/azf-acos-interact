@@ -155,7 +155,7 @@ module.exports = {
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.fornavn + ' ' + xmlData.etternavn,
-              fdato: xmlData.fnr.slice(0, -5),
+              fdato: xmlData.fnr,
               fornavn: xmlData.fornavn,
               etternavn: xmlData.etternavn,
               adresse: xmlData.adresse,

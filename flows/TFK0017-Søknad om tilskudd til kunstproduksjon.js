@@ -1,4 +1,4 @@
-const description = 'Tilskudd til idrettsarrangement og regionale idrettsanlegg'
+const description = 'Tilskudd til kunstproduksjon'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -70,7 +70,7 @@ string Fnr
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '24/04282' : '24/00010'
+        const caseNumber = nodeEnv === 'production' ? '24/23074' : '24/00157'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -81,7 +81,6 @@ string Fnr
           }
         })
         return {
-
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
@@ -109,9 +108,10 @@ string Fnr
             Title: `Søknad om ${xmlData.Tilskuddsordning} - ${xmlData.Prosjektnavn}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            AccessCode: 'Å',
-            Paragraph: 'Åvl §1',
+            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200280', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
+            ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
+            AccessCode: '5',
+            Paragraph: 'Offl. § 5',
             AccessGroup: 'Seksjon kultur'
           }
         }

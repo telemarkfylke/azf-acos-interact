@@ -1,4 +1,4 @@
-const description = 'Fagskolen søknadsskjema Energirådgiver elektro'
+const description = 'Fagskolen søknadsskjema SimienPro'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -81,8 +81,8 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const archiveTitle = `Søknad kurs - Energirådgiver elektro - ${xmlData.fornavn} ${xmlData.etternavn}`
-        const publicTitle = 'Søknad kurs - Energirådgiver elektro'
+        const archiveTitle = `Søknad kurs - SimienPro - ${xmlData.fornavn} ${xmlData.etternavn}`
+        const publicTitle = 'Søknad kurs - SimienPro'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -149,13 +149,13 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Energiraadgiver/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Energiraadgiver/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/SimienPro/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/SimienPro/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
               Title: xmlData.fornavn + ' ' + xmlData.etternavn,
-              fdato: xmlData.fnr,
+              fnr: xmlData.fnr,
               fornavn: xmlData.fornavn,
               etternavn: xmlData.etternavn,
               adresse: xmlData.adresse,
@@ -163,18 +163,16 @@ module.exports = {
               poststed: xmlData.poststed,
               mobilnummer: xmlData.mobilnummer,
               epostadresse: xmlData.epostadresse,
-              nelfomedlem: xmlData.nelfomedlem,
-              oppstartmnd: xmlData.oppstartmnd,
-              sokerPaaVegneAvFirma: xmlData.sokerPaaVegneAvFirma,
+              sokertype: xmlData.sokertype,
               orgnr: xmlData.orgnr,
               orgnavn: xmlData.orgnavn,
-              adresseFirma: xmlData.adresseFirma,
-              postnummerFirma: xmlData.postnummerFirma,
-              poststedFirma: xmlData.poststedFirma,
-              utdanningSoker: xmlData.utdanningSoker,
-              stillingSoker: xmlData.stillingSoker,
-              sisteArbeidsstedSoker: xmlData.sisteArbeidsstedSoker,
-              fartstidSoker: xmlData.fartstidSoker
+              orgadresse: xmlData.orgadresse,
+              orgpostnr: xmlData.orgpostnr,
+              orgpoststed: xmlData.orgpoststed,
+              fakturadresse: xmlData.fakturadresse,
+              utdanningsnivaa: xmlData.utdanningsnivaa,
+              naastilling: xmlData.naastilling,
+              sistearbeidssted: xmlData.sistearbeidssted
             }
           }
         ]
