@@ -172,7 +172,8 @@ module.exports = {
               fakturadresse: xmlData.fakturadresse,
               utdanningsnivaa: xmlData.utdanningsnivaa,
               naastilling: xmlData.naastilling,
-              sistearbeidssted: xmlData.sistearbeidssted
+              sistearbeidssted: xmlData.sistearbeidssted,
+              oppstartmnd: xmlData.oppstartmnd
             }
           }
         ]
