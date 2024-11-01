@@ -49,12 +49,48 @@ ArchiveData {
       }
     }
   },
+  handleCase: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        return {
+          service: 'CaseService',
+          method: 'CreateCase',
+          parameter: {
+            CaseType: 'Sak',
+            Project: nodeEnv === 'production' ? '24-1705' : '24-1', // Dette er riktig for telemark
+            Title: `Søknad om driftstilskudd 2025 - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
+            // UnofficialTitle: ,
+            Status: 'B',
+            JournalUnit: 'Sentralarkiv',
+            SubArchive: 'Sakarkiv',
+            ArchiveCodes: [
+              {
+                ArchiveCode: '243',
+                ArchiveType: 'FELLESKLASSE PRINSIPP',
+                Sort: 1
+              },
+              {
+                ArchiveCode: 'A80',
+                ArchiveType: 'FAGKLASSE PRINSIPP',
+                Sort: 2
+              }
+            ],
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200026' : '200020',
+            ResponsiblePersonEmail: 'marita.bruun@telemarkfylke.no',
+            AccessGroup: 'Alle'
+          }
+        }
+      }
+    }
+  },
   // Arkiverer dokumentet i 360
   archive: {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
+        const caseNumber = flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -83,17 +119,17 @@ ArchiveData {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Søknad om tilskudd til fagskoleutdanning',
+                Title: `Søknad om driftstilskudd 2025 - ${xmlData.OrgNavn}`,
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200026' : '200020', // Seksjon kompetanse og integrering
-            // ResponsiblePersonEmail: nodeEnv === 'production' ? '' : '',
+            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200026' : '200020', // Seksjon kompetanse og integrering
+            ResponsiblePersonEmail: nodeEnv === 'production' ? 'marita.bruun@telemarkfylke.no' : 'marita.bruun@telemarkfylke.no',
             Status: 'J',
-            Title: `Søknad om tilskudd til fagskoleutdanning - ${xmlData.OrgNavn}`,
+            Title: `Søknad om driftstilskudd 2025 - ${xmlData.OrgNavn}`,
             Archive: 'Saksdokument',
-            CaseNumber: nodeEnv === 'production' ? '24/21559' : '23/00076'
+            CaseNumber: caseNumber
           }
         }
       }
