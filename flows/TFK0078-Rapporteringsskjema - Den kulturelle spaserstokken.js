@@ -34,7 +34,7 @@ string Egendefinert2 // OrgNavn
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '24/04354' : '24/00062'
+        const caseNumber = nodeEnv === 'production' ? '24/24454' : '24/00062'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
