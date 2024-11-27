@@ -73,7 +73,7 @@ module.exports = {
             ResponsiblePersonEmail: 'aurora.bye.olsen@telemarkfylke.no',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            AccessGroup: 'Seksjon HR'
+            AccessGroup: 'Team politisk støtte'
           }
         }
       }
@@ -94,10 +94,10 @@ module.exports = {
       mapper: (flowStatus) => {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'Kultur',
+          company: 'Politisk støtte', // Required. The name of the company
           department: '',
           description, // Required. A description of what the statistic element represents
-          type: 'Søknad om stipend for husflid og handverk', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Opplysningsskjema for politikere i Telemark Fylkeskommune ', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
