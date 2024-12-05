@@ -173,7 +173,8 @@ module.exports = {
               utdanningsnivaa: xmlData.utdanningsnivaa,
               naastilling: xmlData.naastilling,
               sistearbeidssted: xmlData.sistearbeidssted,
-              oppstartmnd: xmlData.oppstartmnd
+              oppstartmnd: xmlData.oppstartmnd,
+              samtykkeInfo: xmlData.samtykkeInfo
             }
           }
         ]

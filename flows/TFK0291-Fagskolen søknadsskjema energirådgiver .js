@@ -174,7 +174,8 @@ module.exports = {
               utdanningSoker: xmlData.utdanningSoker,
               stillingSoker: xmlData.stillingSoker,
               sisteArbeidsstedSoker: xmlData.sisteArbeidsstedSoker,
-              fartstidSoker: xmlData.fartstidSoker
+              fartstidSoker: xmlData.fartstidSoker,
+              samtykkeInfo: xmlData.samtykkeInfo
             }
           }
         ]

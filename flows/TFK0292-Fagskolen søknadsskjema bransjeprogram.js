@@ -167,7 +167,8 @@ module.exports = {
               utdanning: xmlData.utdanning,
               fagSvennebrev: xmlData.fagSvennebrev,
               annenUtdanning: xmlData.annenUtdanning,
-              praksisFartstid: xmlData.praksisFartstid
+              praksisFartstid: xmlData.praksisFartstid,
+              samtykkeInfo: xmlData.samtykkeInfo
             }
           }
         ]
