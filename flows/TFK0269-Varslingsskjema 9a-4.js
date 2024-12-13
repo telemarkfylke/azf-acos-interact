@@ -71,7 +71,7 @@ module.exports = {
                 Role: 'Ansvarlig'
               }
             ],
-            AccessGroup: school['9a4Tilgangsgruppe']
+            AccessGroup: school['9a4Tilgangsgruppe'] // Alle
           }
         }
       },
@@ -79,7 +79,7 @@ module.exports = {
         const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
-          Title: `§9A-4 - ${getSchoolYear()} - %`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
+          Title: `§12A-4 saker - ${getSchoolYear()} - %`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
           ContactReferenceNumber: school.orgNr,
           StatusCode: 'Under utføring'
         }
