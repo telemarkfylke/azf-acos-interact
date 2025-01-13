@@ -6,7 +6,7 @@ const { nodeEnv } = require('../config')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true
