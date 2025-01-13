@@ -5,8 +5,8 @@ const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 const { nodeEnv } = require('../config')
 module.exports = {
   config: {
-    enabled: false,
-    doNotRemoveBlobs: true
+    enabled: true,
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true
@@ -64,7 +64,7 @@ module.exports = {
           service: 'ProjectService',
           method: 'CreateProject',
           parameter: {
-            Title: `§12A-4 saker - ${getSchoolYear()} - % - ${school.primaryLocation}`,
+            Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`,
             Contacts: [
               {
                 ReferenceNumber: school.orgNr,
@@ -78,8 +78,10 @@ module.exports = {
       getProjectParameter: (flowStatus) => {
         const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
+        console.log(school.officeLocation)
         return {
-          Title: `§12A-4 saker - ${getSchoolYear()} - %`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
+          // §12-4 saker - 2024/2025 - %
+          Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
           ContactReferenceNumber: school.orgNr,
           StatusCode: 'Under utføring'
         }
@@ -97,7 +99,7 @@ module.exports = {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
-            CaseType: '12-4-Sak',
+            CaseType: nodeEnv === 'production' ? '12-4-Sak' : '9A4-Sak', // 12-4-Sak
             Title: 'Elevsak',
             UnofficialTitle: `12-4-sak - ${xmlData.krenketElevNavn}`,
             Status: 'B',
@@ -179,7 +181,7 @@ module.exports = {
             DocumentDate: new Date().toISOString(),
             Title: 'Varsling',
             UnofficialTitle: 'Varslingsskjema § 12-4',
-            Archive: nodeEnv === 'production' ? '12-4 Dokument' : '12-4 Dokument', //
+            Archive: nodeEnv === 'production' ? '12-4 Dokument' : '9A4 dokument', //12-4 Dokument
             CaseNumber: flowStatus.handleCase.result.CaseNumber,
             ResponsibleEnterpriseNumber: school.orgNr,
             AccessCode: '13',

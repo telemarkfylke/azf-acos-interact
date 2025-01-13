@@ -39,6 +39,41 @@ string SkoleOrgNr
     }
   },
 
+  handleProject: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
+        if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
+        return {
+          service: 'ProjectService',
+          method: 'CreateProject',
+          parameter: {
+            Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`,
+            Contacts: [
+              {
+                ReferenceNumber: school.orgNr,
+                Role: 'Ansvarlig'
+              }
+            ],
+            // AccessGroup: 'Alle'
+          }
+        }
+      },
+      getProjectParameter: (flowStatus) => {
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
+        if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
+        console.log(school.officeLocation)
+        return {
+          // §12-4 saker - 2024/2025 - %
+          Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
+          ContactReferenceNumber: school.orgNr,
+          StatusCode: 'Under utføring'
+        }
+      }
+    }
+  },
+
   handleCase: {
     enabled: true,
     options: {
@@ -59,7 +94,7 @@ string SkoleOrgNr
             // AccessGroup: school['9a4Tilgangsgruppe'], // 9a-4 tilgangsgruppe til den skolen det gjelder
             JournalUnit: 'Sentralarkiv',
             SubArchive: 'Elev',
-            // Project: flowStatus.handleProject.result.ProjectNumber,
+            Project: flowStatus.handleProject.result.ProjectNumber,
             ArchiveCodes: [
               {
                 ArchiveCode: xmlData.Fnr,
