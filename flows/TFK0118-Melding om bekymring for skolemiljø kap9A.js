@@ -1,6 +1,6 @@
 const description = 'Arkivering av melding om bekymring for skolemiljø kap. 9a4'
 // const { nodeEnv } = require('../config')
-// const { getSchoolYear } = require('../lib/flow-helpers')
+const { getSchoolYear } = require('../lib/flow-helpers')
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 module.exports = {
   config: {
@@ -55,7 +55,7 @@ string SkoleOrgNr
                 ReferenceNumber: school.orgNr,
                 Role: 'Ansvarlig'
               }
-            ],
+            ]
             // AccessGroup: 'Alle'
           }
         }

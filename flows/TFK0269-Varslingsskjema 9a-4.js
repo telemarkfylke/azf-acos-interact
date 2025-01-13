@@ -53,7 +53,7 @@ module.exports = {
       }
     }
   },
- 
+
   handleProject: {
     enabled: true,
     options: {
@@ -70,7 +70,7 @@ module.exports = {
                 ReferenceNumber: school.orgNr,
                 Role: 'Ansvarlig'
               }
-            ],
+            ]
             // AccessGroup: 'Alle'
           }
         }
@@ -181,7 +181,7 @@ module.exports = {
             DocumentDate: new Date().toISOString(),
             Title: 'Varsling',
             UnofficialTitle: 'Varslingsskjema § 12-4',
-            Archive: nodeEnv === 'production' ? '12-4 Dokument' : '9A4 dokument', //12-4 Dokument
+            Archive: nodeEnv === 'production' ? '12-4 Dokument' : '9A4 dokument', // 12-4 Dokument
             CaseNumber: flowStatus.handleCase.result.CaseNumber,
             ResponsibleEnterpriseNumber: school.orgNr,
             AccessCode: '13',
