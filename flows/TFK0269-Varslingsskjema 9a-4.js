@@ -1,6 +1,6 @@
 const description = 'Arkivering av varsling ved brud på oppll. § 9 A-4. Skal opprettes en ny sak pr skjema'
 // const { nodeEnv } = require('../config')
-// const { getSchoolYear } = require('../lib/flow-helpers')
+const { getSchoolYear } = require('../lib/flow-helpers')
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 const { nodeEnv } = require('../config')
 module.exports = {
@@ -53,7 +53,7 @@ module.exports = {
       }
     }
   },
-  /*
+ 
   handleProject: {
     enabled: true,
     options: {
@@ -64,14 +64,14 @@ module.exports = {
           service: 'ProjectService',
           method: 'CreateProject',
           parameter: {
-            Title: `§9A-4 sak - ${getSchoolYear()} - ${school.primaryLocation}`,
+            Title: `§12A-4 saker - ${getSchoolYear()} - % - ${school.primaryLocation}`,
             Contacts: [
               {
                 ReferenceNumber: school.orgNr,
                 Role: 'Ansvarlig'
               }
             ],
-            AccessGroup: school['9a4Tilgangsgruppe'] // Alle
+            // AccessGroup: 'Alle'
           }
         }
       },
@@ -85,7 +85,7 @@ module.exports = {
         }
       }
     }
-  }, */
+  },
   handleCase: {
     enabled: true,
     options: {
@@ -106,7 +106,7 @@ module.exports = {
             // AccessGroup: school['9a4Tilgangsgruppe'], // 9a-4 tilgangsgruppe til den skolen det gjelder
             JournalUnit: 'Sentralarkiv',
             SubArchive: '4',
-            // Project: flowStatus.handleProject.result.ProjectNumber,
+            Project: flowStatus.handleProject.result.ProjectNumber,
             ArchiveCodes: [
             //   {
             //     ArchiveCode: '---',
