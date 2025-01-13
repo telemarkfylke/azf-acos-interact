@@ -5,7 +5,7 @@ const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 const { nodeEnv } = require('../config')
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: true
   },
   parseXml: {
