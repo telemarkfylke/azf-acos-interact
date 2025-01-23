@@ -71,7 +71,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Referat fra veiledning i bedrift - Signert',
+                Title: 'Avklaringsskjema i bedrift - Signert',
                 VersionFormat: 'A'
               },
               ...p360Attachments

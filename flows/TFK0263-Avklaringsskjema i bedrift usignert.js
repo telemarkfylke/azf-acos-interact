@@ -80,7 +80,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200249', // Team fag-, yrkes- og voksenopplæring
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Referat fra veiledning i bedrift',
+            Title: 'Avklaringsskjema i bedrift',
             // UnofficialTitle: '',
             Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
