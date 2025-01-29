@@ -71,7 +71,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Referat fra veiledning i bedrift - Signert',
+                Title: 'Avklaringsskjema i bedrift - Signert',
                 VersionFormat: 'A'
               },
               ...p360Attachments
@@ -80,9 +80,9 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200249', // Team fag-, yrkes- og voksenopplæring
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Referat fra veiledning i bedrift - Signert',
+            Title: 'Avklaringsskjema i bedrift - Signert',
             // UnofficialTitle: '',
-            Archive: 'Elevdokument',
+            Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
