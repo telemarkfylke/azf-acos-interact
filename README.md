@@ -180,8 +180,8 @@ roomService er en egen timertrigger som kjører tre ganger om dagen. Den sjekker
     "ROBOT_EMAIL": "robot@domene.no",
     "TEAMS_WEBHOOK_URL": "teams webhook url",
     "ROOMSERVICE_TEAMS_WEBHOOK_URL": "webhook url for roomservice reports",
-    "PAPERTRAIL_HOST": "papertrail.example.com/v1/log", // optional. NODE_ENV must be production for logging to PaperTrail
-    "PAPERTRAIL_TOKEN": "jvkuvuyoufyofo8ygo8f609fo7ouyvcio7=" // optional
+    "BETTERSTACK_URL": "https://s1184125.eu-nbg-2.betterstackdata.com", // optional. NODE_ENV must be production for logging to betterstack
+    "BETTERSTACK_TOKEN": "GdSi2yNPWChYGBi9kmET9gbs" // optional
   }
 }
 ```
