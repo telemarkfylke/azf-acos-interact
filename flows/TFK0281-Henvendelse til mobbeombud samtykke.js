@@ -99,6 +99,7 @@ string InnsenderFnr
         }
       },
       getCaseParameter: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         return {
           ArchiveCode: flowStatus.syncPrivatePersonElev.result.privatePerson.ssn, // Checks for SSN match
           UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}` // Checks for case with this unofficial title
