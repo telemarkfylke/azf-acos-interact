@@ -1,4 +1,4 @@
-const description = 'Arkivering av henvendelse til mobbeombud. Skal opprettes en ny sak pr skjema'
+const description = 'Arkivering av henvendelse til mobbeombud.'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -96,6 +96,12 @@ string InnsenderFnr
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116',
             ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no'
           }
+        }
+      },
+      getCaseParameter: (flowStatus) => {
+        return {
+          ArchiveCode: flowStatus.syncPrivatePersonElev.result.privatePerson.ssn, // Checks for SSN match
+          UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}`, // Checks for case with this unofficial title
         }
       }
     }
