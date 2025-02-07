@@ -66,8 +66,8 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-485' : '24-3',
-            Title: `Søknad om tilskudd til trafikksikkerhetstiltak - Vegnummer: ${flowStatus.parseXml.result.Soknad.Type}`,
+            Project: nodeEnv === 'production' ? '25-182' : '24-3',
+            Title: 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet 2025',
             // UnofficialTitle: ,
             Status: 'B',
             JournalUnit: 'Sentralarkiv',
@@ -131,14 +131,14 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet 2024',
+                Title: 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet 2025',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: `Søknad om tilskudd til trafikksikkerhetstiltak - Vegnummer: ${flowStatus.parseXml.result.Soknad.Type}`,
+            Title: 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet 2025',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200018' : '200023', // Seksjon Vegforvaltning og transport
@@ -189,13 +189,13 @@ module.exports = {
     }
   },
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'Vegforvaltning og transport',
-          department: '',
+          company: 'Samferdsel',
+          department: 'Vegforvaltning og transport',
           description, // Required. A description of what the statistic element represents
           type: 'Tilskudd til trafikksikkerhetstiltak i nærmiljøet', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
