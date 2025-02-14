@@ -68,7 +68,7 @@ module.exports = {
             ],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '216024' : '200314',
             // ResponsiblePersonEmail: flowStatus.syncPrivatePerson.result.
-            AccessGroup: '' // Automatisk
+            AccessGroup: 'Studentmapper'
           }
         }
       }

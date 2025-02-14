@@ -1,4 +1,4 @@
-const description = 'Arkivering av Henvendelse til mobbeombud - samtykke. Skal opprettes en ny sak pr skjema'
+const description = 'Arkivering av Henvendelse til mobbeombud - samtykke.'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -54,7 +54,7 @@ string InnsenderFnr
           parameter: {
             CaseType: 'Ombud',
             Title: 'Elevsak',
-            UnofficialTitle: `Elevsak - Samtykke - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}`,
+            UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}`,
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
@@ -96,6 +96,13 @@ string InnsenderFnr
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116',
             ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no'
           }
+        }
+      },
+      getCaseParameter: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        return {
+          ArchiveCode: flowStatus.syncPrivatePersonElev.result.privatePerson.ssn, // Checks for SSN match
+          UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}` // Checks for case with this unofficial title
         }
       }
     }
