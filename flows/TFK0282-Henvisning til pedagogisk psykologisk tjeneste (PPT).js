@@ -29,7 +29,9 @@ module.exports = {
 
   // Arkiverer dokumentet i elevmappa
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: true,
+    enabled: flowStatus => {
+      return flowStatus.parseXml.result.ArchiveData.SkoleOrgNr !== '929882989' // Ekstern virksomhet - Arkivering settes til false
+    },
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
