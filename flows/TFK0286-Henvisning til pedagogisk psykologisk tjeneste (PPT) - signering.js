@@ -50,6 +50,7 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
+            AccessGroup: school.tilgangsgruppe,
             Category: 'Dokument inn',
             Contacts: [
               {

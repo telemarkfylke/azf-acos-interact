@@ -52,11 +52,17 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
+            AccessGroup: school.tilgangsgruppe,
             Category: 'Dokument ut',
             Contacts: [
               {
                 ReferenceNumber: xmlData.Fnr,
-                Role: 'Avsender',
+                Role: 'Kopi til',
+                IsUnofficial: true
+              },
+              {
+                ReferenceNumber: school.orgNr,
+                Role: 'Mottaker',
                 IsUnofficial: true
               }
             ],
