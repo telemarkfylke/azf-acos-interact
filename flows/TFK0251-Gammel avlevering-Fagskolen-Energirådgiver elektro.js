@@ -6,15 +6,15 @@ module.exports = {
     doNotRemoveBlobs: true
   },
   parseXml: {
-    enabled: false,
+    enabled: true,
     options: {
     }
   },
   groundControl: {
-    enabled: false // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
+    enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
   },
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData

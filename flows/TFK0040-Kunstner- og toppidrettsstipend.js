@@ -56,7 +56,7 @@ ArchiveData{
         } else if (flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend') {
           archiveTitle = ` Søknad om kunstnerstipend - ${xmlData.ForNavn}`
           publicTitle = 'Søknad om kunstnerstipend'
-          caseNumber = nodeEnv === 'production' ? '24/05842' : '24/00075'
+          caseNumber = nodeEnv === 'production' ? '25/04450' : '24/00075'
         } else {
           throw new Error('Kategori må være enten Toppidrettsstipend eller Kunstnerstipend')
         }
