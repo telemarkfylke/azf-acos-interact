@@ -31,7 +31,7 @@ module.exports = {
           parameter: {
             CaseType: 'Sak',
             // Project: nodeEnv === 'production' ? '24-485' : '24-3', // ?? Sjekk med Kristin Ekmann
-            Title: 'Godkjenning nytt samarbeidsorgan for lærebedrifter - navn på organet',
+            Title: `Godkjenning nytt samarbeidsorgan for lærebedrifter - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
             // UnofficialTitle: ,
             Status: 'B',
             JournalUnit: 'Sentralarkiv',
@@ -81,7 +81,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.fnr,
+                ReferenceNumber: xmlData.Fnr,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -103,7 +103,6 @@ module.exports = {
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200249', // Team fag-, yrkes- og voksenopplæring
-            // ResponsiblePersonEmail: 'aurora.bye.olsen@telemarkfylke.no', Skal denne være med?
             AccessCode: 'U',
             Paragraph: '',
             AccessGroup: 'Alle'
