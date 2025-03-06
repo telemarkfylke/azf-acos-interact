@@ -38,6 +38,10 @@ module.exports = {
     pfxPassphrase: process.env.SP_PFX_PASSPHRASE ?? null,
     pfxThumbprint: process.env.SP_PFX_THUMBPRINT ?? ''
   },
+  elevKontrakt: {
+    url: process.env.ELEVKONTRAKT_API_URL || 'url til elevkontrakt',
+    scope: process.env.ELEVKONTRAKT_API_SCOPE || 'skuuupet for elevkontrakt'
+  },
   nodeEnv: process.env.NODE_ENV ?? 'dev',
   robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
   roomServiceTeamsWebhook: process.env.ROOMSERVICE_TEAMS_WEBHOOK_URL ?? 'teams.com'
