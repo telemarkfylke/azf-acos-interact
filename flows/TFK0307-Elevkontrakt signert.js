@@ -1,6 +1,7 @@
 const description = 'Sender elevkontrakt signert til elevmappe'
-const { nodeEnv } = require('../config')
 const { postUpdateToElevkontrakt } = require('../lib/jobs/customJobs/elevkontrakt')
+const schoolInfo = require('../lib/data-sources/tfk-schools')
+
 module.exports = {
   config: {
     enabled: false,
@@ -16,7 +17,7 @@ module.exports = {
   customJobPostToMongoDB: {
     enabled: true,
     runAfter: 'parseXml',
-    options:{},
+    options: {},
     customJob: async (flowStatus) => {
       const result = await postUpdateToElevkontrakt(flowStatus)
       return result
@@ -76,7 +77,7 @@ module.exports = {
                 ReferenceNumber: xmlData.FnrForesatt,
                 Role: 'Avsender',
                 IsUnofficial: true
-              },
+              }
             ],
             DocumentDate: new Date().toISOString(),
             Files: [
@@ -117,9 +118,10 @@ module.exports = {
     enabled: false,
     options: {
       mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
-        if(flowStatus.parseXml.result.ArchiveData.isError === 'false') {
+        if (flowStatus.parseXml.result.ArchiveData.isError === 'false') {
           return {
             company: 'Skoleutvikling og folkehelse',
             department: !school ? 'Ukjent skole' : school.primaryLocation,
@@ -133,7 +135,7 @@ module.exports = {
             company: 'Skoleutvikling og folkehelse',
             department: !school ? 'Ukjent skole' : school.primaryLocation,
             description: 'Elevkontrakt signert - Error',
-            type: 'Elevkontrakt signert - Error', // Required. A short searchable type-name that distinguishes the statistic element
+            type: 'Elevkontrakt signert - Error' // Required. A short searchable type-name that distinguishes the statistic element
           }
         }
       }
