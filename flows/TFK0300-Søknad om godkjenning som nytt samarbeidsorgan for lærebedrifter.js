@@ -21,6 +21,17 @@ module.exports = {
       }
     }
   },
+  syncEnterprise: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
+        return {
+          orgnr: flowStatus.parseXml.result.ArchiveData.OrgNummer.replaceAll(' ', '')
+        }
+      }
+    }
+  },
   handleCase: {
     enabled: true,
     options: {
@@ -81,7 +92,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Fnr,
+                ReferenceNumber: xmlData.OrgNummer.replaceAll(' ', ''),
                 Role: 'Avsender',
                 IsUnofficial: false
               }
