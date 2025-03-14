@@ -41,7 +41,7 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '25-259' : '24-3', 
+            Project: nodeEnv === 'production' ? '25-259' : '24-3',
             Title: `Godkjenning nytt samarbeidsorgan for lærebedrifter - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
             // UnofficialTitle: ,
             Status: 'B',
