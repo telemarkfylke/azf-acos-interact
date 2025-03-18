@@ -31,6 +31,9 @@ module.exports = {
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
+      condition: (flowStatus) => { // Run archive only if isError === false.
+        return flowStatus.parseXml.result.ArchiveData.SkoleOrgNr !== '929882989'? true : false
+      },
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
