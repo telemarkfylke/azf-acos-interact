@@ -32,7 +32,7 @@ module.exports = {
     enabled: true,
     options: {
       condition: (flowStatus) => { // Run archive only if isError === false.
-        return flowStatus.parseXml.result.ArchiveData.SkoleOrgNr !== '929882989'? true : false
+        if (flowStatus.parseXml.result.ArchiveData.SkoleOrgNr !== '929882989') { return true } else { return false }
       },
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
