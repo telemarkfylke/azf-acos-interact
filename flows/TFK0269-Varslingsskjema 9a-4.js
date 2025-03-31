@@ -42,7 +42,7 @@ module.exports = {
   */
 
   /**
-   * Hva som brukes i denne flowen (det vi trenger fra skjemaet): 
+   * Hva som brukes i denne flowen (det vi trenger fra skjemaet):
    * krenketElevNavn
    * krenketElevFnr
    * skjemaInnsenderEpost
