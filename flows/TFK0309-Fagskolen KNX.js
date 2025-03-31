@@ -175,7 +175,10 @@ module.exports = {
               sistearbeidssted: xmlData.sistearbeidssted,
               fartstid: xmlData.ekstra1,
               oppstartmnd: xmlData.oppstartmnd,
-              samtykkeInfo: xmlData.samtykkeInfo
+              samtykkeInfo: xmlData.samtykkeInfo,
+              fakturareferanse: xmlData.ekstra2,
+              kontaktperson: xmlData.ekstra3,
+              fylke: xmlData.ekstra4
             }
           }
         ]

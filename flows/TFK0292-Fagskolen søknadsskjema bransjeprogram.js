@@ -169,7 +169,8 @@ module.exports = {
               annenUtdanning: xmlData.annenUtdanning,
               praksisFartstid: xmlData.praksisFartstid,
               samtykkeInfo: xmlData.samtykkeInfo,
-              oppstartsdato: xmlData.ekstra1
+              oppstartsdato: xmlData.ekstra1,
+              fylke: xmlData.ekstra2
             }
           }
         ]

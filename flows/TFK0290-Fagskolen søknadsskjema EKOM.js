@@ -175,7 +175,10 @@ module.exports = {
               stillingSoker: xmlData.stillingSoker,
               sisteArbeidsstedSoker: xmlData.sisteArbeidsstedSoker,
               fartstidSoker: xmlData.fartstidSoker,
-              samtykkeInfo: xmlData.samtykkeInfo
+              samtykkeInfo: xmlData.samtykkeInfo,
+              fakturareferanse: xmlData.ekstra1,
+              kontaktperson: xmlData.ekstra2,
+              fylke: xmlData.ekstra3
             }
           }
         ]
