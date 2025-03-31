@@ -41,6 +41,15 @@ module.exports = {
 
   */
 
+  /**
+   * Hva som brukes i denne flowen (det vi trenger fra skjemaet): 
+   * krenketElevNavn
+   * krenketElevFnr
+   * skjemaInnsenderEpost
+   * skjemaInnsenderNavn
+   * skjemaInnsenderSkole
+   * */
+
   // Arkivert som 9a-4 elvens navn
   syncPrivatePerson: {
     enabled: true,
