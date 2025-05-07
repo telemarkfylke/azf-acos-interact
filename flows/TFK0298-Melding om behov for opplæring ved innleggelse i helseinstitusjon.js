@@ -31,9 +31,9 @@ module.exports = {
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
-      condition: (flowStatus) => { // Run archive only if isError === false.
-        if (flowStatus.parseXml.result.ArchiveData.Egendefinert1) { return true } else { return false } // Skal kun til arkiv hvis sjekkboks er huket av
-      },
+      // condition: (flowStatus) => { // Run archive only if isError === false.
+      //   if (flowStatus.parseXml.result.ArchiveData.Egendefinert1) { return true } else { return false } // Skal kun til arkiv hvis sjekkboks er huket av
+      // },
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
