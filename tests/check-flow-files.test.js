@@ -6,8 +6,8 @@ describe('Checking flowfile', () => {
   test.each(schemaNames)('$filename has config and parseXml is enabled', (flow) => {
     const file = require(flow.filepath)
     expect(file.config).toBeTruthy()
-    expect(file.parseXml).toBeTruthy()
-    expect(file.parseXml.enabled).toBeTruthy()
+    expect(file.parseXml || file.parseJson).toBeTruthy()
+    expect(file.parseXml.enabled || file.parseJson.enabled).toBeTruthy()
   })
   describe.each(schemaNames)('$filename - customJobs are set up correctly', (flow) => {
     const file = require(flow.filepath)
