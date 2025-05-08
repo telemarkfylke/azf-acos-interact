@@ -49,9 +49,9 @@ Soknad {
         const xmlData = flowStatus.parseXml.result.Soknad
         let caseNumber
         if (flowStatus.parseXml.result.Soknad.Type === 'Tilskudd til idrettsarrangement') {
-          caseNumber = nodeEnv === 'production' ? '24/03961' : '24/00005'
+          caseNumber = nodeEnv === 'production' ? '25/11099' : '24/00005'
         } else if (flowStatus.parseXml.result.Soknad.Type === 'Tilskudd til regionale idrettsanlegg') {
-          caseNumber = nodeEnv === 'production' ? '24/03963' : '24/00006'
+          caseNumber = nodeEnv === 'production' ? '25/11290' : '24/00006'
         } else {
           throw new Error('Type tilskudd er feil eller har ikke kommet med')
         }
@@ -90,7 +90,7 @@ Soknad {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: `Søknad om fylkeskommunale midler til idrettsarrangement/anlegg 2024 – ${xmlData.ArrAnlNavn}`,
+            Title: `Søknad om fylkeskommunale midler til idrettsarrangement/anlegg 2025 – ${xmlData.ArrAnlNavn}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
@@ -136,8 +136,8 @@ Soknad {
               Epost: xmlData.Epost,
               Orgnr: xmlData.Orgnr,
               Kontonr: xmlData.Kontonr,
-              TypeTilskuddsordning: xmlData.Type
-              // _x00c5_rstall: xmlData.Aar
+              TypeTilskuddsordning: xmlData.Type,
+              _x00c5_rstall: new Date().getFullYear(),
             }
           }
         ]
