@@ -137,7 +137,7 @@ Soknad {
               Orgnr: xmlData.Orgnr,
               Kontonr: xmlData.Kontonr,
               TypeTilskuddsordning: xmlData.Type,
-              _x00c5_rstall: new Date().getFullYear(),
+              _x00c5_rstall: new Date().getFullYear()
             }
           }
         ]
