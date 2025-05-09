@@ -79,7 +79,7 @@ module.exports = {
             UnofficialTitle: `Melding om behov for opplæring ved innleggelse i helseinstitusjon -  ${xmlData.Fornavn} ${xmlData.Etternavn}`,
             Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber,
-            ResponsibleEnterpriseRecno: '200019' // Seksjon PPT, OT og alternative opplæringsarenaer
+            ResponsibleEnterpriseRecno: '200027' // Seksjon PPT, OT og alternative opplæringsarenaer
           }
         }
         return documentData
