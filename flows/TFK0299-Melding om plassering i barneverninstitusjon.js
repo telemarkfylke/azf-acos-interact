@@ -17,7 +17,8 @@ module.exports = {
     options: {
       condition: (flowStatus) => { // Run archive only if isError === false.
         if (flowStatus.parseXml.result.ArchiveData.Egendefinert1) { return true } else { return false } // Skal kun til arkiv hvis sjekkboks er huket av
-      },
+      }
+    }
   },
   // Synkroniser elevmappe
   syncElevmappe: {
