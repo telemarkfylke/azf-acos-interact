@@ -52,7 +52,7 @@ ArchiveData{
         if (flowStatus.parseXml.result.ArchiveData.Kategori === 'Toppidrettsstipend') {
           archiveTitle = `Søknad om idrettsstipend - ${xmlData.ForNavn}`
           publicTitle = 'Søknad om idrettsstipend'
-          caseNumber = nodeEnv === 'production' ? '24/05839' : '24/00074'
+          caseNumber = nodeEnv === 'production' ? '25/11502' : '24/00074'
         } else if (flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend') {
           archiveTitle = ` Søknad om kunstnerstipend - ${xmlData.ForNavn}`
           publicTitle = 'Søknad om kunstnerstipend'
@@ -100,7 +100,7 @@ ArchiveData{
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            ResponsiblePersonEmail: flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend' ? 'line.ruud.orslien@telemarkfylke.no' : 'marte.aksnes@telemarkfylke.no',
+            ResponsiblePersonEmail: flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend' ? 'line.ruud.orslien@telemarkfylke.no' : 'andreas.skogstad@telemarkfylke.no',
             AccessCode: '5',
             Paragraph: 'Offl. § 5',
             AccessGroup: 'Seksjon Kultur'
@@ -155,7 +155,7 @@ ArchiveData{
           company: 'Kultur',
           department: '',
           description, // Required. A description of what the statistic element represents
-          type: 'Kunstner- og toppidrettsstipend', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Toppidrettsstipend', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
