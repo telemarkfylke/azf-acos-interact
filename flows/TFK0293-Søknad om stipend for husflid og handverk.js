@@ -30,7 +30,7 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const archiveTitle = `Søknad om stipend for husflid og handverk 2025 - ${xmlData.ForNavn}`
         const publicTitle = 'Søknad om stipend for husflid og handverk 2025'
-        const caseNumber = nodeEnv === 'production' ? '24/22469' : '24/22469'
+        const caseNumber = nodeEnv === 'production' ? '25/11488' : '24/22469'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
