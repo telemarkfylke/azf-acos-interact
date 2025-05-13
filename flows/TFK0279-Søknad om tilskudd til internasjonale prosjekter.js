@@ -37,49 +37,49 @@ module.exports = {
       }
     }
   },
-  handleCase: {
-    enabled: true,
-    options: {
-      mapper: (flowStatus) => {
-        return {
-          service: 'CaseService',
-          method: 'CreateCase',
-          parameter: {
-            CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-357' : '24-1', // Dette er riktig for telemark
-            Title: `Søknad om tilskudd til internasjonale prosjekter - ${flowStatus.parseXml.result.ArchiveData.ProsjektNavn}`,
-            // UnofficialTitle: ,
-            Status: 'B',
-            JournalUnit: 'Sentralarkiv',
-            SubArchive: 'Sakarkiv',
-            ArchiveCodes: [
-              {
-                ArchiveCode: '223',
-                ArchiveType: 'FELLESKLASSE PRINSIPP',
-                Sort: 1
-              },
-              {
-                ArchiveCode: 'C50',
-                ArchiveType: 'FAGKLASSE PRINSIPP',
-                Sort: 2
-              }
-            ],
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
-            // ResponsiblePersonEmail: '',
-            AccessGroup: 'Alle'
-          }
-        }
-      }
-    }
-  },
+  // handleCase: {
+  //   enabled: true,
+  //   options: {
+  //     mapper: (flowStatus) => {
+  //       return {
+  //         service: 'CaseService',
+  //         method: 'CreateCase',
+  //         parameter: {
+  //           CaseType: 'Sak',
+  //           Project: nodeEnv === 'production' ? '24-357' : '24-1', // Dette er riktig for telemark
+  //           Title: `Søknad om tilskudd til internasjonale prosjekter - ${flowStatus.parseXml.result.ArchiveData.ProsjektNavn}`,
+  //           // UnofficialTitle: ,
+  //           Status: 'B',
+  //           JournalUnit: 'Sentralarkiv',
+  //           SubArchive: 'Sakarkiv',
+  //           ArchiveCodes: [
+  //             {
+  //               ArchiveCode: '223',
+  //               ArchiveType: 'FELLESKLASSE PRINSIPP',
+  //               Sort: 1
+  //             },
+  //             {
+  //               ArchiveCode: 'C50',
+  //               ArchiveType: 'FAGKLASSE PRINSIPP',
+  //               Sort: 2
+  //             }
+  //           ],
+  //           ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
+  //           // ResponsiblePersonEmail: '',
+  //           AccessGroup: 'Alle'
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
   // Arkiverer dokumentet i 360
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = flowStatus.handleCase.result.CaseNumber
-        // const caseNumber = nodeEnv === 'production' ? 'må fylles inn!' : '23/00115'
+        // const caseNumber = flowStatus.handleCase.result.CaseNumber
+        const caseNumber = nodeEnv === 'production' ? '25/11489' : '23/00115'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
