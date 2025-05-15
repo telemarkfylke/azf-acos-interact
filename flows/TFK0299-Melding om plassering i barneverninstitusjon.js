@@ -5,7 +5,7 @@ const description = 'Skjemaer arkiveres i P360 og sendes til ground control for 
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true,
@@ -112,7 +112,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            Status: 'J',
+            Status: 'M',
             Title: 'Melding om plassering i barneverninstitusjon',
             UnofficialTitle: `Melding om plassering i barneverninstitusjon - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
             Archive: 'Sensitivt elevdokument',

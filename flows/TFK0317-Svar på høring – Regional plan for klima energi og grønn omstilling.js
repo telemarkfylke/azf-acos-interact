@@ -78,7 +78,7 @@ module.exports = {
             ],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '237953' : '200027', // Seksjon Klima og næring. Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
             // ResponsiblePersonEmail: nodeEnv === 'production' ? 'kjersti.visnes.oksenholt@vestfoldfylke.no' : '',
-            Status: 'J',
+            Status: 'M',
             AccessCode: 'U',
 
             Title: 'Regional plan for klima energi og grønn omstilling - Høringsinnspill',
