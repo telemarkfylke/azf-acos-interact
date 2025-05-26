@@ -1,6 +1,6 @@
 {
   "name": "azf-acos-interact",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Handles forms from Acos",
   "scripts": {
     "start": "func start",
@@ -21,7 +21,7 @@
     "@types/jest": "^29.5.1",
     "azure-functions-core-tools": "^4.x",
     "jest": "^29.5.0",
-    "standard": "^17.0.0"
+    "standard": "^17.1.2"
   },
   "standard": {
     "env": [
