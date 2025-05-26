@@ -1,24 +1,22 @@
-const description = 'Sender elevkontrakt signert til elevmappe'
+const description = 'Sender Elevavtale signert til elevmappe'
 const { postUpdateToElevkontrakt } = require('../lib/jobs/customJobs/elevkontrakt')
-const schoolInfo = require('../lib/data-sources/tfk-schools')
+const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true,
-    options: {
-    }
   },
 
   // CustomJob post to mongoDB
   customJobPostToMongoDB: {
     enabled: true,
-    runAfter: 'parseXml',
+    runAfter: 'archive',
     options: {},
-    customJob: async (flowStatus) => {
+    customJob: async (jobDef, flowStatus) => {
       const result = await postUpdateToElevkontrakt(flowStatus)
       return result
     }
@@ -26,26 +24,32 @@ module.exports = {
 
   // Synkroniser elevmappe
   syncElevmappe: {
-    enabled: false,
+    enabled: true,
     options: {
-      condition: (flowStatus) => { // Run syncElevmappe only if isError === false.
-        return flowStatus.parseXml.result.ArchiveData.isError === 'false'
-      },
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
+          ssn: flowStatus.parseXml.result.ArchiveData.FnrElev
+        }
+      }
+    }
+  },
+  // Synkroniser foresatt
+  syncPrivatePerson: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
+        return {
+          ssn: flowStatus.parseXml.result.ArchiveData.FnrForesatt
         }
       }
     }
   },
   // Arkiverer dokumentet i elevmappa
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: false,
+    enabled: true,
     options: {
-      condition: (flowStatus) => { // Run archive only if isError === false.
-        return flowStatus.parseXml.result.ArchiveData.isError === 'false'
-      },
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
@@ -86,7 +90,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Elevkontrakt - Usignert',
+                Title: 'Elevavtale - Usignert',
                 VersionFormat: 'A'
               },
               ...p360Attachments
@@ -95,9 +99,9 @@ module.exports = {
             ResponsibleEnterpriseNumber: xmlData.SkoleOrgNr,
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Elevkontrakt - Usignert',
+            Title: 'Elevavtale - Usignert',
             // UnofficialTitle: '',
-            Archive: 'Sensitivt elevdokument',
+            Archive: 'Elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
@@ -115,7 +119,7 @@ module.exports = {
   },
 
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
@@ -126,7 +130,7 @@ module.exports = {
             company: 'Skoleutvikling og folkehelse',
             department: !school ? 'Ukjent skole' : school.primaryLocation,
             description,
-            type: 'Elevkontrakt signert', // Required. A short searchable type-name that distinguishes the statistic element
+            type: 'Elevavtale signert', // Required. A short searchable type-name that distinguishes the statistic element
             // optional fields:
             documentNumber: flowStatus.archive?.result?.DocumentNumber
           }
@@ -134,8 +138,8 @@ module.exports = {
           return {
             company: 'Skoleutvikling og folkehelse',
             department: !school ? 'Ukjent skole' : school.primaryLocation,
-            description: 'Elevkontrakt signert - Error',
-            type: 'Elevkontrakt signert - Error' // Required. A short searchable type-name that distinguishes the statistic element
+            description: 'Elevavtale signert - Error',
+            type: 'Elevavtale signert - Error' // Required. A short searchable type-name that distinguishes the statistic element
           }
         }
       }
