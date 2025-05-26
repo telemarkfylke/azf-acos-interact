@@ -20,7 +20,7 @@ module.exports = {
       // This job will post the flowStatus to the elevkontrakt API.
       const result = await postToElevkontrakt(flowStatus)
       return result
-    },
+    }
   },
 
   // Synkroniser elevmappe
