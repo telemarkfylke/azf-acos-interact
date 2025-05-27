@@ -14,7 +14,7 @@ module.exports = {
   // CustomJob post to mongoDB
   customJobPostToMongoDB: {
     enabled: true,
-    runAfter: 'archive', // Run this job after archive has run.
+    runAfter: 'parseXml', // Run this job after parseXml has run.
     options: {},
     customJob: async (jobDef, flowStatus) => {
       // This job will post the flowStatus to the elevkontrakt API.
@@ -25,7 +25,7 @@ module.exports = {
 
   // Synkroniser elevmappe
   syncElevmappe: {
-    enabled: true,
+    enabled: false,
     options: {
       condition: (flowStatus) => { // Run syncElevmappe only if isError === false.
         return flowStatus.parseXml.result.ArchiveData.isError === 'false'
@@ -40,7 +40,7 @@ module.exports = {
   },
   // Synkroniser foresatt
   syncPrivatePerson: {
-    enabled: true,
+    enabled: false,
     options: {
       condition: (flowStatus) => { // Run syncElevmappe only if isError === false.
         return flowStatus.parseXml.result.ArchiveData.isError === 'false' && flowStatus.parseXml.result.ArchiveData.FnrForesatt !== ''
@@ -55,7 +55,7 @@ module.exports = {
   },
   // Arkiverer dokumentet i elevmappa
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: true,
+    enabled: false, // This is disabled because we are not archiving the document in this flow.
     options: {
       condition: (flowStatus) => { // Run archive only if isError === false.
         return flowStatus.parseXml.result.ArchiveData.isError === 'false'
