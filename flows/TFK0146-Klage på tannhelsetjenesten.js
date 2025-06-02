@@ -43,14 +43,14 @@ module.exports = {
             SubArchive: 'Pasientbehandling',
             ArchiveCodes: [
               {
-                ArchiveCode: 'G40',
-                ArchiveType: 'FAGKLASSE PRINSIPP',
-                Sort: 1
-              },
-              {
                 ArchiveCode: xmlData.Fnr, // xmlData.ElevFnr,
                 ArchiveType: 'FNR',
                 IsManualText: true,
+                Sort: 1
+              },
+              {
+                ArchiveCode: 'G40',
+                ArchiveType: 'FAGKLASSE PRINSIPP',
                 Sort: 2
               }
             ],
