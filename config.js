@@ -42,6 +42,10 @@ module.exports = {
     url: process.env.ELEVKONTRAKT_API_URL || 'url til elevkontrakt',
     scope: process.env.ELEVKONTRAKT_API_SCOPE || 'skuuupet for elevkontrakt'
   },
+  smtpeter: {
+    xFunctionsKey: process.env.SMTPETER_MAIL_X_FUNCTIONS_KEY,
+    url: process.env.SMTPETER_MAIL_URL,
+  },
   nodeEnv: process.env.NODE_ENV ?? 'dev',
   robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
   roomServiceTeamsWebhook: process.env.ROOMSERVICE_TEAMS_WEBHOOK_URL ?? 'teams.com'
