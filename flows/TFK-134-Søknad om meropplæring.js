@@ -5,7 +5,7 @@ const { sendEmail } = require('../lib/jobs/customJobs/sendemail')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,
@@ -44,14 +44,14 @@ module.exports = {
         const subject = "Ny søknad om mer opplæring"
         const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
         if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Skole") {
-          console.log('Sending email to skole')
-          //emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
+          //console.log('Sending email to skole')
+          emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
         } else if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Fagopplæring") {
-          console.log('Sending email to fagopplæring')
-          //emailTo.push("fagopplering@telemarkfylke.no")
+          //console.log('Sending email to fagopplæring')
+          emailTo.push("fagopplering@telemarkfylke.no")
         } else if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Voksenopplæring") {
-          console.log('Sending email to voksenopplæring')
-          //emailTo.push("voksenoppleringen@telemarkfylke.no")
+          //console.log('Sending email to voksenopplæring')
+          emailTo.push("voksenoppleringen@telemarkfylke.no")
         } else {
           console.log('Noe gikk galt, Ingen av valgene stemmer')
         }
