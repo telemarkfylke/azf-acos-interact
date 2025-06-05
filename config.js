@@ -44,7 +44,7 @@ module.exports = {
   },
   smtpeter: {
     xFunctionsKey: process.env.SMTPETER_MAIL_X_FUNCTIONS_KEY,
-    url: process.env.SMTPETER_MAIL_URL,
+    url: process.env.SMTPETER_MAIL_URL
   },
   nodeEnv: process.env.NODE_ENV ?? 'dev',
   robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
