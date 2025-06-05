@@ -40,7 +40,7 @@ module.exports = {
     runAfter: 'syncElevmappe',
     options: {},
     customJob: async (jobDef, flowStatus) => {
-      const emailTo = ['tom.jarle.christiansen@telemarkfylke.no']
+      const emailTo = []
       const subject = 'Ny søknad om mer opplæring'
       const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
       if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Skole') {
@@ -104,10 +104,10 @@ module.exports = {
             Title: 'Søknad om meropplæring',
             Archive: 'Sensitivt elevdokument',
             CaseNumber: caseNumber,
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200471' : '200250', // Team Inntak
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200250',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            AccessGroup: 'Elev Inntak'
+            AccessGroup: 'Fagopplæringg'
           }
         }
       }
