@@ -40,21 +40,21 @@ module.exports = {
     runAfter: 'syncElevmappe',
     options: {},
     customJob: async (jobDef, flowStatus) => {
-        let emailTo = ["tom.jarle.christiansen@telemarkfylke.no"]
-        const subject = "Ny søknad om mer opplæring"
-        const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
-        if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Skole") {
-          //console.log('Sending email to skole')
-          emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
-        } else if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Fagopplæring") {
-          //console.log('Sending email to fagopplæring')
-          emailTo.push("fagopplering@telemarkfylke.no")
-        } else if(flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === "Voksenopplæring") {
-          //console.log('Sending email to voksenopplæring')
-          emailTo.push("voksenoppleringen@telemarkfylke.no")
-        } else {
-          console.log('Noe gikk galt, Ingen av valgene stemmer')
-        }
+      const emailTo = ['tom.jarle.christiansen@telemarkfylke.no']
+      const subject = 'Ny søknad om mer opplæring'
+      const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
+      if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Skole') {
+        // console.log('Sending email to skole')
+        emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
+      } else if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Fagopplæring') {
+        // console.log('Sending email to fagopplæring')
+        emailTo.push('fagopplering@telemarkfylke.no')
+      } else if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Voksenopplæring') {
+        // console.log('Sending email to voksenopplæring')
+        emailTo.push('voksenoppleringen@telemarkfylke.no')
+      } else {
+        console.log('Noe gikk galt, Ingen av valgene stemmer')
+      }
       const result = await sendEmail(emailTo, subject, body)
       return result
     }
@@ -125,7 +125,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        //const xmlData = flowStatus.parseXml.result.ArchiveData
+        // const xmlData = flowStatus.parseXml.result.ArchiveData
         const jsonData = flowStatus.parseJson.result.SavedValues
         // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
