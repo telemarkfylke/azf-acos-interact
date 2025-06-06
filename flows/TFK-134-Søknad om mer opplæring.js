@@ -157,7 +157,7 @@ module.exports = {
               Sted: jsonData.Login.PostalArea,
               _x00d8_nske: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op,
               Skole: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Skole,
-              Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1e1.Fag_det_ønskes_,
+              Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Fag_det_ønskes_,
               SkoleEpost: jsonData.Dataset.Skole.Epost,
               Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Fagopplæring,
               Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Voksenopplæring,
