@@ -46,8 +46,8 @@ module.exports = {
       recnoFagopplering = null
       tilgangsgruppe = null
       const emailTo = []
-      const subject = 'Ny søknad om mer opplæring'
-      const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
+      const subject = 'Kvittering - Ny søknad om mer opplæring'
+      const body = `Til orientering<br>Du har fått en ny søknad om mer opplæring.<br>Du finner søknaden i P360. Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}<br>Mer om saksbehanling finner du på innsida: <a href="https://telemarkfylke.sharepoint.com/sites/Min-arbeidshverdag/SitePages/Mer-oppl%C3%A6ring.aspx?csf=1&web=1&e=DWZOzR&CID=c31b6df8-34a0-4fac-b13a-7ccd25e3cca9&xsdata=MDV8MDJ8fDU0MmVlMWRmODEwNzRjNWI5ODQzMDhkZGE0MmNlNDAwfGQ2NDQwOGVlY2U1MjRhMDg5N2ZmNjU4YzAyY2NmNzdifDB8MHw2Mzg4NDcyMzQ4NjcyMzg5Nzl8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPak0yTlRaak9UZ3pMV000TlRrdE5HRTRaUzFoTm1GbExXUTNNRFE0WWpKbU9HUTNZMTlpWVdRMVpqWmpPUzB4TUdFMExUUmhNelF0T0RObE9DMWhPVEJsTlRWaVpHTTBOalJBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVGMwT1RFeU5qWXhNVGN6Tnc9PXw1MDU4MDhlOTNlMDc0MmNiOTg0MzA4ZGRhNDJjZTQwMHw3ZWFiOGNmYTY4ZmE0ZjA2ODhmN2U2Njc0NDk5MmFiNg%3D%3D&sdata=SWowamRYNGF1R1FtMW0rZUdwWTB1aVVwaDVqMFFlT0pDTVhTeHhoNkNRbz0%3D&ovuser=d64408ee-ce52-4a08-97ff-658c02ccf77b%2Ctom.jarle.christiansen%40telemarkfylke.no&OR=Teams-HL&CT=1749204981627&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiI1MC8yNTA2MDIwNjYwMSIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D">Mer opplæring</a><br><br>Med vennlig hilsen<br>Telemark fylkeskommune`
       if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Skole') {
         if (flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost === 'ranveig.gule@telemarkfylke.no') {
           emailTo.push('ranveig.gule@telemarkfylke.no')
