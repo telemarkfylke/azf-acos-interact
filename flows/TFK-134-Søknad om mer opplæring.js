@@ -2,6 +2,9 @@ const description = 'Søknad om mer opplæring'
 const { nodeEnv } = require('../config')
 const { sendEmail } = require('../lib/jobs/customJobs/sendemail')
 
+let recnoFagopplering = null
+let tilgangsgruppe = null
+
 module.exports = {
   config: {
     enabled: true,
@@ -40,18 +43,28 @@ module.exports = {
     runAfter: 'syncElevmappe',
     options: {},
     customJob: async (jobDef, flowStatus) => {
+      recnoFagopplering = null
+      tilgangsgruppe = null
       const emailTo = []
       const subject = 'Ny søknad om mer opplæring'
       const body = `Hei, <br><br>Du har fått en ny søknad om mer opplæring.<br><br>Følgende informasjon er sendt inn:<br> Saksnummer: ${flowStatus.syncElevmappe.result.elevmappe.CaseNumber}`
       if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Skole') {
-        // console.log('Sending email to skole')
-        emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
+        if (flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost === 'ranveig.gule@telemarkfylke.no') {
+          emailTo.push('ranveig.gule@telemarkfylke.no')
+          tilgangsgruppe = 'Elev Inntak'
+        } else {
+          emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
+          tilgangsgruppe = `Elev ${flowStatus.parseJson.result.SavedValues.Dataset.Skole.kolonne1}`
+        }
+        console.log(`Tilgangsgruppe satt til: ${tilgangsgruppe}`)
       } else if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Fagopplæring') {
-        // console.log('Sending email to fagopplæring')
         emailTo.push('fagopplering@telemarkfylke.no')
+        recnoFagopplering = nodeEnv === 'production' ? '200472' : '200249' // Fagopplæring recno
+        tilgangsgruppe = 'Fagopplæring'
       } else if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Voksenopplæring') {
-        // console.log('Sending email to voksenopplæring')
         emailTo.push('voksenoppleringen@telemarkfylke.no')
+        recnoFagopplering = nodeEnv === 'production' ? '200472' : '200249' // Fagopplæring recno
+        tilgangsgruppe = 'Voksenopplæring'
       } else {
         console.log('Noe gikk galt, Ingen av valgene stemmer')
       }
@@ -64,7 +77,6 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        // const xmlData = flowStatus.parseXml.result.ArchiveData
         const caseNumber = flowStatus.syncElevmappe.result.elevmappe.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -101,13 +113,14 @@ module.exports = {
             ],
             Status: 'J',
             UnofficialTitle: 'Søknad om mer opplæring',
-            Title: 'Søknad om meropplæring',
+            Title: 'Søknad om mer opplæring',
             Archive: 'Sensitivt elevdokument',
             CaseNumber: caseNumber,
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200472' : '200250',
+            ResponsibleEnterpriseRecno: recnoFagopplering,
+            ResponsibleEnterpriseNumber: flowStatus.parseJson.result.SavedValues.Dataset.Skole.OrgNr,
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            AccessGroup: 'Fagopplæringg'
+            AccessGroup: tilgangsgruppe
           }
         }
       }
@@ -148,7 +161,8 @@ module.exports = {
               Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Fag_det_ønskes_,
               SkoleEpost: jsonData.Dataset.Skole.Epost,
               Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Fagopplæring,
-              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Voksenopplæring
+              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Voksenopplæring,
+              Saksnummer: flowStatus.syncElevmappe.result.elevmappe.CaseNumber
             }
           }
         ]
@@ -165,7 +179,7 @@ module.exports = {
           company: 'Fagopplæring', // Required. The name of the company
           department: '',
           description, // Required. A description of what the statistic element represents
-          type: 'Søknad om meropplæring ', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Søknad om mer opplæring ', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
