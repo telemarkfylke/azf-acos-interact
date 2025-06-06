@@ -56,7 +56,6 @@ module.exports = {
           emailTo.push(flowStatus.parseJson.result.SavedValues.Dataset.Skole.Epost)
           tilgangsgruppe = `Elev ${flowStatus.parseJson.result.SavedValues.Dataset.Skole.kolonne1}`
         }
-        console.log(`Tilgangsgruppe satt til: ${tilgangsgruppe}`)
       } else if (flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op === 'Fagopplæring') {
         emailTo.push('fagopplering@telemarkfylke.no')
         recnoFagopplering = nodeEnv === 'production' ? '200472' : '200249' // Fagopplæring recno
@@ -157,11 +156,11 @@ module.exports = {
               Postnr: jsonData.Login.PostalCode,
               Sted: jsonData.Login.PostalArea,
               _x00d8_nske: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_har_hatt_op,
-              Skole: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Skole,
-              Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Fag_det_ønskes_,
+              Skole: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Skole,
+              Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1e1.Fag_det_ønskes_,
               SkoleEpost: jsonData.Dataset.Skole.Epost,
-              Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Fagopplæring,
-              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skolegruppe1.Voksenopplæring,
+              Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Fagopplæring,
+              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Voksenopplæring,
               Saksnummer: flowStatus.syncElevmappe.result.elevmappe.CaseNumber
             }
           }
