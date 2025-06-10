@@ -10,7 +10,7 @@ module.exports = {
   parseJson: {
     enabled: true,
     options: {
-       mapper: (dialogueData) => {
+      mapper: (dialogueData) => {
         return {
         }
       }
