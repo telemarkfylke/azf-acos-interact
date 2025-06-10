@@ -1,4 +1,4 @@
-const description = 'Sender Elevavtale signert til elevmappe'
+// const description = 'Sender Elevavtale signert til elevmappe'
 const { postUpdateToElevkontraktNewAcos, postToElevKontraktNewAcos } = require('../lib/jobs/customJobs/elevkontrakt')
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 
