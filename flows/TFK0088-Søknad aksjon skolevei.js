@@ -76,7 +76,7 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-927' : '24-2',
+            Project: nodeEnv === 'production' ? '25-470' : '24-2',
             Title: `Søknad om midler til Aksjon skolevei - ${xmlData.Prosjektnavn}`,
             // UnofficialTitle: ,
             Status: 'B',
