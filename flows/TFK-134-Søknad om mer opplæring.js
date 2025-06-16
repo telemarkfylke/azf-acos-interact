@@ -8,7 +8,7 @@ let tilgangsgruppe = null
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseJson: {
     enabled: true,
@@ -159,8 +159,8 @@ module.exports = {
               Skole: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Skole,
               Skolefag: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Fag_det_ønskes_,
               SkoleEpost: jsonData.Dataset.Skole.Epost,
-              Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Fagopplæring,
-              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Skole1.Voksenopplæring,
+              Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_ønsker_mer_.Fagopplæring1,
+              Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Voksenopplæring.VO_fag,
               Saksnummer: flowStatus.syncElevmappe.result.elevmappe.CaseNumber
             }
           }
