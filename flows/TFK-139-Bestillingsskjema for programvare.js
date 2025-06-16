@@ -33,8 +33,8 @@ module.exports = {
               H_x00e5_ndtererl_x00f8_sningenka: true,
               H_x00e5_ndtererl_x00f8_sningenel: jsonData.Informasjon_om_.Tjenesten_skal_.Håndterer_løsni1,
               H_x00e5_ndtererl_x00f8_sningenvu: jsonData.Informasjon_om_.Tjenesten_skal_.Håndterer_løsni2,
-              Godkjenning_leder: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_nærmest,
-             // Antattkostnad: jsonData.Informasjon_om_.Annen_informasj.Antatt_kostnad,
+              Godkjenning_leder: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_nærmest
+              // Antattkostnad: jsonData.Informasjon_om_.Annen_informasj.Antatt_kostnad,
             }
           }
         ]
