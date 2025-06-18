@@ -29,7 +29,7 @@ module.exports = {
       <h3>Nytt ønske om programvare</h3>
       <p>Til orientering,</p>
       <p>Det har kommet inn et nytt ønske om programvaren: <strong>${jsonData.Informasjon_om_.Informasjon_om_.Navn_på_system}</strong></p>
-      <p>Du finner mer informasjon i <a href="https://telemarkfylke.sharepoint.com/sites/innsida-stottefunksjoner/Lists/Programvareoversikt/MaaFyllesUt.aspx">programvareoversikten</a>.</p>
+      <p>Du finner mer informasjon i <a href="https://telemarkfylke.sharepoint.com/sites/innsida-stottefunksjoner/Lists/Programvareoversikt/MaaFyllesUt.aspx?viewid=feab8433%2D5fca%2D4c5c%2D96d0%2Dea24258a3ea7&ovuser=d64408ee%2Dce52%2D4a08%2D97ff%2D658c02ccf77b%2Ctom%2Ejarle%2Echristiansen%40telemarkfylke%2Eno&OR=Teams%2DHL&CT=1750249709144&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiI1MC8yNTA2MDUxNzYwNSIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D">programvareoversikten</a>.</p>
       <br>
       <p>Med vennlig hilsen,<br>
       Den automagiske programvarebestillingsepostvarslebotten</p>
