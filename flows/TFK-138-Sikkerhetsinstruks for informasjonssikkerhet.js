@@ -27,70 +27,71 @@ module.exports = {
       }
     }
   },
-  handleCase: {
-    enabled: true,
-    options: {
-      getCaseParameter: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        if (!personData?.Fødselsnummer1) {
-          throw new Error('Mangler: Fødselsnummer1')
-        }
-        return {
-          Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet', // check for existing case with this title
-          ArchiveCode: personData.Fødselsnummer1
-        }
-      },
-      mapper: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        if (!personData?.Fødselsnummer1 || !personData?.Fornavn1 || !personData?.Etternavn1) {
-          throw new Error('Mangler: Fødselsnummer1, Fornavn1, eller Etternavn1')
-        }
-        return {
-          service: 'CaseService',
-          method: 'CreateCase',
-          parameter: {
-            CaseType: 'Personal',
-            Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet',
-            UnofficialTitle: `Samtykke for sikkerhetsinstruks for informasjonssikkerhet - ${personData.Fornavn1} ${personData.Etternavn1}`,
-            Status: 'B',
-            AccessCode: '13',
-            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            JournalUnit: 'Sentralarkiv',
-            SubArchive: 'Personal',
-            ArchiveCodes: [
-              {
-                ArchiveCode: '400',
-                ArchiveType: 'FELLESKLASSE PRINSIPP',
-                Sort: 2
-              },
-              {
-                ArchiveCode: personData.Fødselsnummer1,
-                ArchiveType: 'FNR',
-                Sort: 1,
-                IsManualText: true
-              }
-            ],
-            Contacts: [
-              {
-                Role: 'Sakspart',
-                ReferenceNumber: personData.Fødselsnummer1,
-                IsUnofficial: true
-              }
-            ],
-            ResponsibleEnterpriseRecno: '200011', // flowStatus.syncEmployee.result.responsibleEnterprise.recno,
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
-            AccessGroup: '' // Automatisk
-          }
-        }
-      }
-    }
-  },
+  // handleCase: {
+  //   enabled: true,
+  //   options: {
+  //     getCaseParameter: (flowStatus) => {
+  //       const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
+  //       if (!personData?.Fødselsnummer1) {
+  //         throw new Error('Mangler: Fødselsnummer1')
+  //       }
+  //       return {
+  //         Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet', // check for existing case with this title
+  //         ArchiveCode: personData.Fødselsnummer1
+  //       }
+  //     },
+  //     mapper: (flowStatus) => {
+  //       const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
+  //       if (!personData?.Fødselsnummer1 || !personData?.Fornavn1 || !personData?.Etternavn1) {
+  //         throw new Error('Mangler: Fødselsnummer1, Fornavn1, eller Etternavn1')
+  //       }
+  //       return {
+  //         service: 'CaseService',
+  //         method: 'CreateCase',
+  //         parameter: {
+  //           CaseType: 'Personal',
+  //           Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet',
+  //           UnofficialTitle: `Samtykke for sikkerhetsinstruks for informasjonssikkerhet - ${personData.Fornavn1} ${personData.Etternavn1}`,
+  //           Status: 'B',
+  //           AccessCode: '13',
+  //           Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+  //           JournalUnit: 'Sentralarkiv',
+  //           SubArchive: 'Personal',
+  //           ArchiveCodes: [
+  //             {
+  //               ArchiveCode: '400',
+  //               ArchiveType: 'FELLESKLASSE PRINSIPP',
+  //               Sort: 2
+  //             },
+  //             {
+  //               ArchiveCode: personData.Fødselsnummer1,
+  //               ArchiveType: 'FNR',
+  //               Sort: 1,
+  //               IsManualText: true
+  //             }
+  //           ],
+  //           Contacts: [
+  //             {
+  //               Role: 'Sakspart',
+  //               ReferenceNumber: personData.Fødselsnummer1,
+  //               IsUnofficial: true
+  //             }
+  //           ],
+  //           ResponsibleEnterpriseRecno: '200011', // flowStatus.syncEmployee.result.responsibleEnterprise.recno,
+  //           // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+  //           AccessGroup: '' // Automatisk
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
   archive: {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        const caseNumber = flowStatus.handleCase.result.CaseNumber
+        // const caseNumber = flowStatus.handleCase.result.CaseNumber
+        const caseNumber = '25/12930' // Felles samlesak for sikkerhetsinstruks for informasjonssikkerhet
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -138,7 +139,7 @@ module.exports = {
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             Status: 'J',
             Title: 'Sikkerhetsinstruks for informasjonssikkerhet',
-            Archive: 'Personaldokument',
+            Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
         }
