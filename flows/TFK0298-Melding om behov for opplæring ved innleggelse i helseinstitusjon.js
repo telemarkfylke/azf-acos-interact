@@ -17,6 +17,18 @@ module.exports = {
   groundControl: {
     enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
   },
+
+  syncPrivatePerson: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
+        return {
+          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
+        }
+      }
+    }
+  },
   handleCase: {
     enabled: true,
     options: {
