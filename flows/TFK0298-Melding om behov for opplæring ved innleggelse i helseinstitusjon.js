@@ -1,5 +1,4 @@
 const { nodeEnv } = require('../config')
-const { syncElevmappe } = require('./TFK-136-Elevavtale - leieavtale')
 
 const description = 'Skjemaer arkiveres i P360 og sendes til ground control for videre behandling'
 // const { nodeEnv } = require('../config')
