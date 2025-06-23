@@ -1,4 +1,5 @@
 const { nodeEnv } = require('../config')
+const { syncElevmappe } = require('./TFK-136-Elevavtale - leieavtale')
 
 const description = 'Skjemaer arkiveres i P360 og sendes til ground control for videre behandling'
 // const { nodeEnv } = require('../config')
@@ -18,13 +19,24 @@ module.exports = {
     enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
   },
 
+  syncElevmappe: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
+        return {
+          ssn: flowStatus.parseXml.result.ArchiveData.Fnr // Fnr til den det gjelder (Elev)s
+        }
+      }
+    }
+  },
   syncPrivatePerson: {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
+          ssn: flowStatus.parseXml.result.ArchiveData.Egendefinert2 // Fnr til foresatt
         }
       }
     }
