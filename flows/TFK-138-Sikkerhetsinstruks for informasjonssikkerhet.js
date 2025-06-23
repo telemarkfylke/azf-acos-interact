@@ -106,7 +106,7 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            // AccessGroup: '', Automatisk tilgangsgruppe
+            AccessGroup: 'Seksjon Digitale tjenester',
             Category: 'Dokument inn',
             Contacts: [
               {
