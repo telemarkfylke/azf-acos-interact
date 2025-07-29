@@ -116,7 +116,7 @@ module.exports = {
             Archive: 'Sensitivt elevdokument',
             CaseNumber: caseNumber,
             ResponsibleEnterpriseRecno: recnoFagopplering,
-            ResponsibleEnterpriseNumber: flowStatus.parseJson.result.SavedValues.Dataset.Skole.OrgNr,
+            ResponsibleEnterpriseNumber: recnoFagopplering ? '' : flowStatus.parseJson.result.SavedValues.Dataset.Skole.OrgNr, // Test for at ikke enterprise og Recno begge fylles ut
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             AccessGroup: tilgangsgruppe
