@@ -19,8 +19,8 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Vegdata/Lists/Prosjektoversikt%20til%20geodata/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Vegdata/Lists/Prosjektoversikt%20til%20geodata/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Samferdselsektorteam/Lists/Prosjektoversikt%20til%20geodata/Allitems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Samferdselsektorteam/Lists/Prosjektoversikt%20til%20geodata/Allitems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
