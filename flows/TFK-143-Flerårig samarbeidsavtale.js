@@ -115,7 +115,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: '200028',
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             Status: 'J',
-            Title: `Flerårig samarbeidsavtale - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
+            Title: `Søknad om flerårige samarbeidsavtaler på kulturfeltet - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
