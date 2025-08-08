@@ -1,10 +1,10 @@
-const description = 'Sikkerhetsinstruks for informasjonssikkerhet'
+const description = 'Flerårig samarbeidsavtale'
 const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,
