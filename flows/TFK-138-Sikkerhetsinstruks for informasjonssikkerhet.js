@@ -151,7 +151,7 @@ module.exports = {
   },
 
   closeCase: { // handleCase må kjøres for å kunne kjøre closeCase
-    enabled: true
+    enabled: false
   },
 
   statistics: {
