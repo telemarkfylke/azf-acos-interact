@@ -85,10 +85,15 @@ module.exports = {
           parameter: {
             AccessCode: '13',
             AccessGroup: school.tilgangsgruppe,
-            Category: 'Dokument ut',
+            Category: 'Dokument inn',
             Contacts: [ // Her vil alltid avsender være eleven, men mottaker kan være enten eleven (over 18) eller en foresatt (for elev under 18)
               {
                 ReferenceNumber: jsonData.DialogueInstance.Informasjon_om_.Privatperson.Fødselsnummer1,
+                Role: 'Kopi til',
+                IsUnofficial: true
+              },
+              {
+                ReferenceNumber: school.orgNr,
                 Role: 'Mottaker',
                 IsUnofficial: true
               },
