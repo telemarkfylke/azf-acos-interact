@@ -46,6 +46,13 @@ module.exports = {
     xFunctionsKey: process.env.SMTPETER_MAIL_X_FUNCTIONS_KEY,
     url: process.env.SMTPETER_MAIL_URL
   },
+  fintfolk: {
+    baseUrl: process.env.FINTFOLK_BASE_URL,
+    clientId: process.env.FINTFOLK_CLIENT_ID,
+    clientSecret: process.env.FINTFOLK_CLIENT_SECRET,
+    scope: process.env.FINTFOLK_SCOPE,
+    tenantId: process.env.FINTFOLK_TENANT_ID
+  },
   nodeEnv: process.env.NODE_ENV ?? 'dev',
   robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
   roomServiceTeamsWebhook: process.env.ROOMSERVICE_TEAMS_WEBHOOK_URL ?? 'teams.com'
