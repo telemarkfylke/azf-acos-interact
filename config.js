@@ -27,6 +27,7 @@ module.exports = {
   },
   graph: {
     url: process.env.GRAPH_URL || 'tullballfinnessikkertikkeeleer.sharepoint.com',
+    urlBeta: process.env.GRAPH_URL_BETA || 'tullballfinnessikkertikkeeleer.sharepoint.com',
     scope: process.env.GRAPH_SCOPE ?? 'etSkikkeligSkuup'
   },
   sharepointCredentials: {
