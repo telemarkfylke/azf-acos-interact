@@ -1,6 +1,14 @@
 const description = 'Sikkerhetsinstruks for informasjonssikkerhet'
 const { isPolitician } = require('../lib/jobs/customJobs/sikkerhetsinstruks')
-let vanligAnsatt
+
+// Logikk - Sikkerhetsinstruks for informasjonssikkerhet
+// Hvis politiker/folkevalgt - Arkiver i samlesak 25/12930
+// Hvis Lærer/ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
+// Andre ansatte - Arkiver i personalmappa
+
+// 1. Sync employee og sjekk om person er ansatt eller folkevalgt. Hvis folkevalgt arkiver i samlesak 22/12930
+// 2. Hvis ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
+// 3. Hvis andre ansatte - Arkiver i personalmappa
 
 module.exports = {
   config: {
@@ -24,28 +32,13 @@ module.exports = {
     customJob: async (jobDef, flowStatus) => {
       const result = await isPolitician(flowStatus)
       console.log('Is politician:', result)
-      if (result === true) {
-        vanligAnsatt = false // Skrur av syncEmployee og handleCase
-      } else {
-        vanligAnsatt = true
-      }
-      console.log('Vanlig ansatt:', vanligAnsatt)
       return result
     }
   },
-  // Logikk - Sikkerhetsinstruks for informasjonssikkerhet
-  // Hvis politiker/folkevalgt - Arkiver i samlesak 25/12930
-  // Hvis Lærer/ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
-  // Andre ansatte - Arkiver i personalmappa
-
-  // 1. Sync employee og sjekk om person er ansatt eller folkevalgt. Hvis folkevalgt arkiver i samlesak 22/12930
-  // 2. Hvis ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
-  // 3. Hvis andre ansatte - Arkiver i personalmappa
-
-  // Synkroniser ansatt
   syncEmployee: {
-    enabled: true, // Enable true hvis ikke politiker
+    enabled: true, // Kjør kun syncEmployee hvis IKKE politiker
     options: {
+      condition: (flowStatus) => !flowStatus.customJobIsPolitician.result,
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
         return {
@@ -55,8 +48,9 @@ module.exports = {
     }
   },
   handleCase: {
-    enabled: true, // customJobIsPolitician.result === true ? false : true, // Skrus av når det er politiker
+    enabled: true,
     options: {
+      condition: (flowStatus) => !flowStatus.customJobIsPolitician.result,
       getCaseParameter: (flowStatus) => {
         const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
         if (!personData?.Fødselsnummer1) {
@@ -118,7 +112,7 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
         // const caseNumber = flowStatus.handleCase.result.CaseNumber
-        const caseNumber = '25/00127' // customElements.result === true? '25/12930' : handleCase.result.CaseNumber // Felles samlesak for sikkerhetsinstruks for informasjonssikkerhet KUN hvis innsender er politiker. Ellers personalmappe/handleCase
+        const caseNumber = flowStatus.customJobIsPolitician.result === true ? '25/12930' : flowStatus.handleCase.result.CaseNumber // '25/00127' // customElements.result === true? '25/12930' : handleCase.result.CaseNumber // Felles samlesak for sikkerhetsinstruks for informasjonssikkerhet KUN hvis innsender er politiker. Ellers personalmappe/handleCase
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -133,7 +127,7 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: 'Team politisk støtte', // Byttes ut for andre ansatte
+            AccessGroup: flowStatus.customJobIsPolitician.result === true ? 'Team politisk støtte' : '',
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -162,11 +156,11 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: '200039', // Team politisk støtte for politikere
+            ResponsibleEnterpriseRecno: flowStatus.customJobIsPolitician.result === true ? '200066' : flowStatus.syncEmployee.result.responsibleEnterprise.recno, // Team politisk støtte for politikere: recno 200039
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             Status: 'J',
             Title: 'Sikkerhetsinstruks for informasjonssikkerhet',
-            Archive: 'Saksdokument', // 'Personal', for alle andre ansatte
+            Archive: flowStatus.customJobIsPolitician.result === true ? 'Saksdokument' : 'Personaldokument',
             CaseNumber: caseNumber
           }
         }
