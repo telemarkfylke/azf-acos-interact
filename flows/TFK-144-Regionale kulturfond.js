@@ -19,13 +19,14 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
-        const orgData = flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_
+        const orgData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_
         return {
           orgnr: orgData.Organisasjonsnu
         }
       }
     }
   },
+
   handleCase: {
     enabled: true,
     options: {
@@ -35,8 +36,8 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '25-510' : '25-7', // Må lages nytt prosjekt for Prod i 2024,
-            Title: 'Flerårige samarbeidsavtaler på kulturfeltet',
+            Project: nodeEnv === 'production' ? '25-565' : '25-6',
+            Title: `Regionale kulturfond - søknad om midler - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             UnofficialTitle: '',
             Status: 'B',
             AccessCode: 'U',
@@ -45,7 +46,7 @@ module.exports = {
             SubArchive: 'Sakarkiv',
             ArchiveCodes: [
               {
-                ArchiveCode: '027',
+                ArchiveCode: '243',
                 ArchiveType: 'FELLESKLASSE PRINSIPP',
                 Sort: 1
               },
@@ -105,8 +106,8 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Skjema - flerårig samarbeidsavtale - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
-                UnofficialTitle: `Skjema - flerårig samarbeidsavtale - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
+                Title: `Søknad om midler fra regionale kulturfond - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+                UnofficialTitle: '',
                 VersionFormat: 'A'
               },
               ...p360Attachments
@@ -115,7 +116,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: '200028',
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             Status: 'J',
-            Title: `Søknad om flerårige samarbeidsavtaler på kulturfeltet - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
+            Title: `Søknad om midler fra regionale kulturfond - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
@@ -136,22 +137,24 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
-        const formData = flowStatus.parseJson.result.DialogueInstance.Søknadsskjema
-        const orgData = flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_
+        const formData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_
+        const orgData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_
         const savedValues = flowStatus.parseJson.result.SavedValues
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Flerrige%20samarbeidsavtaler%20p%20kulturfeltet/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Flerrige%20samarbeidsavtaler%20p%20kulturfeltet/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20midler%20fra%20regionale%20kulturfond/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20midler%20fra%20regionale%20kulturfond/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
               Title: orgData.Navn_på_organis,
-              typeaktor: formData.Informasjon_om_1.Type_akt\u00F8r_,
-              KortBeskrivelse: formData.Drift_og_aktivi.Beskrivelse_av_1,
-              soknadssum: formData.Økonomi1.Søknadssum,
-              suminntekter: savedValues.Logic.Kalkuler_Inntekt3,
-              sumutgifter: savedValues.Logic.Kalkuler_Sum_utgift3
+              Tilskuddsordning: formData.S\u00F8knadstype.Tilskuddsordnin,
+              Sokertype: formData.S\u00F8kertype.S\u00F8ker_er_en_,
+              kunstkulturbeskrivelse: formData.Kunst__og_kultu.Beskrivelse_av_,
+              arrangementkompetansebeskrivelse: formData.Arrangementer_o.Beskrivelse_av_1,
+              Soknadssum: formData.Økonomi.Søknadssum,
+              sumutgift: savedValues.Logic.Calculate_Sum_utgift6,
+              suminntekt: savedValues.Logic.Calculate_Sum_inntekt4
             }
           }
         ]
@@ -167,7 +170,7 @@ module.exports = {
         return {
           company: 'Seksjon kultur',
           description,
-          type: 'Flerårig samarbeidsavtale' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Regionale kulturfond' // Required. A short searchable type-name that distinguishes the statistic element
         }
       }
     }
