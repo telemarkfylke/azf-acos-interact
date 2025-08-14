@@ -4,11 +4,7 @@ const { isPolitician } = require('../lib/jobs/customJobs/sikkerhetsinstruks')
 // Logikk - Sikkerhetsinstruks for informasjonssikkerhet
 // Hvis politiker/folkevalgt - Arkiver i samlesak 25/12930
 // Hvis Lærer/ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
-// Andre ansatte - Arkiver i personalmappa
-
-// 1. Sync employee og sjekk om person er ansatt eller folkevalgt. Hvis folkevalgt arkiver i samlesak 22/12930
-// 2. Hvis ansatt på skole - Arkiver i personalmappa med skole som ansvarlig virksomhet til fordeling
-// 3. Hvis andre ansatte - Arkiver i personalmappa
+// Andre ansatte - Arkiveres i personalmappa med riktig ansvarlig enhet fra syncEmployee
 
 module.exports = {
   config: {
