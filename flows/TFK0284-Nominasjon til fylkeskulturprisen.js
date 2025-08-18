@@ -1,4 +1,4 @@
-const description = 'Nominasjon til fylkeskulturprisen'
+const description = 'Nominasjon til fylkeskulturprisen 2025'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '24/16188' : '24/00147'
+        const caseNumber = nodeEnv === 'production' ? '25/15434' : '24/00147'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -64,7 +64,7 @@ module.exports = {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: 'Nominasjon til Fylkeskulturprisen 2024',
+            Title: 'Nominasjon til Fylkeskulturprisen 2025',
             // UnofficialTitle: 'Søknad om utsetting av ferskvannsfisk',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
