@@ -57,7 +57,7 @@ module.exports = {
               }
             ],
             Contacts: [],
-            ResponsibleEnterpriseRecno: '200028', // flowStatus.syncEmployee.result.responsibleEnterprise.recno,
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             AccessGroup: '' // Automatisk
           }
@@ -88,7 +88,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: flowStatus.syncEnterprise.result.orgnr,
+                ReferenceNumber: flowStatus.syncEnterprise.result.enterprise.EnterpriseNumber,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -113,7 +113,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: '',
-            ResponsibleEnterpriseRecno: '200028',
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
             // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
             Status: 'J',
             Title: `Søknad om midler fra regionale kulturfond - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
