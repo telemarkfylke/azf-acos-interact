@@ -23,7 +23,7 @@ module.exports = {
     options: {},
     customJob: async (jobDef, flowStatus) => {
       const jsonData = flowStatus.parseJson.result.DialogueInstance
-      const emailTo = ['jon.kvist@telemarkfylke.no', 'anette.dordal@telemarkfylke.no', 'kaja.bergjensen@telemarkfylke.no', 'richard.dolven.nilsen@telemarkfylke.no', 'paal.are.solberg@telemarkfylke.no', 'anders.weston.roine@telemarkfylke.no', 'rune.almenning@telemarkfylke.no']
+      const emailTo = ['jon.kvist@telemarkfylke.no', 'anette.dordal@telemarkfylke.no', 'kaja.bergjensen@telemarkfylke.no', 'richard.dolven.nilsen@telemarkfylke.no', 'paal.are.solberg@telemarkfylke.no', 'anders.weston.roine@telemarkfylke.no', 'rune.almenning@telemarkfylke.no', '23e1ca10.telemarkfylke.no@no.teams.ms']
       const subject = 'Melding om nytt ønske om programvare'
       const body = `
       <h3>Nytt ønske om programvare</h3>
