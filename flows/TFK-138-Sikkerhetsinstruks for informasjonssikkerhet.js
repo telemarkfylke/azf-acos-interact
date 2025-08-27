@@ -164,7 +164,7 @@ module.exports = {
     }
   },
   signOff: {
-    enabled: false // Har med avskriving å gjøre
+    enabled: true // Har med avskriving å gjøre
   },
 
   closeCase: { // handleCase må kjøres for å kunne kjøre closeCase
