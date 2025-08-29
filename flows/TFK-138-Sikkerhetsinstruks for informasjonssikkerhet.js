@@ -164,11 +164,11 @@ module.exports = {
     }
   },
   signOff: {
-    enabled: false // Har med avskriving å gjøre
+    enabled: true // Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering).
   },
 
-  closeCase: { // handleCase må kjøres for å kunne kjøre closeCase
-    enabled: true
+  closeCase: { //Den henter saksnummer fra denne jobben og lukker saken.
+    enabled: false
   },
 
   statistics: {
