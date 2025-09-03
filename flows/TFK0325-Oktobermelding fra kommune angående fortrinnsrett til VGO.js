@@ -1,4 +1,4 @@
-const description = '1. Oktobermelding fra kommune angående fortrinnsrett til vgo'
+const description = '1. oktobermelding fra kommune angående fortrinnsrett til vgo'
 const { nodeEnv } = require('../config')
 module.exports = {
   config: {
@@ -66,7 +66,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: '1. Oktobermelding fra kommune angående fortrinnsrett til vgo',
+                Title: '1. oktobermelding fra kommune angående fortrinnsrett til vgo',
                 VersionFormat: 'A'
               },
               ...p360Attachments
@@ -75,7 +75,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200471' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: '1. Oktobermelding fra kommune angående fortrinnsrett til vgo',
+            Title: '1. oktobermelding fra kommune angående fortrinnsrett til vgo',
             Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
@@ -103,7 +103,7 @@ module.exports = {
           company: 'Opplæring',
           department: 'Sektorstøtte, inntak og eksamen',
           description,
-          type: '1. Oktobermelding fra kommune angående fortrinnsrett til vgo', // Required. A short searchable type-name that distinguishes the statistic element
+          type: '1. oktobermelding fra kommune angående fortrinnsrett til vgo', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
