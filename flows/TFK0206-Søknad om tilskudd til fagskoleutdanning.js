@@ -4,7 +4,7 @@ const { nodeEnv } = require('../config')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true
@@ -58,8 +58,8 @@ ArchiveData {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-1705' : '24-1', // Dette er riktig for telemark
-            Title: `Søknad om driftstilskudd 2025 - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
+            Project: nodeEnv === 'production' ? '24-644' : '24-1', // Dette er riktig for telemark
+            Title: `Søknad om driftstilskudd 2026 - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
             // UnofficialTitle: ,
             Status: 'B',
             JournalUnit: 'Sentralarkiv',
@@ -119,15 +119,15 @@ ArchiveData {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: `Søknad om driftstilskudd 2025 - ${xmlData.OrgNavn}`,
+                Title: `Søknad om driftstilskudd 2026 - ${xmlData.OrgNavn}`,
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200026' : '200020', // Seksjon kompetanse og integrering
-            ResponsiblePersonEmail: nodeEnv === 'production' ? 'marita.bruun@telemarkfylke.no' : 'marita.bruun@telemarkfylke.no',
+            ResponsiblePersonEmail: nodeEnv === 'production' ? 'marita.bruun@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
-            Title: `Søknad om driftstilskudd 2025 - ${xmlData.OrgNavn}`,
+            Title: `Søknad om driftstilskudd 2026 - ${xmlData.OrgNavn}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
