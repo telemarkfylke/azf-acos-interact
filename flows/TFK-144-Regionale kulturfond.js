@@ -21,7 +21,7 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         const orgData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_
         return {
-          orgnr: orgData.Organisasjonsnu
+          orgnr: orgData.Organisasjonsnu.replaceAll(' ', '')
         }
       }
     }
