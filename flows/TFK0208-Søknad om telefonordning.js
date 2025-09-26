@@ -3,7 +3,7 @@ const description = 'Søknad om telefonavtale'
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -172,7 +172,7 @@ ArchiveData {
               Fornavn: xmlData.Fornavn,
               Etternavn: xmlData.Etternavn,
               Enhetsnavn: xmlData.Seksjon,
-              Kommentar: xmlData.Kommentar,
+              Kommentar: xmlData?.Kommentar || 'Ingen kommentar',
               Ansattnummer: xmlData.Ansattnr,
               F_x00f8_dselsdato: xmlData.Fdato
             }

@@ -1,7 +1,7 @@
 const description = 'Tilleggsavtale om hjemmekontor'
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -188,7 +188,7 @@ ArchiveData {
               Etternavn: xmlData.Etternavn,
               Enhetsnavn: xmlData.Seksjon,
               Avtaleperiode: xmlData.Periode,
-              Kommentar: xmlData.Kommentar
+              Kommentar: xmlData?.Kommentar || 'Ingen kommentar'
             //   Ansattnummer: xmlData.Ansattnr,
             //   F_x00f8_dselsdato: xmlData.Fdato
             }
