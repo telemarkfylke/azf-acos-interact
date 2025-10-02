@@ -150,8 +150,8 @@ module.exports = {
               Title: orgData.Navn_på_organis,
               Tilskuddsordning: formData.S\u00F8knadstype.Tilskuddsordnin,
               Sokertype: formData.S\u00F8kertype.S\u00F8ker_er_en_,
-              kunstkulturbeskrivelse: formData.Kunst__og_kultu1.Beskrivelse_av_1,
-              arrangementkompetansebeskrivelse: formData.Arrangementer_o.Beskrivelse_av_,
+              kunstkulturbeskrivelse: formData.Kunst__og_kultu.Beskrivelse_av_,
+              arrangementkompetansebeskrivelse: formData.Arrangementer_o.Beskrivelse_av_1,
               Soknadssum: formData.Økonomi.Søknadssum,
               sumutgift: savedValues.Logic.Calculate_Sum_utgift6,
               suminntekt: savedValues.Logic.Calculate_Sum_inntekt4
