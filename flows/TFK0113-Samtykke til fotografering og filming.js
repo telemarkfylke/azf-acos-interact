@@ -1,4 +1,5 @@
 const description = 'Sender til Sharepoint. Samme liste som VFK0112'
+const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 // const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -10,6 +11,91 @@ module.exports = {
     enabled: true,
     options: {
     }
+  },
+
+  // Synkroniser elevmappe
+  syncElevmappe: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
+        return {
+          ssn: flowStatus.parseXml.result.ArchiveData.Fnr // Fnr til den som er logget inn (Elev)
+        }
+      }
+    }
+  },
+
+  // Arkiverer dokumentet i elevmappa
+  archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
+    enabled: true,
+    options: {
+      /*
+      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
+        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
+      },
+      */
+      mapper: (flowStatus, base64, attachments) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const elevmappe = flowStatus.syncElevmappe.result.elevmappe
+        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.Tilgangsgruppe) // Bruker tilgangsgrupper fordi jeg ikke gidder å skrive om avleveringen fra Gamle acos. Robin. 02-10-2025
+        if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.Tilgangsgruppe}`)
+        const p360Attachments = attachments.map(att => {
+          return {
+            Base64Data: att.base64,
+            Format: att.format,
+            Status: 'F',
+            Title: att.title,
+            VersionFormat: att.versionFormat
+          }
+        })
+        return {
+          service: 'DocumentService',
+          method: 'CreateDocument',
+          parameter: {
+            AccessCode: '13',
+            AccessGroup: school.tilgangsgruppe,
+            Category: 'Dokument inn',
+            Contacts: [
+              {
+                ReferenceNumber: xmlData.Fnr,
+                Role: 'Avsender',
+                IsUnofficial: true
+              }
+            ],
+            DocumentDate: new Date().toISOString(),
+            Files: [
+              {
+                Base64Data: base64,
+                Category: '1',
+                Format: 'pdf',
+                Status: 'F',
+                Title: 'Samtykke til fotografering og filming',
+                VersionFormat: 'A'
+              },
+              ...p360Attachments
+            ],
+            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+            ResponsibleEnterpriseNumber: xmlData.Tilgangsgruppe,
+            // ResponsiblePersonEmail: '',
+            Status: 'J',
+            Title: 'Samtykke til fotografering og filming',
+            UnofficialTitle: `Samtykke til fotografering og filming - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
+            Archive: 'Sensitivt elevdokument',
+            CaseNumber: elevmappe.CaseNumber
+          }
+        }
+      }
+    }
+
+  },
+
+  signOff: {
+    enabled: false
+  },
+
+  closeCase: {
+    enabled: false
   },
 
   sharepointList: {
