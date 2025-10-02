@@ -1,4 +1,5 @@
 const description = 'Sender til Sharepoint. Samme liste som VFK0112'
+const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 // const { nodeEnv } = require('../config')
 
 module.exports = {
