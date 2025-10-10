@@ -23,7 +23,7 @@ module.exports = {
         const orgData = flowStatus.parseJson.result.DialogueInstance.Type_medlemskap.Organisasjon
         const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Type_medlemskap.Samtykke
         const medlemsskapData = flowStatus.parseJson.result.DialogueInstance.Type_medlemskap.Velg_medlemskap
-        // const savedValues = flowStatus.parseJson.result.SavedValues
+        const kontaktinfoValues = flowStatus.parseJson.result.DialogueInstance.Type_medlemskap.Kontaktinfo
         // const loginValues = flowStatus.parseJson.result.SavedValues.Login
         return [
           {
@@ -39,6 +39,9 @@ module.exports = {
               orgpostnummer: orgData.Postnummer,
               orgpoststed: orgData.Poststed,
               medlemsskapstype: medlemsskapData.Velg_medlemskap1,
+              navn: kontaktinfoValues.Navn,
+              epost: kontaktinfoValues.E_epost,
+              telefon: kontaktinfoValues.Tlf,
               samtykke: samtykkeData.Jeg_samtykker_t
             }
           }
