@@ -62,7 +62,7 @@ module.exports = {
                 IsUnofficial: true
               },
               {
-                ReferenceNumber: school.orgNr,
+                ReferenceNumber: '918124136', // school.orgNr, // PPT sin orgnr 918124136
                 Role: 'Mottaker',
                 IsUnofficial: true
               }
@@ -80,7 +80,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseNumber: school.orgNr,
+            ResponsibleEnterpriseNumber: school.orgNr, // Denne er riktig
             Status: 'J',
             Title: 'Henvisning til pedagogisk psykologisk tjeneste',
             UnofficialTitle: `Henvisning til pedagogisk psykologisk tjeneste -  ${xmlData.Fornavn} ${xmlData.Etternavn}`,
