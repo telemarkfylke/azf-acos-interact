@@ -2,7 +2,7 @@ const description = 'Utviklingssamtale for ledere'
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: true
   },
   parseJson: {
@@ -15,42 +15,59 @@ module.exports = {
     }
   },
   syncEmployee: {
-    enabled: true, // Kjør kun syncEmployee hvis IKKE politiker
+    enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
-        const personData = flowStatus.parseJson.result.SavedValues.Login
+        const personData = flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber
         return {
-          upn: personData.UserID // UPN ansatt som er logget inn
+          ssn: personData // SSN ansatt som er logget inn
         }
       }
     }
   },
-  handleCase: {
-    enabled: false,
+  handleProject: {
+    enabled: true,
     options: {
-      condition: (flowStatus) => !flowStatus.customJobIsPolitician.result,
-      getCaseParameter: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        if (!personData?.Fødselsnummer1) {
-          throw new Error('Mangler: Fødselsnummer1')
-        }
+      mapper: (flowStatus) => {
         return {
-          Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet', // check for existing case with this title
-          ArchiveCode: personData.Fødselsnummer1
+          service: 'ProjectService',
+          method: 'CreateProject',
+          parameter: {
+            Title: `Personaldokumentasjon - ${flowStatus.syncEmployee.result.privatePerson.name}`,
+            // ResponsiblePersonEmail: flowStatus.parseJsonsyncEmployee.result.email,
+            Contacts: [
+              {
+                Role: 'Kontakt',
+                ReferenceNumber: flowStatus.syncEmployee.result.privatePerson.ssn
+              }
+            ]
+          }
         }
       },
+      getProjectParameter: (flowStatus) => {
+        return {
+          Title: `Personaldokumentasjon - ${flowStatus.syncEmployee.result.privatePerson.name}` // check for exisiting project with this title
+        }
+    }
+  }
+},
+  handleCase: {
+    enabled: true,
+    options: {
       mapper: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        if (!personData?.Fødselsnummer1 || !personData?.Fornavn1 || !personData?.Etternavn1) {
-          throw new Error('Mangler: Fødselsnummer1, Fornavn1, eller Etternavn1')
+        // const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
+        const prosjekt = flowStatus.handleProject.result
+        if (!prosjekt.ProjectNumber) {
+          throw new Error('Mangler: ProjectNumber')
         }
         return {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
+            ProjectNumber: prosjekt.ProjectNumber,
             CaseType: 'Personal',
-            Title: 'Samtykke for sikkerhetsinstruks for informasjonssikkerhet',
-            UnofficialTitle: `Samtykke for sikkerhetsinstruks for informasjonssikkerhet - ${personData.Fornavn1} ${personData.Etternavn1}`,
+            Title: 'Utviklingssamtale',
+            UnofficialTitle: `Utviklingssamtale - ${flowStatus.syncEmployee.result.privatePerson.name}`,
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
@@ -58,12 +75,12 @@ module.exports = {
             SubArchive: 'Personal',
             ArchiveCodes: [
               {
-                ArchiveCode: '400',
+                ArchiveCode: '431',
                 ArchiveType: 'FELLESKLASSE PRINSIPP',
                 Sort: 2
               },
               {
-                ArchiveCode: personData.Fødselsnummer1,
+                ArchiveCode: flowStatus.syncEmployee.result.privatePerson.ssn,
                 ArchiveType: 'FNR',
                 Sort: 1,
                 IsManualText: true
@@ -72,7 +89,7 @@ module.exports = {
             Contacts: [
               {
                 Role: 'Sakspart',
-                ReferenceNumber: personData.Fødselsnummer1,
+                ReferenceNumber: flowStatus.syncEmployee.result.privatePerson.ssn,
                 IsUnofficial: true
               }
             ],
@@ -85,12 +102,11 @@ module.exports = {
     }
   },
   archive: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        // const caseNumber = flowStatus.handleCase.result.CaseNumber
-        const caseNumber = flowStatus.customJobIsPolitician.result === true ? '25/12930' : flowStatus.handleCase.result.CaseNumber // '25/00127' // customElements.result === true? '25/12930' : handleCase.result.CaseNumber // Felles samlesak for sikkerhetsinstruks for informasjonssikkerhet KUN hvis innsender er politiker. Ellers personalmappe/handleCase
+        const personData = flowStatus.syncEmployee.result.privatePerson
+        const caseNumber = flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -105,11 +121,11 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: flowStatus.customJobIsPolitician.result === true ? 'Team politisk støtte' : '',
+            // AccessGroup: flowStatus.customJobIsPolitician.result === true ? 'Team politisk støtte' : '',
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: personData.Fødselsnummer1,
+                ReferenceNumber: personData.ssn,
                 Role: 'Avsender',
                 IsUnofficial: true
               }
@@ -127,30 +143,29 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: 'Signert sikkerhetsinstruks for informasjonssikkerhet',
-                UnofficialTitle: `Signert sikkerhetsinstruks for informasjonssikkerhet - ${personData.Fornavn1} ${personData.Etternavn1}`,
+                Title: 'Utviklingssamtale',
+                UnofficialTitle: `Utviklingssamtale - ${personData.name}`,
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: flowStatus.customJobIsPolitician.result === true ? '200066' : flowStatus.syncEmployee.result.responsibleEnterprise.recno, // Team politisk støtte for politikere: recno 200039
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsibleEnterpriseRecno: flowStatus.syncEmployee.result.responsibleEnterprise.recno,
             Status: 'J',
-            Title: 'Sikkerhetsinstruks for informasjonssikkerhet',
-            Archive: flowStatus.customJobIsPolitician.result === true ? 'Saksdokument' : 'Personaldokument',
-            CaseNumber: caseNumber
+            Title: 'Utviklingssamtale',
+            Archive: 'Personaldokument',
+            CaseNumber: caseNumber, 
           }
         }
       }
     }
   },
   signOff: {
-    enabled: false // Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering).
+    enabled: true // Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering).
   },
 
   closeCase: { // Den henter saksnummer fra denne jobben og lukker saken.
-    enabled: false
+    enabled: true
   },
 
   statistics: {
