@@ -48,9 +48,9 @@ module.exports = {
         return {
           Title: `Personaldokumentasjon - ${flowStatus.syncEmployee.result.privatePerson.name}` // check for exisiting project with this title
         }
+      }
     }
-  }
-},
+  },
   handleCase: {
     enabled: true,
     options: {
@@ -154,7 +154,7 @@ module.exports = {
             Status: 'J',
             Title: 'Utviklingssamtale',
             Archive: 'Personaldokument',
-            CaseNumber: caseNumber, 
+            CaseNumber: caseNumber
           }
         }
       }
