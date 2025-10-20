@@ -66,7 +66,7 @@ string SkoleOrgNr
         console.log(school.officeLocation)
         return {
           // §12-4 saker - 2024/2025 - %
-          Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
+          Title: `§12-4 saker - ${getSchoolYear()} - ${school.officeLocation}`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
           ContactReferenceNumber: school.orgNr,
           StatusCode: 'Under utføring'
         }
