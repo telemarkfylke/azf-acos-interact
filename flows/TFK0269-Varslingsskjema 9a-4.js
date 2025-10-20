@@ -73,7 +73,7 @@ module.exports = {
           service: 'ProjectService',
           method: 'CreateProject',
           parameter: {
-            Title: `§12-4 saker - ${getSchoolYear()}-${school.officeLocation}`,
+            Title: `§12-4 saker - ${getSchoolYear()} - ${school.officeLocation}`,
             Contacts: [
               {
                 ReferenceNumber: school.orgNr,
