@@ -4,7 +4,7 @@ const { sendEmail } = require('../lib/jobs/customJobs/sendemail')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseJson: {
     enabled: true,
@@ -56,15 +56,15 @@ module.exports = {
               Godkjenning_x: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_nærmest, // Personoppslag
               Brukes_x0020_i_x0020_undervisnin: jsonData.Informasjon_om_.Skal_tjenesten_, // Enkel linje med tekst
               Antattkostnad: jsonData.Informasjon_om_.Annen_informasj.Antatt_kostnad, // Enkel linje med tekst
-              Systemeier_x: jsonData.Informasjon_om_.Tjenesten_skal_.Navn_på_systeme, // Personoppslag
-              Systemansvarlig_x: jsonData.Informasjon_om_.Tjenesten_skal_.Navn_på_systema, // Personoppslag
+              // Systemeier_x: jsonData.Informasjon_om_.Annen_informasj.Navn_på_systema, // Personoppslag
+              Systemansvarlig_x: jsonData.Informasjon_om_.Annen_informasj.Navn_på_systema, // Personoppslag
               Beskrivelse: jsonData.Informasjon_om_.Annen_informasj.Hva_er_formålet, // Lang tekst
-              Kategoriregistrerte_x: jsonData.Informasjon_om_.Annen_informasj.Hvem_skal_benyt, // Valg
-              Autentisering_x: jsonData.Informasjon_om_.Tjenesten_skal_.Hvilken_løsning, // Valg
+              Kategoriregistrerte_x: jsonData.Informasjon_om_.Annen_informasj.Hvem_skal_benyt1, // Valg
+              Autentisering_x: jsonData.Informasjon_om_.Annen_informasj.Hvilken_løsning, // Valg
               Kategoripersonvern_x: jsonData.Informasjon_om_.Annen_informasj.Hvilke_personop, //  Valg
-              H_x00e5_ndtererl_x00f8_sningenka: jsonData.Informasjon_om_.Tjenesten_skal_.Håndterer_løsni === 'Ja', // Sjekkboks
-              H_x00e5_ndtererl_x00f8_sningenel: jsonData.Informasjon_om_.Tjenesten_skal_.Håndterer_løsni1 === 'Ja', // Sjekkboks
-              H_x00e5_ndtererl_x00f8_sningenvu: jsonData.Informasjon_om_.Tjenesten_skal_.Håndterer_løsni2 === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenka: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni1 === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenel: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenvu: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni2 === 'Ja', // Sjekkboks
               kontaktpersonleverand_x00f8_r: jsonData.Informasjon_om_.Annen_informasj.Lenke_til_tjene, // Lang tekst
               Kommentar: jsonData.Informasjon_om_.Annen_informasj.Annet_ // Lang tekst
             }

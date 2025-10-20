@@ -75,7 +75,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseNumber: school.orgNr,
+            ResponsibleEnterpriseNumber: '918124136',
             Status: 'J',
             Title: 'Henvisning til pedagogisk psykologisk tjeneste (Signert)',
             UnofficialTitle: `Henvisning til pedagogisk psykologisk tjeneste (Signert) -  ${xmlData.Fornavn} ${xmlData.Etternavn}`,
