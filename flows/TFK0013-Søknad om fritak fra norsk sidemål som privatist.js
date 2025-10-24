@@ -71,7 +71,7 @@ module.exports = {
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200027' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
-            ResponsiblePersonEmail: 'line.eilertsen@telemarkfylke.no',
+            ResponsiblePersonEmail: 'heidi.roland.vik@telemarkfylke.no',
             Status: 'J',
             Title: 'Søknad om fritak fra norsk sidemål som privatist',
             Archive: 'Sensitivt elevdokument',
