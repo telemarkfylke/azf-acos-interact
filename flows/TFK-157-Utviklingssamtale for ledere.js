@@ -3,7 +3,7 @@ const description = 'Utviklingssamtale for ledere'
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,

@@ -4,7 +4,7 @@ const { sendEmail } = require('../lib/jobs/customJobs/sendemail')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,

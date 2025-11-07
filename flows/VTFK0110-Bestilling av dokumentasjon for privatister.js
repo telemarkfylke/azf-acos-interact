@@ -2,7 +2,7 @@ const description = 'Bestilling av dokumentasjon for privatister. Sender til ele
 module.exports = {
   config: {
     enabled: false,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true,
