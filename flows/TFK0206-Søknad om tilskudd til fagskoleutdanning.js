@@ -58,7 +58,7 @@ ArchiveData {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-644' : '24-1', // Dette er riktig for telemark
+            Project: nodeEnv === 'production' ? '25-644' : '24-1', // Dette er riktig for telemark
             Title: `Søknad om driftstilskudd 2026 - ${flowStatus.parseXml.result.ArchiveData.OrgNavn}`,
             // UnofficialTitle: ,
             Status: 'B',
