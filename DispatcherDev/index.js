@@ -1,16 +1,9 @@
 const { dispatcher } = require('../lib/dispatcher')
-const { logConfig } = require('@vtfk/logger')
+const { logger } = require('@vestfoldfylke/loglady')
 
 module.exports = async function (context, req) {
-  logConfig({
+  logger.logConfig({
     prefix: 'azf-acos-interact - Dispatcher',
-    teams: {
-      onlyInProd: false
-    },
-    azure: {
-      context,
-      excludeInvocationId: true
-    }
   })
   try {
     const result = await dispatcher()
