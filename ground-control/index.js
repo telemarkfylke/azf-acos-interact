@@ -68,4 +68,6 @@
     }
   }
   logger.info('Finished downloading all refids and blobs to ground control')
+  // Flush to ensure all log messages have been processed
+  logger.flush()
 })()

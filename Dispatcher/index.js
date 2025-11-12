@@ -8,6 +8,6 @@ module.exports = async function (context, myTimer) {
   try {
     await dispatcher()
   } catch (error) {
-    logger.errorException(error, 'Timertrigger failed')
+    logger.errorException(error, 'Timertrigger failed. Error: {@message}', error.response?.data || error.stack || error.toString())
   }
 }

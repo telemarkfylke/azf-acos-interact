@@ -8,7 +8,7 @@ module.exports = async function (context, req) {
   try {
     await roomService()
   } catch (error) {
-    logger.errorException(error, 'Statusrapportering feilet')
+    logger.errorException(error, 'Statusrapportering feilet. Error: {@message}', error.response?.data || error.stack || error.toString())
   }
 
   return {
