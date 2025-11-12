@@ -3,7 +3,7 @@ const { logger } = require('@vestfoldfylke/loglady')
 
 module.exports = async function (context, req) {
   logger.logConfig({
-    prefix: 'azf-acos-interact - Dispatcher',
+    prefix: 'azf-acos-interact - Dispatcher'
   })
   try {
     const result = await dispatcher()
