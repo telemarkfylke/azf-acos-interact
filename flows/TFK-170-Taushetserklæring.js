@@ -1,4 +1,6 @@
 const description = 'Taushetserklæring'
+let virksomhetRecno = null
+let skoleOrgnummer = null
 // const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 
 module.exports = {
@@ -33,8 +35,7 @@ module.exports = {
         const arbeidssted = flowStatus.parseJson.result.DialogueInstance.Steg_1___Inform.Velg_Arbeidsste
         const seksjon = arbeidssted.Velg_
         const utdanningSektor = arbeidssted.Velg_hvilken_de
-        const skoleOrgnummer = flowStatus.parseJson.result.SavedValues?.Dataset.Velg_skole1.OrgNr
-        let virksomhetRecno = null
+        skoleOrgnummer = flowStatus.parseJson.result.SavedValues?.Dataset.Velg_skole1.OrgNr
 
         if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Videreg\u00E5ende skole') { console.log('VGS') } else if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Administrasjon') { virksomhetRecno = '2000015' } else if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Tannhelse') { virksomhetRecno = '200022' } else if (seksjon === 'Fylkesdirektør') { virksomhetRecno = '200006' } else if (seksjon === 'Samferdsel') { virksomhetRecno = '200016' } else if (seksjon === 'Organisasjon og digitale tjenester') { virksomhetRecno = '200009' } else if (seksjon === 'Økonomi og virksomhetsstyring') { virksomhetRecno = '200009' } else if (seksjon === 'Samfunnsutvikling') { virksomhetRecno = '2000017' } else {
           console.log('Ingen virksomhet funnet')
@@ -56,13 +57,7 @@ module.exports = {
               {
                 ArchiveCode: '043',
                 ArchiveType: 'FELLESKLASSE PRINSIPP',
-                Sort: 2
-              },
-              {
-                ArchiveCode: personData.privatePerson.ssn,
-                ArchiveType: 'FNR',
-                Sort: 1,
-                IsManualText: true
+                Sort: 1
               }
             ],
             Contacts: [
@@ -122,7 +117,8 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 26 femte ledd',
-            ResponsibleEnterpriseRecno: flowStatus.syncEmployee.result.responsibleEnterprise.recno,
+            ResponsibleEnterpriseRecno: virksomhetRecno || '',
+            ResponsibleEnterpriseNumber: skoleOrgnummer || '',
             Status: 'J',
             Title: 'Taushetserklæring',
             Archive: 'Saksdokument',
