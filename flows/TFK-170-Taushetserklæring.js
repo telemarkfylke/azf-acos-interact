@@ -1,4 +1,5 @@
 const description = 'Taushetserklæring'
+// const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 
 module.exports = {
   config: {
@@ -14,13 +15,12 @@ module.exports = {
       }
     }
   },
-  syncEmployee: {
+  syncPrivatePerson: {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
-        const personnummer = flowStatus.parseJson.result.SavedValues.Login.UserID
         return {
-          ssn: personnummer // SSN ansatt som er logget inn
+          ssn: flowStatus.parseJson.result.SavedValues.Login.UserID
         }
       }
     }
@@ -29,11 +29,15 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const personData = flowStatus.syncEmployee.result
-        // const prosjekt = flowStatus.handleProject.result
-        console.log('personData', personData)
-        if (!personData?.privatePerson.ssn) {
-          throw new Error('Mangler: Fødselsnummer1')
+        const personData = flowStatus.syncPrivatePerson.result
+        const arbeidssted = flowStatus.parseJson.result.DialogueInstance.Steg_1___Inform.Velg_Arbeidsste
+        const seksjon = arbeidssted.Velg_
+        const utdanningSektor = arbeidssted.Velg_hvilken_de
+        const skoleOrgnummer = flowStatus.parseJson.result.SavedValues?.Dataset.Velg_skole1.OrgNr
+        let virksomhetRecno = null
+
+        if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Videreg\u00E5ende skole') { console.log('VGS') } else if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Administrasjon') { virksomhetRecno = '2000015' } else if (seksjon === 'Utdanning, folkehelse, tannhelse' && utdanningSektor === 'Tannhelse') { virksomhetRecno = '200022' } else if (seksjon === 'Fylkesdirektør') { virksomhetRecno = '200006' } else if (seksjon === 'Samferdsel') { virksomhetRecno = '200016' } else if (seksjon === 'Organisasjon og digitale tjenester') { virksomhetRecno = '200009' } else if (seksjon === 'Økonomi og virksomhetsstyring') { virksomhetRecno = '200009' } else if (seksjon === 'Samfunnsutvikling') { virksomhetRecno = '2000017' } else {
+          console.log('Ingen virksomhet funnet')
         }
         return {
           service: 'CaseService',
@@ -68,8 +72,8 @@ module.exports = {
                 IsUnofficial: true
               }
             ],
-            ResponsibleEnterpriseRecno: personData.responsibleEnterprise.recno,
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsibleEnterpriseNumber: skoleOrgnummer || '',
+            ResponsibleEnterpriseRecno: virksomhetRecno || '',
             AccessGroup: '' // Automatisk
           }
         }
@@ -80,7 +84,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const personData = flowStatus.syncEmployee.result
+        const personData = flowStatus.syncPrivatePerson.result
         const caseNumber = flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
