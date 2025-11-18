@@ -1,9 +1,8 @@
 const description = 'Fartebot tilbakemelding'
-// const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseJson: {
@@ -28,6 +27,7 @@ module.exports = {
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
               BrukerId: flowStatus.parseJson.result.Metadata.UserIdentifier.Value,
               Fornavn: kontaktinfoValues.Fornavn_,
               Etternavn: kontaktinfoValues.Etternavn_,
