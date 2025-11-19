@@ -38,7 +38,7 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
         let school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
-        if (!school) { school = schoolInfo.find('929882989') }//throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
+        if (!school) { school = schoolInfo.find('929882989') }// throw new Error(`Could not find any school with orgNr: ${xmlData.SkoleOrgNr}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
