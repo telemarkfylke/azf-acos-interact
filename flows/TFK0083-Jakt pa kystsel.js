@@ -41,7 +41,7 @@ string Epost
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '24/01203' : '23/00078'
+        const caseNumber = nodeEnv === 'production' ? '25/21947' : '23/00078'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -69,15 +69,15 @@ string Epost
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Jakt på kystsel 2024',
+                Title: 'Jakt på kystsel 2026',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: 'Jakt på kystsel 2024 – Søknadsskjema',
-            // UnofficialTitle: 'Jakt på kystsel 2024',
+            Title: 'Jakt på kystsel 2026 – Søknadsskjema',
+            // UnofficialTitle: 'Jakt på kystsel 2026',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             // ResponsibleEnterpriseNumber: nodeEnv === 'production' ? 'må fylles inn!' : 'må fylles inn!', // Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
