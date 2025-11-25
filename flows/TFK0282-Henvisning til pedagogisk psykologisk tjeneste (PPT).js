@@ -62,7 +62,12 @@ module.exports = {
                 IsUnofficial: true
               },
               {
-                ReferenceNumber: school.orgNr, // PPT sin orgnr 918124136
+                ReferenceNumber: school.orgNr,
+                Role: 'Avsender',
+                IsUnofficial: true
+              },
+              {
+                ReferenceNumber: '918124136', // PPT sin orgnr 918124136
                 Role: 'Mottaker',
                 IsUnofficial: true
               }
