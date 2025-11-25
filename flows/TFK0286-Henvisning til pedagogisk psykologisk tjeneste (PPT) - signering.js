@@ -38,7 +38,7 @@ module.exports = {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
         let school = schoolInfo.find(school => school.orgNr.toString() === xmlData.SkoleOrgNr)
-        if (!school) { school = schoolInfo.find(school => school.orgNr.toString() === '929882989') } // Fallback to default school if not found
+        if (!school) { school = schoolInfo.find(school => school.orgNr.toString() === '918124136') } // Fallback to default school if not found
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -75,7 +75,7 @@ module.exports = {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseNumber: '918124136',
+            ReferenceNumber: school.orgNr, // PPT sin orgnr 918124136
             Status: 'J',
             Title: 'Henvisning til pedagogisk psykologisk tjeneste (Signert)',
             UnofficialTitle: `Henvisning til pedagogisk psykologisk tjeneste (Signert) -  ${xmlData.Fornavn} ${xmlData.Etternavn}`,
