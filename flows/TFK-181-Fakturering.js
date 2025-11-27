@@ -72,7 +72,7 @@ const addLine = (ownerId, productCode, description, quantity, unitPrice, custome
 module.exports = {
 	config: {
 		enabled: true,
-		doNotRemoveBlobs: true
+		doNotRemoveBlobs: false
 	},
 	parseJson: {
 		enabled: true,
