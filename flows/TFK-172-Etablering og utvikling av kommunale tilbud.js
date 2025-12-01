@@ -49,7 +49,7 @@ module.exports = {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
-            ProjectNumber: prosjekt.ProjectNumber,
+            ProjectNumber: '25-759',
             CaseType: 'Sak',
             Title: 'Etablering og utvikling av kommunale frisklivs-, lærings- og mestringstilbud',
             UnofficialTitle: 'Etablering og utvikling av kommunale frisklivs-, lærings- og mestringstilbud',
