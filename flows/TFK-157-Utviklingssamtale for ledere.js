@@ -169,14 +169,14 @@ module.exports = {
   },
 
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         // Mapping av verdier fra JSON-avleveringsfil fra dialogueportal
         return {
           company: 'Telemark Fylkeskommune',
           description,
-          type: 'Sikkerhetsinstruks for informasjonssikkerhet - Signert' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Utviklingssamtale for ledere' // Required. A short searchable type-name that distinguishes the statistic element
         }
       }
     }
