@@ -161,7 +161,7 @@ module.exports = {
     }
   },
   signOff: {
-    enabled: true // Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering).
+    enabled: false // Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering).
   },
 
   closeCase: { // Den henter saksnummer fra denne jobben og lukker saken.
