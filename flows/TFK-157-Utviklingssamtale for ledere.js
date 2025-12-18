@@ -165,7 +165,7 @@ module.exports = {
   },
 
   closeCase: { // Den henter saksnummer fra denne jobben og lukker saken.
-    enabled: true
+    enabled: false
   },
 
   statistics: {
