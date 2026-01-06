@@ -43,7 +43,7 @@ module.exports = {
           return payload
         } else if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Har_du_norsk_f\u00F8 === 'Ja') {
           return {
-            ssn: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Norsk_fodselsnummer
+            ssn: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Norsk_f\u00F8dselsnu
           }
         } else throw new Error('norskFnr må være Ja eller Nei')
       }
