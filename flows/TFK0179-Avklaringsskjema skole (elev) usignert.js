@@ -70,6 +70,10 @@ module.exports = {
               {
                 ReferenceNumber: nodeEnv === 'production' ? 'recno:200025' : 'recno:200019', // Seksjon PPT, OT og alternative opplæringsarenaer, intern mottaker som ikke har org nr bruk recno på denne måten
                 Role: 'Kopi til'
+              },
+              {
+                ReferenceNumber: school.orgNr, // Skolen eleven går ved
+                Role: 'Kopi til'
               }
             ],
             DocumentDate: new Date().toISOString(),
