@@ -58,7 +58,7 @@ module.exports = {
             ],
             Contacts: [],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
             AccessGroup: '' // Automatisk
           }
         }
@@ -108,7 +108,7 @@ module.exports = {
             ],
             Paragraph: '',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '208915' : '200028',
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
             Status: 'J',
             Title: `Søknad om tilskudd til utvikling innen kultur og reiseliv 2026 - ${flowStatus.parseJson.result.DialogueInstance.S\u00F8knadsskjema.Informasjon_om_.Navn_p\u00E5_akt\u00F8r}`,
             Archive: 'Saksdokument',
