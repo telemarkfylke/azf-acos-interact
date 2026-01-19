@@ -110,7 +110,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
             ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
             Status: 'J',
-            Title: `Søknad om tilskudd til utvikling innen kultur og reiseliv 2026 - ${flowStatus.parseJson.result.DialogueInstance.S\u00F8knadsskjema.Informasjon_om_.Navn_p\u00E5_akt\u00F8r}`,
+            Title: `Tilskudd arrangement 2026 - ${flowStatus.parseJson.result.DialogueInstance.S\u00F8knadsskjema.Informasjon_om_.Navn_p\u00E5_akt\u00F8r}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
