@@ -4,7 +4,7 @@ const nodeEnv = require('../config').nodeEnv
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,
@@ -16,7 +16,7 @@ module.exports = {
     }
   },
   syncEnterprise: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         const orgData = flowStatus.parseJson.result.DialogueInstance.S\u00F8knadsskjema.Informasjon_om_.Organisasjonsnu
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   handleCase: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         return {
@@ -66,7 +66,7 @@ module.exports = {
     }
   },
   archive: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const caseNumber = flowStatus.handleCase.result.CaseNumber
