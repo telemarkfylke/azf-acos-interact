@@ -4,7 +4,7 @@ const nodeEnv = require('../config').nodeEnv
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseJson: {
     enabled: true,
@@ -16,7 +16,7 @@ module.exports = {
     }
   },
   syncEnterprise: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         const orgData = flowStatus.parseJson.result.DialogueInstance.S\u00F8knadsskjema.Informasjon_om_.Organisasjonsnu
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   handleCase: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         return {
@@ -66,7 +66,7 @@ module.exports = {
     }
   },
   archive: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const caseNumber = flowStatus.handleCase.result.CaseNumber
@@ -115,6 +115,43 @@ module.exports = {
             CaseNumber: caseNumber
           }
         }
+      }
+    }
+  },
+  sharepointList: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const DialogueInstance = flowStatus.parseJson.result.DialogueInstance
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/TilskuddUtviklingKulturReiseliv/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/TilskuddUtviklingKulturReiseliv/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: flowStatus.parseJson.result.Metadata.DialogueId.Value + ' - ' + DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_aktør,
+              Adresse: DialogueInstance.Søknadsskjema.Informasjon_om_.Adresse,
+              // Utgift: DialogueInstance.Søknadsskjema.Utgift1[0].Utgift,
+              Beskriv_hvordan: DialogueInstance.Søknadsskjema.Drift_og_aktivi.Beskriv_hvordan,
+              Kort_om_soker: DialogueInstance.Søknadsskjema.Drift_og_aktivi.Kort_om_søker,
+              Organisasjonsnu: DialogueInstance.Søknadsskjema.Informasjon_om_.Organisasjonsnu,
+              // inntekt: DialogueInstance.Søknadsskjema.Andre_inntekter[0].inntekt,
+              Poststed: DialogueInstance.Søknadsskjema.Informasjon_om_.Poststed,
+              Navn_pa_aktor: DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_aktør,
+              Sum_utgift: DialogueInstance.Søknadsskjema.Sum_utgift.toString(),
+              // Navn_pa_inntekt: DialogueInstance.Søknadsskjema.Andre_inntekter[0].Navn_på_inntekt,
+              E_post: DialogueInstance.Søknadsskjema.Informasjon_om_.E_post,
+              // Navn_pa_utgift: DialogueInstance.Søknadsskjema.Utgift1[0].Navn_på_utgift,
+              // Vedlegg2: DialogueInstance.Søknadsskjema.Vedlegg2,
+              Telefonnummer: DialogueInstance.Søknadsskjema.Informasjon_om_.Telefonnummer,
+              Beskrivelse_av: DialogueInstance.Søknadsskjema.Drift_og_aktivi.Beskrivelse_av_,
+              Postnummer: DialogueInstance.Søknadsskjema.Informasjon_om_.Postnummer,
+              Sum_inntekt: DialogueInstance.Søknadsskjema.Sum_inntekt.toString(),
+              Soknadssum: DialogueInstance.Søknadsskjema.Økonomi1.Søknadssum.toString()
+            }
+          }
+        ]
       }
     }
   },
