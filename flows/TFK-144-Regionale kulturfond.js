@@ -4,7 +4,7 @@ const nodeEnv = require('../config').nodeEnv
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseJson: {
     enabled: true,
@@ -36,8 +36,8 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '25-565' : '25-6',
-            Title: `Regionale kulturfond - søknad om midler - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+            Project: nodeEnv === 'production' ? '26-105' : '25-6',
+            Title: `Regionale kulturfond - søknad om midler 2026 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             UnofficialTitle: '',
             Status: 'B',
             AccessCode: 'U',
@@ -114,9 +114,9 @@ module.exports = {
             ],
             Paragraph: '',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsiblePersonEmail: nodeEnv === 'production' ? 'ellen.rodvang@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
-            Title: `Søknad om midler fra regionale kulturfond - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+            Title: `Søknad om midler fra regionale kulturfond 2026 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
@@ -137,24 +137,38 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
-        const formData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_
-        const orgData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_
-        const savedValues = flowStatus.parseJson.result.SavedValues
+        const formData = flowStatus.parseJson.result.DialogueInstance
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20midler%20fra%20regionale%20kulturfond/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20midler%20fra%20regionale%20kulturfond/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/SoknaderRegionaleKulturfond2026/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/SoknaderRegionaleKulturfond2026/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: orgData.Navn_på_organis,
-              Tilskuddsordning: formData.S\u00F8knadstype.Tilskuddsordnin,
-              Sokertype: formData.S\u00F8kertype.S\u00F8ker_er_en_,
-              kunstkulturbeskrivelse: formData.Kunst__og_kultu1.Beskrivelse_av_1,
-              arrangementkompetansebeskrivelse: formData.Arrangementer_o.Beskrivelse_av_,
-              Soknadssum: formData.Økonomi.Søknadssum,
-              sumutgift: savedValues.Logic.Calculate_Sum_utgift6,
-              suminntekt: savedValues.Logic.Calculate_Sum_inntekt4
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              Kontaktperson: formData.Informasjon_om_.Informasjon_om_.Kontaktperson,
+              Navn_pa_organis: formData.Informasjon_om_.Informasjon_om_.Navn_på_organis,
+              Organisasjonsnu: formData.Informasjon_om_.Informasjon_om_.Organisasjonsnu,
+              Adresse: formData.Informasjon_om_.Informasjon_om_.Adresse,
+              Postnummer: formData.Informasjon_om_.Informasjon_om_.Postnummer,
+              Poststed: formData.Informasjon_om_.Informasjon_om_.Poststed,
+              Telefonnummer: formData.Informasjon_om_.Informasjon_om_.Telefonnummer,
+              E_post: formData.Informasjon_om_.Informasjon_om_.E_post,
+              Soker_er_en: formData.Informasjon_om_.Søkertype___Hon.Søker_er_en_,
+              Soker_er_en_1: formData.Informasjon_om_.Søkertype___Til.Søker_er_en_1,
+              Beskriv_pa_hvil: formData.Informasjon_om_.Kunst__og_kultu1.Beskriv_på_hvil,
+              Hvilke_profesjo: formData.Informasjon_om_.Tilskudd_til_Ho.Hvilke_profesjo,
+              Tilskuddsordnin: formData.Informasjon_om_.Søknadstype.Tilskuddsordnin,
+              Utfyllende_besk: formData.Informasjon_om_.Søkertype___Hon.Utfyllende_besk,
+              Utfyllende_besk1: formData.Informasjon_om_.Søkertype___Til.Utfyllende_besk1,
+              Beskrivelse_av_1: formData.Informasjon_om_.Kunst__og_kultu1.Beskrivelse_av_1,
+              Beskrivelse_av_2: formData.Informasjon_om_.Tilskudd_til_Ho.Beskrivelse_av_2,
+              Beskriv_hvordan2: formData.Informasjon_om_.Kunst__og_kultu1.Beskriv_hvordan2,
+              Beskriv_hvordan3: formData.Informasjon_om_.Tilskudd_til_Ho.Beskriv_hvordan3,
+              Beskriv_hvordan1: formData.Informasjon_om_.Kunst__og_kultu1.Beskriv_hvordan1,
+              Soknadssum: formData.Informasjon_om_.Økonomi.Søknadssum.toString(),
+              Sum_inntekt: formData.Informasjon_om_.Sum_inntekt.toString(),
+              Sum_utgift: formData.Informasjon_om_.Sum_utgift.toString()
             }
           }
         ]
