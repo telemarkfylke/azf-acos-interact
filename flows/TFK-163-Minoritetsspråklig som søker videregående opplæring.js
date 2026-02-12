@@ -2,7 +2,7 @@ const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseJson: {
@@ -33,8 +33,8 @@ module.exports = {
             manualData: true,
             birthdate: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Fodselsdato,
             gender,
-            firstName: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Fornavn,
-            lastName: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Etternavn,
+            firstName: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Fornavn2,
+            lastName: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Etternavn1,
             streetAddress: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Adresse || 'Ukjent adresse',
             zipCode: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Postnr_sted_postnr || '9999',
             zipPlace: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Poststed || 'Ukjent poststed',
