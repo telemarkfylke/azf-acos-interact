@@ -163,7 +163,7 @@ module.exports = {
               Beskrivelse: sokerBeskrivelse.Beskriv_dagens_trafikksi,
               Forslag: sokerBeskrivelse.Beskriv_plan_for_gjennom,
               AndreOpplysninger: sokerBeskrivelse.Har_du_har_andre_relevan,
-              OrgNavn: jsonData.Kontaktopplysninger.Informasjon_om_organisas.Navn_pa_organisasjon,
+              OrgNavn: jsonData.Kontaktopplysninger.Informasjon_om_organisas.Navn_pa_organisasjon
               // reserve2: xmlData.reserve2
             }
           }
