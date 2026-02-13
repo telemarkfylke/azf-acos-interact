@@ -19,6 +19,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person manuelt uten oppslag i Freg (Eks. utenlandske elever)
+        const fnr = flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Norsk_f\u00F8dselsnu1 || flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Norsk_f\u00F8dselsnu || ''
         if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Har_du_norsk_f\u00F8 === 'Nei') {
           let gender
           if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Kjonn === 'Mann') {
@@ -43,7 +44,7 @@ module.exports = {
           return payload
         } else if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Har_du_norsk_f\u00F8 === 'Ja') {
           return {
-            ssn: flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Norsk_f\u00F8dselsnu1
+            ssn: fnr
           }
         } else throw new Error('norskFnr må være Ja eller Nei')
       }
