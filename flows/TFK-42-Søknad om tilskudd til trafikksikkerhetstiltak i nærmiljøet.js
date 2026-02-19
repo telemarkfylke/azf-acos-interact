@@ -30,12 +30,12 @@ module.exports = {
     enabled: true,
     options: {
       condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseJson.result.DialogueInstance.Kontaktopplysninger.Informasjon_om_organisas.Eventuelt_organisasjonsn !== ''
+        return flowStatus.parseJson.result.DialogueInstance.Kontaktopplysninger.Informasjon_om_organisas.Organisasjonsnu !== ''
       },
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          orgnr: flowStatus.parseJson.result.DialogueInstance.Kontaktopplysninger.Informasjon_om_organisas.Eventuelt_organisasjonsn.replaceAll(' ', '')
+          orgnr: flowStatus.parseJson.result.DialogueInstance.Kontaktopplysninger.Informasjon_om_organisas.Organisasjonsnu.replaceAll(' ', '')
         }
       }
     }
