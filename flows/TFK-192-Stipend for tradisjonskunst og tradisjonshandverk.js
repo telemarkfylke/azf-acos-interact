@@ -84,8 +84,8 @@ module.exports = {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
-            AccessCode: 'U',
-            AccessGroup: 'Alle',
+            AccessCode: 'Offl. § 7d',
+            AccessGroup: 'Team kulturarv',
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -107,7 +107,7 @@ module.exports = {
               },
               ...p360Attachments
             ],
-            Paragraph: '',
+            Paragraph: 'Forskrift Offl § 7d fødselsnummer, personnummer og nummer med tilsvarande funksjon',
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
             ResponsiblePersonEmail: nodeEnv === 'production' ? 'anund.johannes.grini@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
