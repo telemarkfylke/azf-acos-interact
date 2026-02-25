@@ -3,8 +3,8 @@ const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
-    enabled: false,
-    doNotRemoveBlobs: true
+    enabled: true,
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,
@@ -21,7 +21,7 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         return {
-          ssn: flowStatus.parseJson.result.SavedValues.Login.UserID
+          ssn: flowStatus.parseJson.result.SavedValues.Login.UserID // FNR fra skjema
         }
       }
     }
@@ -141,9 +141,39 @@ module.exports = {
   closeCase: {
     enabled: false
   },
+  sharepointList: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const personData = flowStatus.parseJson.result.SavedValues
+        const skjemnadata = flowStatus.parseJson.result.DialogueInstance
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studiepermisjon/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studiepermisjon/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: personData.Login.UserID,
+              fornavn: personData.Login.FirstName,
+              etternavn: personData.Login.LastName,
+              adresse: personData.Login.Address,
+              postnummer: personData.Login.PostalCode,
+              poststed: personData.Login.PostalArea,
+              mobiltelefon: personData.Login.Telephone,
+              epost: personData.Login.Email,
+              skoleaar: skjemnadata.Søknad_om_studi.Permisjonsarsak.For_hvilket_skolear_gjel,
+              aarsak: skjemnadata.Søknad_om_studi.Permisjonsarsak.Hva_er_arsaken_til_at_du,
+              stotteLaanekassen: skjemnadata.Søknad_om_studi.Lan_og_stipend.Mottar_du_stotte_fra_Lan
+            }
+          }
+        ]
+      }
+    }
+  },
 
   statistics: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         return {
