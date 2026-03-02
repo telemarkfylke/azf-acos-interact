@@ -57,13 +57,7 @@ module.exports = {
                 IsManualText: true
               }
             ],
-            Contacts: [
-              {
-                ReferenceNumber: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
-                Role: 'Avsender',
-                IsUnofficial: false
-              }
-            ],
+            Contacts: [],
             ResponsibleEnterpriseRecno: flowStatus.syncEmployee.result.responsibleEnterprise.recno,
             ResponsiblePersonEmail: nodeEnv === 'production' ? personData.AzureAD.Manager.UPN : 'tom.jarle.christiansen@telemarkfylke.no',
             AccessGroup: '' // Automatisk
@@ -93,7 +87,13 @@ module.exports = {
             AccessCode: '13',
             AccessGroup: 'Alle',
             Category: 'Dokument inn',
-            Contacts: [],
+            Contacts: [
+              {
+                ReferenceNumber: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
+                Role: 'Avsender',
+                IsUnofficial: false
+              }
+            ],
             DocumentDate: new Date().toISOString(),
             Files: [
               {
