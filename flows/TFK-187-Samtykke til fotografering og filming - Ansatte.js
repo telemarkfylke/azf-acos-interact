@@ -59,7 +59,7 @@ module.exports = {
             ],
             Contacts: [
               {
-                ReferenceNumber: flowStatus.syncEmployee.result.privatePerson.ssn,
+                ReferenceNumber: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
