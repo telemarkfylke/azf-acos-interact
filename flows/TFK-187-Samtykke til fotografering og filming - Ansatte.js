@@ -51,7 +51,7 @@ module.exports = {
                 Sort: 2
               },
               {
-                ArchiveCode: flowStatus.syncEmployee.result.privatePerson.ssn,
+                ArchiveCode: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
                 ArchiveType: 'FNR',
                 Sort: 1,
                 IsManualText: true
