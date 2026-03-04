@@ -20,6 +20,7 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const personData = flowStatus.parseJson.result.SavedValues.Login
+        const personSSN = flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber
         const caseNumber = nodeEnv === 'production' ? '25/20533' : '25/00230'
         const p360Attachments = attachments.map(att => {
           return {
@@ -38,7 +39,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: personData.UserID,
+                ReferenceNumber: personSSN,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
