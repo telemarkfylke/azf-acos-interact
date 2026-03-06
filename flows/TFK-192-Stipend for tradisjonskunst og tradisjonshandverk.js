@@ -84,7 +84,7 @@ module.exports = {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
-            AccessCode: 'Offl. § 7d',
+            AccessCode: 'Offl. § 7d i admin',
             AccessGroup: 'Team kulturarv',
             Category: 'Dokument inn',
             Contacts: [
