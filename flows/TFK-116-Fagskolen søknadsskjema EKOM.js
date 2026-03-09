@@ -191,7 +191,6 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'Fagskolen Vestfold og Telemark',
           department: '',
