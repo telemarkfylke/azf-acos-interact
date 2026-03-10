@@ -1,4 +1,6 @@
-const description = 'Utviklingssamtale for ledere'
+const { nodeEnv } = require('../config')
+
+const description = 'Samtykke til fotografering og filming - Ansatte'
 
 module.exports = {
   config: {
@@ -20,33 +22,7 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         const personData = flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber
         return {
-          ssn: personData // SSN ansatt som er logget inn
-        }
-      }
-    }
-  },
-  handleProject: {
-    enabled: true,
-    options: {
-      mapper: (flowStatus) => {
-        return {
-          service: 'ProjectService',
-          method: 'CreateProject',
-          parameter: {
-            Title: `Personaldokumentasjon - ${flowStatus.syncEmployee.result.privatePerson.name}`,
-            // ResponsiblePersonEmail: flowStatus.parseJsonsyncEmployee.result.email,
-            Contacts: [
-              {
-                Role: 'Kontakt',
-                ReferenceNumber: flowStatus.syncEmployee.result.privatePerson.ssn
-              }
-            ]
-          }
-        }
-      },
-      getProjectParameter: (flowStatus) => {
-        return {
-          Title: `Personaldokumentasjon - ${flowStatus.syncEmployee.result.privatePerson.name}` // check for exisiting project with this title
+          ssn: personData // Fnr ansatt som er logget inn
         }
       }
     }
@@ -55,19 +31,14 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        // const personData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Privatperson
-        const prosjekt = flowStatus.handleProject.result
-        if (!prosjekt.ProjectNumber) {
-          throw new Error('Mangler: ProjectNumber')
-        }
+        const personData = flowStatus.parseJson.result.SavedValues.Login
         return {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
-            ProjectNumber: prosjekt.ProjectNumber,
             CaseType: 'Personal',
-            Title: 'Utviklingssamtale',
-            UnofficialTitle: `Utviklingssamtale - ${flowStatus.syncEmployee.result.privatePerson.name}`,
+            Title: `Samtykke til fotografering og filming - ${personData.FirstName} ${personData.LastName}`,
+            UnofficialTitle: 'Samtykke til fotografering og filming',
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
@@ -75,26 +46,20 @@ module.exports = {
             SubArchive: 'Personal',
             ArchiveCodes: [
               {
-                ArchiveCode: '431',
+                ArchiveCode: '420',
                 ArchiveType: 'FELLESKLASSE PRINSIPP',
                 Sort: 2
               },
               {
-                ArchiveCode: flowStatus.syncEmployee.result.privatePerson.ssn,
+                ArchiveCode: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
                 ArchiveType: 'FNR',
                 Sort: 1,
                 IsManualText: true
               }
             ],
-            Contacts: [
-              {
-                Role: 'Sakspart',
-                ReferenceNumber: flowStatus.syncEmployee.result.privatePerson.ssn,
-                IsUnofficial: true
-              }
-            ],
+            Contacts: [],
             ResponsibleEnterpriseRecno: flowStatus.syncEmployee.result.responsibleEnterprise.recno,
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsiblePersonEmail: nodeEnv === 'production' ? personData.AzureAD.Manager.UPN : 'tom.jarle.christiansen@telemarkfylke.no',
             AccessGroup: '' // Automatisk
           }
         }
@@ -105,8 +70,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const personData = flowStatus.syncEmployee.result.privatePerson
-        const caseNumber = flowStatus.handleCase.result.CaseNumber
+        const personData = flowStatus.parseJson.result.SavedValues.Login
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -121,20 +85,14 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            // AccessGroup: flowStatus.customJobIsPolitician.result === true ? 'Team politisk støtte' : '',
+            AccessGroup: 'Alle',
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: personData.ssn,
+                ReferenceNumber: flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber,
                 Role: 'Avsender',
-                IsUnofficial: true
+                IsUnofficial: false
               }
-              /*,
-              {
-                ReferenceNumber: `recno: ${flowStatus.syncEmployee.result.archiveManager.recno}`,
-                Role: 'Mottaker'
-              }
-              */
             ],
             DocumentDate: new Date().toISOString(),
             Files: [
@@ -143,18 +101,20 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: 'Utviklingssamtale',
-                UnofficialTitle: `Utviklingssamtale - ${personData.name}`,
+                Title: `Samtykke til fotografering og filming - ${personData.FirstName} ${personData.LastName}`,
+                UnofficialTitle: 'Samtykke til fotografering og filming',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             ResponsibleEnterpriseRecno: flowStatus.syncEmployee.result.responsibleEnterprise.recno,
+            ResponsiblePersonEmail: nodeEnv === 'production' ? personData.AzureAD.Manager.UPN : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
-            Title: 'Utviklingssamtale',
+            Title: 'Samtykke til fotografering og filming',
+            UnofficialTitle: `Samtykke til fotografering og filming - ${personData.FirstName} ${personData.LastName}`,
             Archive: 'Personaldokument',
-            CaseNumber: caseNumber
+            CaseNumber: flowStatus.handleCase.result.CaseNumber
           }
         }
       }
@@ -176,7 +136,7 @@ module.exports = {
         return {
           company: 'Telemark Fylkeskommune',
           description,
-          type: 'Utviklingssamtale for ledere' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Samtykke til fotografering og filming - Ansatte' // Required. A short searchable type-name that distinguishes the statistic element
         }
       }
     }

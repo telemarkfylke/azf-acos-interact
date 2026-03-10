@@ -1,5 +1,6 @@
-const description = 'Delegering av anvisningsmyndighet'
-const nodeEnv = require('../config').nodeEnv
+const { nodeEnv } = require('../config')
+
+const description = 'Samtykke til fotografering og filming - Eksterne'
 
 module.exports = {
   config: {
@@ -15,25 +16,11 @@ module.exports = {
       }
     }
   },
-  syncEmployee: {
-    enabled: true,
-    options: {
-      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
-        const personSSN = flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber
-        return {
-          ssn: personSSN // Fnr ansatt som er logget inn
-        }
-      }
-    }
-  },
   archive: {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const personData = flowStatus.parseJson.result.SavedValues.Login
-        const personDelegere = flowStatus.parseJson.result.DialogueInstance.Telemark_fylkes.Delegere_myndig
-        const personSSN = flowStatus.parseJson.result.SavedValues.Integration.UPN_til_SSN.SSN.extension_09851fd03a344926989f13ca3b4da692_employeeNumber
-        const caseNumber = nodeEnv === 'production' ? '25/20533' : '25/00230'
+        const caseNumber = nodeEnv === 'production' ? '26/000593' : '26/00002'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -48,10 +35,11 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: 'U',
-            Category: 'Internt notat med oppfølging',
+            AccessGroup: 'Alle',
+            Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: personSSN,
+                ReferenceNumber: flowStatus.parseJson.result.SavedValues.Login.UserID,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -63,17 +51,16 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Delegering av anvisningsmyndighet - ${personDelegere.Fornavn___mello} ${personDelegere.Etternavn}`,
-                UnofficialTitle: `Delegering av anvisningsmyndighet - ${personDelegere.Fornavn___mello} ${personDelegere.Etternavn}`,
+                Title: `Samtykke til fotografering og filming - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`,
+                UnofficialTitle: '',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
-            // Paragraph: 'Offl. § 26 femte ledd',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200012' : '200010', // Sektor for økonomi og virksomhetsstyring
-            ResponsiblePersonEmail: personData.Email, // Trine
+            Paragraph: 'Offl. § 26 femte ledd',
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200058' : '200040',
             Status: 'J',
-            Title: 'Delegering av anvisningsmyndighet',
+            Title: `Samtykke til fotografering og filming - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
@@ -97,7 +84,7 @@ module.exports = {
         return {
           company: 'Telemark Fylkeskommune',
           description,
-          type: 'Delegering av anvisningsmyndighet' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Samtykke til fotografering og filming - Eksterne' // Required. A short searchable type-name that distinguishes the statistic element
         }
       }
     }

@@ -161,6 +161,7 @@ module.exports = {
               SkoleEpost: jsonData.Dataset.Skole.Epost,
               Fagoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Jeg_ønsker_mer_.Fagopplæring1,
               Voksenoppl_x00e6_ring: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Voksenopplæring.VO_fag,
+              Eksamen: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Eksamen_i_lære.Beskriv_hva_sla,
               Saksnummer: flowStatus.syncElevmappe.result.elevmappe.CaseNumber
             }
           }
