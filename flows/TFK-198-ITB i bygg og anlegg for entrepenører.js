@@ -175,7 +175,7 @@ module.exports = {
             uploadFormAttachments: true,
             fields: {
               Title: dialogData.Gruppe.Fornavn + ' ' + dialogData.Gruppe.Etternavn,
-              fnr: dialogData.Gruppe.Fodselsnummer,
+              fnr: dialogData.Gruppe.Fodselsnummer.slice(0, 6),
               fornavn: dialogData.Gruppe.Fornavn,
               etternavn: dialogData.Gruppe.Etternavn,
               adresse: dialogData.Gruppe.Adresse,
