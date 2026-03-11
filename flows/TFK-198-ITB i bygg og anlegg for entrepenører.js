@@ -18,7 +18,7 @@ const getFakturaAdresse = function (dialogData, loginData) {
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseJson: {
     enabled: true,
