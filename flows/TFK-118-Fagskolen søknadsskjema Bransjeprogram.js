@@ -174,7 +174,7 @@ module.exports = {
               praksisFartstid: skjemaData.Utdanning_og_praksis.Gruppe11?.map(r => `Arbeidssted: ${r.Arbeidssted2}, Art: ${r.Arbeidets_art2}, Antall måneder: ${r.Antall_maneder2}`).join('\n'),
               samtykkeInfo: skjemaData.Samtykke2.Samtykke.Jeg_onsker_a_motta_infor,
               studiekontrakt: skjemaData.Samtykke2.Studiekontrakte.Bekreft,
-              oppstartsdato: skjemaData.Soknad.Bransje.Nar_onsker_du_a_delta_,
+              oppstartsdato: skjemaData.Soknad.Bransje.Nar_onsker_du_a_delta_
             }
           }
         ]

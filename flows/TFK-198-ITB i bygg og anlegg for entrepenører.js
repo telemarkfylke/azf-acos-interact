@@ -1,20 +1,18 @@
 const description = 'Fagskolen Søknadsskjmema for ITB i bygg og anlegg for entreprenører'
 const { nodeEnv } = require('../config')
 
-const getFakturaAdresse = function(dialogData, loginData){
-	if(dialogData.Hvem_skal_betal.Velg === "Arbeidsgiver"){
-		const data =dialogData.Hvem_skal_betal.Organisasjon
-		return `${data.Organisasjon_gatenavn_og__nu}, ${data.Organisasjon_postnr}	${data.Organisasjon_poststed}`
-	}
-	else {
-		if(loginData.IDPorten?.Folkeregister){
-			const data = loginData.IDPorten?.Folkeregister
-			return `${data.Gatenavn} ${data.Gatenummer}, ${data.Postnummer}	${data.Poststed}`
-		}
-		else{
-			return `${loginData.Address}, ${loginData.PostalCode}	${loginData.PostalArea}`
-		}		
-	}
+const getFakturaAdresse = function (dialogData, loginData) {
+  if (dialogData.Hvem_skal_betal.Velg === 'Arbeidsgiver') {
+    const data = dialogData.Hvem_skal_betal.Organisasjon
+    return `${data.Organisasjon_gatenavn_og__nu}, ${data.Organisasjon_postnr} ${data.Organisasjon_poststed}`
+  } else {
+    if (loginData.IDPorten?.Folkeregister) {
+      const data = loginData.IDPorten?.Folkeregister
+      return `${data.Gatenavn} ${data.Gatenummer}, ${data.Postnummer} ${data.Poststed}`
+    } else {
+      return `${loginData.Address}, ${loginData.PostalCode} ${loginData.PostalArea}`
+    }
+  }
 }
 
 module.exports = {
@@ -167,7 +165,7 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         const dialogData = flowStatus.parseJson.result.DialogueInstance.P\u00E5melding_til_k
-				const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
+        const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
         const loginValues = flowStatus.parseJson.result.SavedValues.Login
         return [
           {
@@ -195,17 +193,17 @@ module.exports = {
               utdanningsnivaa: dialogData.Utdanning_og_praksis.Utdanningsniva,
               naastilling: dialogData.Utdanning_og_praksis.Navarende_stilling,
               sistearbeidssted: dialogData.Utdanning_og_praksis.Siste_arbeidssted,
-							fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
+              fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
               samtykkeInfo: samtykkeData.Samtykke2.Jeg_onsker_a_motta_infor,
               studiekontrakt: samtykkeData.Studiekontrakte.Bekreft,
               fakturareferanse: dialogData.Faktura_ref.Refferanse_p\u00E5_f
 
-							// Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
-							/*
-							  oppstartmnd: xmlData.oppstartmnd,
-                kontaktperson: xmlData.ekstra3,   
+              // Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
+              /*
+                oppstartmnd: xmlData.oppstartmnd,
+                kontaktperson: xmlData.ekstra3,
                 fylke: xmlData.ekstra4
-							*/
+              */
             }
           }
         ]
