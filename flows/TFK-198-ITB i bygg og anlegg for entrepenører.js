@@ -1,10 +1,24 @@
-const description = 'Fagskolen søknadsskjema Bransjeprogram'
+const description = 'Fagskolen Søknadsskjmema for ITB i bygg og anlegg for entreprenører'
 const { nodeEnv } = require('../config')
+
+const getFakturaAdresse = function (dialogData, loginData) {
+  if (dialogData.Hvem_skal_betal.Velg === 'Arbeidsgiver') {
+    const data = dialogData.Hvem_skal_betal.Organisasjon
+    return `${data.Organisasjon_gatenavn_og__nu}, ${data.Organisasjon_postnr} ${data.Organisasjon_poststed}`
+  } else {
+    if (loginData.IDPorten?.Folkeregister) {
+      const data = loginData.IDPorten?.Folkeregister
+      return `${data.Gatenavn} ${data.Gatenummer}, ${data.Postnummer} ${data.Poststed}`
+    } else {
+      return `${loginData.Address}, ${loginData.PostalCode} ${loginData.PostalArea}`
+    }
+  }
+}
 
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: true
   },
   parseJson: {
     enabled: true,
@@ -19,7 +33,8 @@ module.exports = {
   syncPrivatePerson: {
     enabled: true,
     options: {
-      mapper: (flowStatus) => {
+      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+        // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
           ssn: flowStatus.parseJson.result.SavedValues.Login.UserID // FNR fra skjema
         }
@@ -84,8 +99,8 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const archiveTitle = `Søknad kurs - Bransjeprogram - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
-        const publicTitle = 'Søknad kurs - Bransjeprogram'
+        const archiveTitle = `Søknad kurs - Energirådgiver elektro - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
+        const publicTitle = 'Søknad kurs - Energirådgiver elektro'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -144,37 +159,51 @@ module.exports = {
   closeCase: {
     enabled: false
   },
+
   sharepointList: {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.SavedValues.Login
-        const skjemaData = flowStatus.parseJson.result.DialogueInstance
+        const dialogData = flowStatus.parseJson.result.DialogueInstance.P\u00E5melding_til_k
+        const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
+        const loginValues = flowStatus.parseJson.result.SavedValues.Login
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Bransjeprogram/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Bransjeprogram/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.FirstName + ' ' + personData.LastName,
-              soknadsreferanse: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
-              fdato: personData.UserID.slice(0, 6),
-              fornavn: personData.FirstName,
-              etternavn: personData.LastName,
-              adresse: personData.Address,
-              postnummer: personData.PostalCode,
-              poststed: personData.PostalArea,
-              mobilnummer: personData.Telephone,
-              epostadresse: personData.Email,
-              bransjeprogram: skjemaData.Soknad.Bransje.Velg_bransje,
-              utdanning: skjemaData.Soknad.Bransje.Velg_bransje,
-              fagSvennebrev: skjemaData.Utdanning_og_praksis.Gruppe9?.map(r => `Fag: ${r.Fag3}, Årstall: ${r._rstall3}`).join('\n'),
-              annenUtdanning: skjemaData.Utdanning_og_praksis.Gruppe10?.map(r => `Nivå: ${r.Niva2}, Fag: ${r.Fag4}, Årstall: ${r._rstall4}`).join('\n'),
-              praksisFartstid: skjemaData.Utdanning_og_praksis.Gruppe11?.map(r => `Arbeidssted: ${r.Arbeidssted2}, Art: ${r.Arbeidets_art2}, Antall måneder: ${r.Antall_maneder2}`).join('\n'),
-              samtykkeInfo: skjemaData.Samtykke2.Samtykke.Jeg_onsker_a_motta_infor,
-              studiekontrakt: skjemaData.Samtykke2.Studiekontrakte.Bekreft,
-              oppstartsdato: skjemaData.Soknad.Bransje.Nar_onsker_du_a_delta_
+              Title: dialogData.Gruppe.Fornavn + ' ' + dialogData.Gruppe.Etternavn,
+              fnr: dialogData.Gruppe.Fodselsnummer.slice(0, 6),
+              fornavn: dialogData.Gruppe.Fornavn,
+              etternavn: dialogData.Gruppe.Etternavn,
+              adresse: dialogData.Gruppe.Adresse,
+              postnummer: dialogData.Gruppe.Postnummer_sted_postnr,
+              poststed: dialogData.Gruppe.Postnummer_sted_poststed,
+              mobilnummer: dialogData.Gruppe.Mobilnummer,
+              epostadresse: dialogData.Gruppe.E_postadresse,
+              sokertype: dialogData.Hvem_skal_betal.Velg,
+              orgnr: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_orgnr,
+              orgnavn: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_orgnavn,
+              orgadresse: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_gatenavn_og__nu,
+              orgpostnr: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_postnr,
+              orgpoststed: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_poststed,
+              fakturadresse: getFakturaAdresse(dialogData, loginValues),
+              utdanningsnivaa: dialogData.Utdanning_og_praksis.Utdanningsniva,
+              naastilling: dialogData.Utdanning_og_praksis.Navarende_stilling,
+              sistearbeidssted: dialogData.Utdanning_og_praksis.Siste_arbeidssted,
+              fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
+              samtykkeInfo: samtykkeData.Samtykke2.Jeg_onsker_a_motta_infor,
+              studiekontrakt: samtykkeData.Studiekontrakte.Bekreft,
+              fakturareferanse: dialogData.Faktura_ref.Refferanse_p\u00E5_f
+
+              // Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
+              /*
+                oppstartmnd: xmlData.oppstartmnd,
+                kontaktperson: xmlData.ekstra3,
+                fylke: xmlData.ekstra4
+              */
             }
           }
         ]
@@ -185,13 +214,14 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'Fagskolen Vestfold og Telemark',
           department: '',
           description, // Required. A description of what the statistic element represents
-          type: 'Søknad Fagskolen', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Søknad Fagskolen' // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
+          // documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
       }
     }
