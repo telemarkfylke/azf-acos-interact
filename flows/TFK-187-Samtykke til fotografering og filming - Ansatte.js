@@ -2,6 +2,11 @@ const { nodeEnv } = require('../config')
 
 const description = 'Samtykke til fotografering og filming - Ansatte'
 
+const formatDate = (iso) => {
+  const d = new Date(iso)
+  return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()} kl.${String(d.getHours()).padStart(2, '0')}.${String(d.getMinutes()).padStart(2, '0')}`
+}
+
 module.exports = {
   config: {
     enabled: true,
@@ -127,7 +132,31 @@ module.exports = {
   closeCase: { // Den henter saksnummer fra denne jobben og lukker saken.
     enabled: false
   },
-
+  sharepointList: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const personData = flowStatus.parseJson.result.SavedValues.Login
+        const skjemaData = flowStatus.parseJson.result.DialogueInstance
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/Kommunikasjonsgruppa/Lists/SamtykkerFotoFilm/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/Kommunikasjonsgruppa/Lists/SamtykkerFotoFilm/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              Dato: formatDate(flowStatus.parseJson.result.Metadata.Submitted),
+              Navn: personData.FirstName + ' ' + personData.LastName,
+              Rolle: 'Ansatt',
+              Samtykke: skjemaData.Samtykke.Samtykke.Kryss_av,
+              SamtykkeEkstern: skjemaData.Samtykke.Samtykke.Kryss_av1
+            }
+          }
+        ]
+      }
+    }
+  },
   statistics: {
     enabled: true,
     options: {
