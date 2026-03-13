@@ -6,7 +6,8 @@ module.exports = async function (context, req) {
     prefix: 'azf-acos-interact - Dispatcher'
   })
   try {
-    const result = await dispatcher()
+    const flowFilter = req.query?.flow || null
+    const result = await dispatcher(flowFilter)
     return { status: 200, body: result }
   } catch (error) {
     console.log(error)
