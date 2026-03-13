@@ -148,23 +148,28 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const personData = flowStatus.parseJson.result.SavedValues.Login
-        const skjemaData = flowStatus.parseJson.result.DialogueInstance
-        const soknadType = skjemaData.Sett_kryss_for_tilrettel === 'Annet'
-          ? skjemaData.Spesifiser_Anne
+        const personData = flowStatus.parseJson.result.SavedValues
+        const skjemaData = flowStatus.parseJson.result.DialogueInstance.Søknad_om_tilre
+        const tilretteleggingsData = skjemaData.Tilrettelegging.Sett_kryss_for_tilrettel === 'Annet'
+          ? 'Annet: ' + skjemaData.Tilrettelegging.Spesifiser_Anne
           : skjemaData.Sett_kryss_for_tilrettel
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/tilrettelegging/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/tilrettelegging/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              //TODO: må avklare om dette og de andre "fritaksskjemaene skal i samme eller separate"
-              Title: personData.FirstName + ' ' + personData.LastName,
-              E_x002d_post: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
-              S_x00f8_knadstype: soknadType,
-              Klasse: skjemaData.Klasse
+              Title: personData.Login.UserID,
+              fornavn: personData.Login.FirstName,
+              etternavn: personData.Login.LastName,
+              adresse: personData.Login.Address,
+              postnummer: personData.Login.PostalCode,
+              poststed: personData.Login.PostalArea,
+              mobilnummer: personData.Login.Telephone,
+              epost: personData.Login.Email,
+              klasse: skjemaData.Tilhørlighet.Klasse,
+              tilrettelegging: tilretteleggingsData
             }
           }
         ]
