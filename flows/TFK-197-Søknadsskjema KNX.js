@@ -99,8 +99,8 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const archiveTitle = `Søknad - KNX - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
-        const publicTitle = 'Søknad - KNX'
+        const archiveTitle = `Søknad kurs - KNX - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
+        const publicTitle = 'Søknad kurs - KNX'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -196,19 +196,6 @@ module.exports = {
               fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
               samtykkeInfo: samtykkeData.Samtykke2.Jeg_onsker_a_motta_infor,
               fakturareferanse: dialogData.Faktura_ref.Refferanse_p\u00E5_f
-
-              // Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
-              /*
-								oppstartmnd: xmlData.oppstartmnd,
-                kontaktperson: xmlData.ekstra3,
-                fylke: xmlData.ekstra4
-              */
-
-								// Disse feltene ligger ikke i lista man skla inn i 
-
-								/*
-								studiekontrakt: samtykkeData.Studiekontrakte.Bekreft,
-								*/
             }
           }
         ]

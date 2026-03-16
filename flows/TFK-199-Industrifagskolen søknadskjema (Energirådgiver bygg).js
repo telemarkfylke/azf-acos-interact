@@ -151,8 +151,7 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         const dialogData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_
-        const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
-        const loginValues = flowStatus.parseJson.result.SavedValues.Login
+
         return [
           {
             testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Industrifagskolen/AllItems.aspx',
@@ -169,9 +168,9 @@ module.exports = {
               poststed: dialogData.Privatperson.Poststed1,
               mobilnummer: dialogData.Privatperson.Telefon1,
               epostadresse: dialogData.Privatperson.E_post,
-							utdanning:dialogData.Utdanning.Hvilken_utdanni,
-							soknadsgrunnlag:dialogData.Utdanning.P\u00E5_hvilket_grun,
-							opptaksgrunnlag:dialogData.Utdanning.Hvilket_opptaks
+              utdanning: dialogData.Utdanning.Hvilken_utdanni,
+              soknadsgrunnlag: dialogData.Utdanning.P\u00E5_hvilket_grun,
+              opptaksgrunnlag: dialogData.Utdanning.Hvilket_opptaks
             }
           }
         ]

@@ -99,8 +99,8 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const archiveTitle = `Søknad kurs - ITB Bygg og anlegg - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
-        const publicTitle = 'Søknad kurs - ITB Bygg og anlegg'
+        const archiveTitle = `Søknad kurs - ITB i bygg og anlegg for entrepenører - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
+        const publicTitle = 'Søknad kurs - ITB i bygg og anlegg for entrepenører'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
