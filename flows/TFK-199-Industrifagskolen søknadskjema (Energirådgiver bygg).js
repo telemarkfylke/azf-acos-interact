@@ -1,19 +1,5 @@
-const description = 'Fagskolen Søknadsskjmema for ITB i bygg og anlegg for entreprenører'
+const description = 'Fagskolen Søknadsskjmema for Industrifagskolen Energirådgiver bygg'
 const { nodeEnv } = require('../config')
-
-const getFakturaAdresse = function (dialogData, loginData) {
-  if (dialogData.Hvem_skal_betal.Velg === 'Arbeidsgiver') {
-    const data = dialogData.Hvem_skal_betal.Organisasjon
-    return `${data.Organisasjon_gatenavn_og__nu}, ${data.Organisasjon_postnr} ${data.Organisasjon_poststed}`
-  } else {
-    if (loginData.IDPorten?.Folkeregister) {
-      const data = loginData.IDPorten?.Folkeregister
-      return `${data.Gatenavn} ${data.Gatenummer}, ${data.Postnummer} ${data.Poststed}`
-    } else {
-      return `${loginData.Address}, ${loginData.PostalCode} ${loginData.PostalArea}`
-    }
-  }
-}
 
 module.exports = {
   config: {
@@ -99,8 +85,8 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const archiveTitle = `Søknad kurs - ITB i bygg og anlegg for entrepenører - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
-        const publicTitle = 'Søknad kurs - ITB i bygg og anlegg for entrepenører'
+        const archiveTitle = `Søknad kurs - Energirådgiver bygg - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
+        const publicTitle = 'Søknad kurs - Energirådgiver bygg'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -164,46 +150,27 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const dialogData = flowStatus.parseJson.result.DialogueInstance.P\u00E5melding_til_k
-        const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
-        const loginValues = flowStatus.parseJson.result.SavedValues.Login
+        const dialogData = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_
+
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Industrifagskolen/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/Industrifagskolen/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: dialogData.Gruppe.Fornavn + ' ' + dialogData.Gruppe.Etternavn,
-              fnr: dialogData.Gruppe.Fodselsnummer.slice(0, 6),
-              fornavn: dialogData.Gruppe.Fornavn,
-              etternavn: dialogData.Gruppe.Etternavn,
-              adresse: dialogData.Gruppe.Adresse,
-              postnummer: dialogData.Gruppe.Postnummer_sted_postnr,
-              poststed: dialogData.Gruppe.Postnummer_sted_poststed,
-              mobilnummer: dialogData.Gruppe.Mobilnummer,
-              epostadresse: dialogData.Gruppe.E_postadresse,
-              sokertype: dialogData.Hvem_skal_betal.Velg,
-              orgnr: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_orgnr,
-              orgnavn: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_orgnavn,
-              orgadresse: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_gatenavn_og__nu,
-              orgpostnr: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_postnr,
-              orgpoststed: dialogData.Hvem_skal_betal.Organisasjon.Organisasjon_poststed,
-              fakturadresse: getFakturaAdresse(dialogData, loginValues),
-              utdanningsnivaa: dialogData.Utdanning_og_praksis.Utdanningsniva,
-              naastilling: dialogData.Utdanning_og_praksis.Navarende_stilling,
-              sistearbeidssted: dialogData.Utdanning_og_praksis.Siste_arbeidssted,
-              fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
-              samtykkeInfo: samtykkeData.Samtykke2.Jeg_onsker_a_motta_infor,
-              studiekontrakt: samtykkeData.Studiekontrakte.Bekreft,
-              fakturareferanse: dialogData.Faktura_ref.Refferanse_p\u00E5_f
-
-              // Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
-              /*
-                oppstartmnd: xmlData.oppstartmnd,
-                kontaktperson: xmlData.ekstra3,
-                fylke: xmlData.ekstra4
-              */
+              Title: dialogData.Privatperson.Fornavn1 + ' ' + dialogData.Privatperson.Etternavn1,
+              fnr: dialogData.Privatperson.F\u00F8dselsnummer1.slice(0, 6),
+              fornavn: dialogData.Privatperson.Fornavn1,
+              etternavn: dialogData.Privatperson.Etternavn1,
+              adresse: dialogData.Privatperson.Adresse1,
+              postnummer: dialogData.Privatperson.Postnummer1,
+              poststed: dialogData.Privatperson.Poststed1,
+              mobilnummer: dialogData.Privatperson.Telefon1,
+              epostadresse: dialogData.Privatperson.E_post,
+              utdanning: dialogData.Utdanning.Hvilken_utdanni,
+              soknadsgrunnlag: dialogData.Utdanning.P\u00E5_hvilket_grun,
+              opptaksgrunnlag: dialogData.Utdanning.Hvilket_opptaks
             }
           }
         ]

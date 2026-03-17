@@ -1,4 +1,4 @@
-const description = 'Fagskolen Søknadsskjmema for ITB i bygg og anlegg for entreprenører'
+const description = 'Søknadsskjema KNX'
 const { nodeEnv } = require('../config')
 
 const getFakturaAdresse = function (dialogData, loginData) {
@@ -99,8 +99,8 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const archiveTitle = `Søknad kurs - ITB i bygg og anlegg for entrepenører - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
-        const publicTitle = 'Søknad kurs - ITB i bygg og anlegg for entrepenører'
+        const archiveTitle = `Søknad kurs - KNX - ${flowStatus.parseJson.result.SavedValues.Login.FirstName} ${flowStatus.parseJson.result.SavedValues.Login.LastName}`
+        const publicTitle = 'Søknad kurs - KNX'
         const caseNumber = nodeEnv === 'production' ? flowStatus.handleCase.result.CaseNumber : flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -169,8 +169,8 @@ module.exports = {
         const loginValues = flowStatus.parseJson.result.SavedValues.Login
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/ITB%20i%20bygg%20og%20anlegg/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/KNX/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/KNX/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -195,15 +195,7 @@ module.exports = {
               sistearbeidssted: dialogData.Utdanning_og_praksis.Siste_arbeidssted,
               fartstid: dialogData.Utdanning_og_praksis.Fartstid__antall_ar_,
               samtykkeInfo: samtykkeData.Samtykke2.Jeg_onsker_a_motta_infor,
-              studiekontrakt: samtykkeData.Studiekontrakte.Bekreft,
               fakturareferanse: dialogData.Faktura_ref.Refferanse_p\u00E5_f
-
-              // Disse feltene ligger ikke i nye json fila, så vet ikke hvor jeg skal få dette ifra.
-              /*
-                oppstartmnd: xmlData.oppstartmnd,
-                kontaktperson: xmlData.ekstra3,
-                fylke: xmlData.ekstra4
-              */
             }
           }
         ]
