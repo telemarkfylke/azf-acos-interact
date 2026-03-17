@@ -36,7 +36,7 @@ module.exports = {
           parameter: {
             CaseType: 'Sak',
             Project: nodeEnv === 'production' ? '25-510' : '25-7', // Må lages nytt prosjekt for Prod i 2024,
-            Title: 'Flerårige samarbeidsavtaler på kulturfeltet',
+            Title: `Flerårig samarbeidsavtale på kulturfeltet - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
             UnofficialTitle: '',
             Status: 'B',
             AccessCode: 'U',
@@ -105,8 +105,8 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Skjema - flerårig samarbeidsavtale - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
-                UnofficialTitle: `Skjema - flerårig samarbeidsavtale - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
+                Title: `Flerårig samarbeidsavtale på kulturfeltet - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
+                UnofficialTitle: `Flerårig samarbeidsavtale på kulturfeltet - ${flowStatus.parseJson.result.DialogueInstance.Søknadsskjema.Informasjon_om_.Navn_på_organis}`,
                 VersionFormat: 'A'
               },
               ...p360Attachments
