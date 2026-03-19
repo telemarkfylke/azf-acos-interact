@@ -4,7 +4,7 @@ const nodeEnv = require('../config').nodeEnv
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: nodeEnv !== 'production'
   },
   parseJson: {
     enabled: true,
