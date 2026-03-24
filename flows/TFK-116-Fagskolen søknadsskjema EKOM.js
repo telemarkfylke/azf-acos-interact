@@ -160,7 +160,7 @@ module.exports = {
             fields: {
               Title: personData.FirstName + ' ' + personData.LastName,
               soknadsreferanse: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
-              fdato: personData.UserID.slice(0, 6),
+              fdato: personData.UserID,
               fornavn: personData.FirstName,
               etternavn: personData.LastName,
               adresse: personData.Address,

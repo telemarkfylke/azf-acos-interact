@@ -158,7 +158,7 @@ module.exports = {
             uploadFormAttachments: true,
             fields: {
               Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
-              fnr: personData.UserID.slice(0, 6),
+              fnr: personData.UserID,
               fornavn: personData.FirstName,
               etternavn: personData.LastName,
               adresse: personData.Address,

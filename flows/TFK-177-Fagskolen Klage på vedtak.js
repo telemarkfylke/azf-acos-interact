@@ -157,7 +157,7 @@ module.exports = {
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.Login.UserID.slice(0, 6),
+              Title: personData.Login.UserID,
               fornavn: personData.Login.FirstName,
               etternavn: personData.Login.LastName,
               adresse: personData.Login.Address,
