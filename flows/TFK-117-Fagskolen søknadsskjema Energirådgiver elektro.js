@@ -179,7 +179,7 @@ module.exports = {
               sisteArbeidsstedSoker: skjemaData.Utdanning_og_praksis.sisteArbeidssted,
               fartstidSoker: skjemaData.Utdanning_og_praksis.Fartstid__antall_ar_,
               samtykkeInfo: flowStatus.parseJson.result.DialogueInstance.Samtykke.Samtykke2.Jeg_onsker_a_motta_infor,
-              fakturareferanse: skjemaData.Faktura_ref.u00E5_f,
+              fakturareferanse: skjemaData.Faktura_ref.Refferanse_p\u00E5_f,
               lestKontrakt: flowStatus.parseJson.result.DialogueInstance.Samtykke.Studiekontakten.Bekreft
             }
           }
