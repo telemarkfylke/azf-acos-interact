@@ -167,6 +167,7 @@ module.exports = {
               epostadresse: personData.Email,
               utdanning: skjemaData.Informasjon_om_.Utdanning.Hvilken_utdanni,
               grunnlag: skjemaData.Informasjon_om_.Utdanning.P\u00E5_hvilket_grun,
+              Hvilketopptaksgrunnlag_x003f_: skjemaData.Informasjon_om_.Utdanning.Hvilket_opptaks,
               samtykkeInfo: skjemaData.Samtykke.Samtykke.Jeg_\u00F8nsker_\u00E5_mo,
               studiekontrakt: skjemaData.Samtykke.Studiekontrakte.Bekreft
             }
