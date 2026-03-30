@@ -99,7 +99,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Søknad om utviklingsstipend for unge kulturutøvere`,
+                Title: 'Søknad om utviklingsstipend for unge kulturutøvere',
                 UnofficialTitle: `Søknad om utviklingsstipend for unge kulturutøvere - ${personData.FirstName} ${personData.LastName}`,
                 VersionFormat: 'A'
               },
@@ -109,7 +109,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
             ResponsiblePersonEmail: nodeEnv === 'production' ? 'ronnaug.flatin@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
-            Title: `Søknad om utviklingsstipend for unge kulturutøvere - ${personData.FirstName} ${personData.LastName}`,
+            Title: 'Søknad om utviklingsstipend for unge kulturutøvere',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
