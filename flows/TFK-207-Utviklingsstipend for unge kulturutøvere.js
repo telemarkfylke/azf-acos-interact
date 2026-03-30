@@ -89,7 +89,7 @@ module.exports = {
               {
                 ReferenceNumber: personData.UserID,
                 Role: 'Avsender',
-                IsUnofficial: false
+                IsUnofficial: true
               }
             ],
             DocumentDate: new Date().toISOString(),
@@ -99,8 +99,8 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Søknad om utviklingsstipend for unge kulturutøvere - ${personData.FirstName} ${personData.LastName}`,
-                UnofficialTitle: 'Søknad om utviklingsstipend for unge kulturutøvere',
+                Title: `Søknad om utviklingsstipend for unge kulturutøvere`,
+                UnofficialTitle: `Søknad om utviklingsstipend for unge kulturutøvere - ${personData.FirstName} ${personData.LastName}`,
                 VersionFormat: 'A'
               },
               ...p360Attachments
