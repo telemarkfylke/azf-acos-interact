@@ -42,7 +42,7 @@ module.exports = {
             forceUpdate: true // optional - forces update of privatePerson instead of quick return if it exists
           }
           return payload
-        } else if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Har_du_norsk_f\u00F8 === 'Ja') {
+        } else if (flowStatus.parseJson.result.DialogueInstance.Opplysninger.Om_soker.Har_du_norsk_f\u00F8 === 'Ja' || flowStatus.parseJson.result.DialogueInstance.Opplysninger.Er_dette_deg_1.Sjekk_de_automa === 'Ja, informasjonen i feltene under gjelder meg') {
           return {
             ssn: fnr
           }
