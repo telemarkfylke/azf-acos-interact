@@ -152,12 +152,13 @@ module.exports = {
         const skjemaData = flowStatus.parseJson.result.DialogueInstance
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/SoknadFritak_godskriving/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/SoknadFritak_godskriving/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
               Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              S_x00f8_knadstype: 'fritak eller godskriving',
               fodselsnummer: personData.Login.UserID,
               fornavn: personData.Login.FirstName,
               etternavn: personData.Login.LastName,
@@ -167,7 +168,7 @@ module.exports = {
               mobilnummer: personData.Login.Telephone,
               epost: personData.Login.Email,
               studium: skjemaData.Om_soker.Informasjon_om_.Hvilket_studium1,
-              klasse: skjemaData.Om_soker.Informasjon_om_.Klassetilh\u00F8righ,
+              Klasse: skjemaData.Om_soker.Informasjon_om_.Klassetilh\u00F8righ,
               kursemne: skjemaData.Studium_og_emne.Spesifiser_emne?.map(r => `Kurskode: ${r.Kurskode}, Navn på emne: ${r.Navn_pa_emne}`).join('\n')
             }
           }
