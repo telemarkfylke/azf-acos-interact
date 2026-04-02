@@ -155,12 +155,14 @@ module.exports = {
           : skjemaData.Sett_kryss_for_tilrettel
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/tilrettelegging/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/tilrettelegging/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.Login.UserID,
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              S_x00f8_knadstype: 'Tilrettelegging',
+              fodselsnummer: personData.Login.UserID,
               fornavn: personData.Login.FirstName,
               etternavn: personData.Login.LastName,
               adresse: personData.Login.Address,
@@ -168,7 +170,7 @@ module.exports = {
               poststed: personData.Login.PostalArea,
               mobilnummer: personData.Login.Telephone,
               epost: personData.Login.Email,
-              klasse: skjemaData.Tilhørlighet.Klasse,
+              Klasse: skjemaData.Tilhørlighet.Klasse,
               tilrettelegging: tilretteleggingsData
             }
           }

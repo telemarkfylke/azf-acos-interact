@@ -149,18 +149,20 @@ module.exports = {
         const skjemnadata = flowStatus.parseJson.result.DialogueInstance
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studiepermisjon/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studiepermisjon/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.Login.UserID,
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              S_x00f8_knadstype: 'Studiepermisjon',
+              fodselsnummer: personData.Login.UserID,
               fornavn: personData.Login.FirstName,
               etternavn: personData.Login.LastName,
               adresse: personData.Login.Address,
               postnummer: personData.Login.PostalCode,
               poststed: personData.Login.PostalArea,
-              mobiltelefon: personData.Login.Telephone,
+              mobilnummer: personData.Login.Telephone,
               epost: personData.Login.Email,
               skoleaar: skjemnadata.Søknad_om_studi.Permisjonsarsak.For_hvilket_skolear_gjel,
               aarsak: skjemnadata.Søknad_om_studi.Permisjonsarsak.Hva_er_arsaken_til_at_du,
