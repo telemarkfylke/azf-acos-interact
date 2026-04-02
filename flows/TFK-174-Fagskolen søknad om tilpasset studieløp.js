@@ -152,12 +152,14 @@ module.exports = {
         const skjemaData = flowStatus.parseJson.result.DialogueInstance.S\u00F8knad_om_tilpa
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Tilpasset%20studielp/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Tilpasset%20studielp/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-Studieadministrasjon/Lists/Studentsknader/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.Login.UserID,
+              Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
+              S_x00f8_knadstype: 'tilpasset studieløp',
+              fodselsnummer: personData.Login.UserID,
               fornavn: personData.Login.FirstName,
               etternavn: personData.Login.LastName,
               adresse: personData.Login.Address,
@@ -166,14 +168,14 @@ module.exports = {
               mobilnummer: personData.Login.Telephone,
               epost: personData.Login.Email,
               studium: skjemaData.Informasjon_om_.Hvilket_studium,
-              klasse: skjemaData.Informasjon_om_.Klasse,
-              begrunnelse: skjemaData.\u00C5rsak.Begrunnelse_for,
+              Klasse: skjemaData.Informasjon_om_.Klasse,
+              begrunnlese: skjemaData.\u00C5rsak.Begrunnelse_for, // obs: Legg merke til "trykkleif" i SP-feltnavn
               dokumentasjon: skjemaData.\u00C5rsak.\u00D8nsker_du_\u00E5_las,
-              _x0061_ar1: skjemaData.Tilpasset_studi.\u00C5r_1_,
-              _x0061_ar2: skjemaData.Tilpasset_studi.\u00C5r_2_,
-              _x0061_ar3: skjemaData.Tilpasset_studi.\u00C5r_3_,
-              _x0061_ar4: skjemaData.Tilpasset_studi.\u00C5r_4_,
-              kommentar: skjemaData.Tilpasset_studi.Kommentar
+              _x0061_r1: skjemaData.Tilpasset_studi.\u00C5r_1_,
+              _x0061_r2: skjemaData.Tilpasset_studi.\u00C5r_2_,
+              _x0061_r3: skjemaData.Tilpasset_studi.\u00C5r_3_,
+              _x0061_r4: skjemaData.Tilpasset_studi.\u00C5r_4_,
+              Kommentar: skjemaData.Tilpasset_studi.Kommentar
             }
           }
         ]
