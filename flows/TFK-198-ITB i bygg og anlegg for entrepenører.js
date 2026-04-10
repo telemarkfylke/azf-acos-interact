@@ -18,7 +18,7 @@ const getFakturaAdresse = function (dialogData, loginData) {
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: nodeEnv !== 'production' // for å kunne teste flere ganger uten å fylle opp blob-lagringen
   },
   parseJson: {
     enabled: true,
