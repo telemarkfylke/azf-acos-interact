@@ -166,7 +166,7 @@ module.exports = {
               mobilnummer: personData.Telephone,
               epostadresse: personData.Email,
               utdanning: skjemaData.Inns\u00F8kning_til.Opplysninger_om_soker.Utdanningsbakgrunn,
-              pri1host: skjemaData.Inns\u00F8kning_til.Modulvalg___H\u00F8s._1__prioritet,
+              pri1host0: skjemaData.Inns\u00F8kning_til.Modulvalg___H\u00F8s._1__prioritet,
               pri1vinter: skjemaData.Inns\u00F8kning_til.Modulvalg___Vinter._1__prioritet2,
               pri2vinter: skjemaData.Inns\u00F8kning_til.Modulvalg___Vinter._2__prioritet2,
               pri1vaar: skjemaData.Inns\u00F8kning_til.Modulvalg___Var._1__prioritet3,
