@@ -21,7 +21,7 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseJson.result.DialogueInstance.Informasjon_om_1.Informasjon_om_.F\u00F8dselsnummer_D // Fnr til eleven som meldingen gjelder SJEKK OM DENNE ALLTID SKAL ARKIVERES I ELEVMAPPE
+          ssn: flowStatus.parseJson.result.DialogueInstance.Om_skjemaet.Informasjon_om_.F\u00F8dselsnummer // Fnr til eleven som meldingen gjelder SJEKK OM DENNE ALLTID SKAL ARKIVERES I ELEVMAPPE
         }
       }
     }
@@ -32,14 +32,14 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const jsonData = flowStatus.parseJson.result
-        const schoolOrgNr = Number(jsonData.SavedValues.Dataset.Skoletilh\u00F8righe.OrgNr)
+        const schoolOrgNr = Number(jsonData.SavedValues.Dataset.Velg_fra_rullegardinen_.OrgNr)
         const school = schoolInfo.find(skoleinfo => skoleinfo.orgNr === schoolOrgNr)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
             Format: att.format,
             Status: 'F',
-            Title: 'Plan for manglende fag i videregående opplæring',
+            Title: 'Tilpasset fag- og timefordeling i videregående opplæring',
             VersionFormat: att.versionFormat
           }
         })
@@ -52,7 +52,7 @@ module.exports = {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: jsonData.DialogueInstance.Informasjon_om_1.Informasjon_om_.u00F8dselsnummer_D,
+                ReferenceNumber: jsonData.DialogueInstance.Om_skjemaet.Informasjon_om_.F\u00F8dselsnummer,
                 Role: 'Avsender',
                 IsUnofficial: true
               },
@@ -69,7 +69,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Plan for manglende fag i videregående opplæring',
+                Title: 'Tilpasset fag- og timefordeling i videregående opplæring',
                 VersionFormat: 'A'
               },
               ...p360Attachments
@@ -77,8 +77,8 @@ module.exports = {
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             ResponsibleEnterpriseNumber: nodeEnv === 'production' ? school.orgNr : school.orgNr, // Ansvarlig skole
             Status: 'J',
-            Title: 'Plan for manglende fag i videregående opplæring',
-            UnofficialTitle: `Plan for manglende fag i videregående opplæring - ${flowStatus.syncElevmappe.result.privatePerson.name}`,
+            Title: 'Tilpasset fag- og timefordeling i videregående opplæring',
+            UnofficialTitle: `Tilpasset fag- og timefordeling i videregående opplæring - ${flowStatus.syncElevmappe.result.privatePerson.name}`,
             Archive: 'Sensitivt elevdokument',
             CaseNumber: flowStatus.syncElevmappe.result.elevmappe.CaseNumber
           }
@@ -101,8 +101,8 @@ module.exports = {
         return {
           company: 'Telemark fylkeskommune',
           department: schoolInfo.primaryLocation,
-          description: 'Plan for manglende fag i videregående opplæring',
-          type: 'Plan for manglende fag i videregående opplæring' // Required. A short searchable type-name that distinguishes the statistic element
+          description: 'Tilpasset fag- og timefordeling i videregående opplæring',
+          type: 'Tilpasset fag- og timefordeling i videregående opplæring' // Required. A short searchable type-name that distinguishes the statistic element
         }
       }
     }
