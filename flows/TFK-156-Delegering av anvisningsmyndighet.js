@@ -73,7 +73,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200012' : '200010', // Sektor for økonomi og virksomhetsstyring
             ResponsiblePersonEmail: personData.Email, // Trine
             Status: 'J',
-            Title: 'Delegering av anvisningsmyndighet',
+            Title: `Delegering av anvisningsmyndighet - ${personDelegere.Fornavn___mello} ${personDelegere.Etternavn}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
