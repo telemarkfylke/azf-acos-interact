@@ -112,7 +112,7 @@ module.exports = {
               poststedKunstner: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Postnr_sted_poststed,
               epostKunstner: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.E_post,
               mobilKunstner: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Mobil,
-              fodselsAarKunstner: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Fodselsar.toString(),
+              fodselsAarKunstner: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Fodselsar?.toString() ?? '',
               kunstart: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Kunstart,
               tilknytningTelemark: skjemadata.Begrunnelse_for_nominasj2.Kontaktopplysninger_til_.Tilknytning_til_Telemark,
               navnInnsender: persondata.FirstName + ' ' + persondata.LastName,
