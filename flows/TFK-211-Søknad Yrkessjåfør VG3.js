@@ -114,7 +114,17 @@ module.exports = {
               epost: personData.Email,
               fylke: skjemaData.S\u00F8knad.Fylke1.Fylke,
               oppstart: skjemaData.S\u00F8knad.Kurs.Jeg_s\u00F8ker_start_p\u00E5,
-              sokertype: skjemaData.S\u00F8knad.Kurs.Jeg_er
+              sokertype: skjemaData.S\u00F8knad.Kurs.Jeg_er,
+              forerkort: skjemaData.S\u00F8knad.Kurs.Jeg_har_f\u00F8rerkort,
+              bedriftNavn: skjemaData.S\u00F8knad.Opplysninger_om1.Navn_p\u00E5_l\u00E6rebedrift,
+              bedriftKontaktperson: skjemaData.S\u00F8knad.Opplysninger_om1.Kontaktperson_i,
+              bedriftTelefon: skjemaData.S\u00F8knad.Opplysninger_om1.Kontaktperson_i1,
+              bedriftKontor: skjemaData.S\u00F8knad.Opplysninger_om1.Navn_p\u00E5,
+              kontorNavn: skjemaData.S\u00F8knad.Opplysninger_om1.Navn_,
+              kontorEpost: skjemaData.S\u00F8knad.Opplysninger_om1.E_post1,
+              praksisErfaring: skjemaData.S\u00F8knad.Opplysninger_om1.Praksis_og,
+              utdanning: skjemaData.S\u00F8knad.Utdanning.Utdanning_og_kurs,
+              utdanningAnnet: skjemaData.S\u00F8knad.Utdanning.Annet
             }
           }
         ]
