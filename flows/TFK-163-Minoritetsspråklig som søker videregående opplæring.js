@@ -60,7 +60,7 @@ module.exports = {
             Base64Data: att.base64,
             Format: att.format,
             Status: 'F',
-            Title: 'Minoritetsspråklig som søker videregående opplæring',
+            Title: att.title,
             VersionFormat: att.versionFormat
           }
         })

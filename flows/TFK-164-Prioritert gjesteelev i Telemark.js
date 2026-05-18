@@ -35,7 +35,7 @@ module.exports = {
             Base64Data: att.base64,
             Format: att.format,
             Status: 'F',
-            Title: 'Prioritert gjesteelev i Telemark',
+            Title: att.title,
             VersionFormat: att.versionFormat
           }
         })
