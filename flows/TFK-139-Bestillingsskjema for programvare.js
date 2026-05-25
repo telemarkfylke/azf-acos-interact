@@ -1,16 +1,16 @@
-const description = 'Søknad om mer opplæring'
+const description = 'TFK-139 - Bestillingsskjema for programvare'
+const nodeEnv = require('../config').nodeEnv
 const { sendEmail } = require('../lib/jobs/customJobs/sendemail')
 
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: nodeEnv !== 'production'
   },
   parseJson: {
     enabled: true,
     options: {
       mapper: (dialogueData) => {
-        // if (!dialogueData.Testskjema_for_?.Gruppa_øverst?.Fornavn) throw new Error('Missing Gruppa_øverst.Fornavn mangler i JSON filen')
         return {
         }
       }
@@ -51,6 +51,7 @@ module.exports = {
             uploadFormAttachments: false,
             fields: {
               Title: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_system, // Enkel linje med tekst
+              Vibbet: jsonData.Informasjon_om_.Informasjon_om_.Er_Skal__løsningen, // Vibbekodet
               Bestiller_x: jsonData.Informasjon_om_.Informasjon_om_.Brukernavn1, // Personoppslag
               Navnp_x00e5_virksomhet_x002c_sko: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_virksom, // Enkel linje med tekst
               Godkjenning_x: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_nærmest, // Personoppslag
