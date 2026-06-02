@@ -119,3 +119,9 @@ cert/*
 # Test- & cachefiles
 flows/TFK0276-TJ-testeskjema.js
 .file-cache
+
+# Claude Code
+.claude/
+
+# PI
+.pi/
