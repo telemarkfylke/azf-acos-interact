@@ -40,7 +40,7 @@ module.exports = {
             AccessCode: 'U',
             Paragraph: '',
             JournalUnit: 'Fagskolen Vestfold og Telemark',
-            SubArchive: 'Sakarkiv',
+            SubArchive: 'Fagskolen Vestfold og Telemark',
             ArchiveCodes: [
               {
                 ArchiveCode: '027',
