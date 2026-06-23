@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "%STORAGE_ACCOUNT_CONTAINER_NAME%/{name}",
+      "connection": "STORAGE_ACCOUNT_CONNECTION_STRING"
+    }
+  ],
+  "scriptFile": "index.js"
+}
