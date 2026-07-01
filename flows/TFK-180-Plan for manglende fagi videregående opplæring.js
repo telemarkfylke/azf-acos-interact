@@ -32,8 +32,8 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const jsonData = flowStatus.parseJson.result
-        const schoolOrgNr = Number(jsonData.SavedValues.Dataset.Skoletilh\u00F8righe.OrgNr)
-        const school = schoolInfo.find(skoleinfo => skoleinfo.orgNr === schoolOrgNr)
+        const schoolName = jsonData.DialogueInstance.Informasjon_til.Skolens_represe.Skoletilhørighe
+        const school = schoolInfo.find(skoleinfo => skoleinfo.officeLocation === schoolName)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
