@@ -73,6 +73,7 @@ module.exports = {
             ],
             Paragraph: 'Offl. § 5',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
+            ResponsiblePersonEmail: nodeEnv === 'production' ? 'andreas.skogstad@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
             Title: 'Søknad om toppidrettsstipend 2026',
             UnofficialTitle: `Søknad om toppidrettsstipend 2026 - ${sokerNavn}`,
