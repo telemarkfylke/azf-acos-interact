@@ -150,6 +150,7 @@ module.exports = {
       mapper: (flowStatus) => {
         const personData = flowStatus.parseJson.result.SavedValues.Login
         const skjemaData = flowStatus.parseJson.result.DialogueInstance
+        const paamelding = skjemaData.Påmelding_til_F || {}
         return [
           {
             testListUrl: 'https://telemarkfylke.sharepoint.com/sites/FAGS-avdelingkursogetterutdanning/Lists/FGkurs/AllItems.aspx',
@@ -166,21 +167,14 @@ module.exports = {
               poststed: personData.PostalArea,
               mobilnummer: personData.Telephone,
               epostadresse: personData.Email,
-              betaler: skjemaData.P\u00E5melding_til_F.Kursavgiften.Hvem_skal_betal,
-              orgnr: skjemaData.P\u00E5melding_til_F.Organisasjonsin.Organisasjon.Organisasjonsnu,
-              orgnavn: skjemaData.P\u00E5melding_til_F.Organisasjonsin.Organisasjon.Organisasjonsna,
-              orgadresse: skjemaData.P\u00E5melding_til_F.Organisasjonsin.Organisasjon.Organisasjonsna.Gatenavn_og__nu,
-              orgpostnr: skjemaData.P\u00E5melding_til_F.Organisasjonsin.Organisasjon.Postnummer2,
-              orgpoststed: skjemaData.P\u00E5melding_til_F.Organisasjonsin.Organisasjon.Poststed2,
-              fakturaref: skjemaData.P\u00E5melding_til_F.Fakturarefferan.Refferanse_kan_,
-              opptaksgrunnlag: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.Hvilket_opptaks,
-              opptakforklaring: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.Hvilket_opptaks1,
-              utdanning: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.Utdanningsniv\u00E5,
-              naastilling: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.N\u00E5v\u00E6rende_still,
-              sistearbeidssted: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.Siste_arbeidsst,
-              fartstid: skjemaData.P\u00E5melding_til_F.Utdanning_og_pr.Fartstid__antal,
-              samtykkeInfo: skjemaData.Samtykke.Samtykke.Jeg_\u00F8nsker_\u00E5_mo,
-              lestKontrakt: skjemaData.Samtykke.Studiekontrakte1.Bekreft
+              opptaksgrunnlag: paamelding.Utdanning_og_pr?.Hvilket_opptaks || '',
+              opptakforklaring: paamelding.Utdanning_og_pr?.Hvilket_opptaks1 || '',
+              utdanning: paamelding.Utdanning_og_pr?.Utdanningsniv\u00E5 || '',
+              naastilling: paamelding.Utdanning_og_pr?.N\u00E5v\u00E6rende_still || '',
+              sistearbeidssted: paamelding.Utdanning_og_pr?.Siste_arbeidsst || '',
+              fartstid: paamelding.Utdanning_og_pr?.Fartstid__antal || '',
+              samtykkeInfo: skjemaData.Samtykke?.Samtykke?.Jeg_\u00F8nsker_\u00E5_mo || '',
+              lestKontrakt: skjemaData.Samtykke?.Studiekontrakte1?.Bekreft || ''
             }
           }
         ]
