@@ -54,6 +54,10 @@ module.exports = {
     scope: process.env.FINTFOLK_SCOPE,
     tenantId: process.env.FINTFOLK_TENANT_ID
   },
+	xledger: {
+		baseUrl:  process.env.XLEDGER_API_URL,
+		invoiceFilename: process.env.XLEDGER_API_INVOICE_FILENAME || 'acos-faktura.csv'
+	},
   nodeEnv: process.env.NODE_ENV ?? 'dev',
   robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
   roomServiceTeamsWebhook: process.env.ROOMSERVICE_TEAMS_WEBHOOK_URL ?? 'teams.com'
