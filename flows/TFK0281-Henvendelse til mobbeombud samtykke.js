@@ -150,7 +150,7 @@ string InnsenderFnr
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116',
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '251836' : '200116',
             Status: 'J',
             Title: 'Henvendelse til mobbeombud - samtykke',
             Archive: 'Sensitivt ombudsdokument',
