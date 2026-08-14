@@ -98,7 +98,8 @@ module.exports = {
               Navn: personData.FirstName + ' ' + personData.LastName,
               Rolle: 'Ekstern',
               Samtykke: skjemaData.Samtykke.Samtykke.Kryss_av,
-              SamtykkeEkstern: skjemaData.Samtykke.Samtykke.Kryss_av1
+              SamtykkeEkstern: skjemaData.Samtykke.Samtykke.Kryss_av1,
+              arkivnummer: flowStatus.archive?.result?.DocumentNumber || 'Mangler arkivnummer' // Dokumentnummer på formatet saksnummer-løpenummer, f.eks. 26/000593-4
             }
           }
         ]
