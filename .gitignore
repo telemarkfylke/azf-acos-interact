@@ -118,6 +118,7 @@ cert/*
 
 # Test- & cachefiles
 flows/TFK0276-TJ-testeskjema.js
+flows/TFK-216-SMM prosjekt test.js
 .file-cache
 
 # Claude Code
