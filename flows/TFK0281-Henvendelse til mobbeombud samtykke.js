@@ -59,7 +59,7 @@ string InnsenderFnr
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             JournalUnit: 'Sentralarkiv',
-            SubArchive: 'Mobbeombud',
+            SubArchive: 'Ombud for barn og unge',
 
             ArchiveCodes: [
               {
@@ -93,8 +93,8 @@ string InnsenderFnr
                 IsUnofficial: true
               }
             ],
-            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116',
-            ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no'
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '251836' : '200557',
+            ...(nodeEnv === 'production' ? { ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no' } : {})
           }
         }
       },
@@ -128,7 +128,7 @@ string InnsenderFnr
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: 'Mobbeombud',
+            AccessGroup: 'Ombud for barn og unge',
             Category: 'Dokument inn',
             Contacts: [
               {
@@ -144,15 +144,17 @@ string InnsenderFnr
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Henvendelse til mobbeombud - samtykke',
+                Title: 'Samtykkeskjema',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '251836' : '200116',
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '251836' : '200557',
+            ...(nodeEnv === 'production' ? { ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no' } : {}),
             Status: 'J',
-            Title: 'Henvendelse til mobbeombud - samtykke',
+            Title: 'Samtykkeskjema',
+            UnofficialTitle: `Samtykkeskjema - ${xmlData.ElevNavn}`,
             Archive: 'Sensitivt ombudsdokument',
             CaseNumber: caseNumber
           }
