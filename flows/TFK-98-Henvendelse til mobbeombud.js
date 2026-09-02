@@ -42,10 +42,9 @@ module.exports = {
     enabled: true,
     options: {
       getCaseParameter: (flowStatus) => {
-        const barnet = flowStatus.parseJson.result.DialogueInstance.Utfylling.Informasjon_om_barnet
         return {
-          ArchiveCode: flowStatus.syncPrivatePersonElev.result.privatePerson.ssn, // Sjekker om det finnes en sak med denne eleven
-          UnofficialTitle: `Elevsak - ${barnet.Skole_barnehage} - ${barnet.Navn}` // Sjekker om det finnes en sak med denne uoffisielle tittelen
+          Title: 'Elevsak', // Sjekker om det finnes en sak med denne tittelen
+          ArchiveCode: flowStatus.syncPrivatePersonElev.result.privatePerson.ssn // og denne eleven
         }
       },
       mapper: (flowStatus) => {
