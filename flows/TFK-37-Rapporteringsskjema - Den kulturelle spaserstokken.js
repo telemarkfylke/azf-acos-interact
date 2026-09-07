@@ -38,7 +38,7 @@ module.exports = {
           parameter: {
             CaseType: 'Sak',
             Project: nodeEnv === 'production' ? '24-1853' : '26-4',
-            Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.name}`,
+            Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.Name}`,
             UnofficialTitle: '',
             Status: 'B',
             AccessCode: 'U',
@@ -102,7 +102,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.name}`,
+                Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.Name}`,
                 UnofficialTitle: '',
                 VersionFormat: 'A'
               },
@@ -112,7 +112,7 @@ module.exports = {
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200419' : '200235',
             ResponsiblePersonEmail: nodeEnv === 'production' ? 'gro.kabbe@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
             Status: 'J',
-            Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.name}`,
+            Title: `Rapporteringsskjema - Den kulturelle spaserstokken - ${enterpriseData.enterprise.Name}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
