@@ -117,6 +117,12 @@ cert/*
 .cer
 
 # Test- & cachefiles
+tests/
+test/
+__tests__/
+*.test.*
+*.spec.*
+*-test.*
 flows/TFK0276-TJ-testeskjema.js
 flows/TFK-216-SMM prosjekt test.js
 .file-cache

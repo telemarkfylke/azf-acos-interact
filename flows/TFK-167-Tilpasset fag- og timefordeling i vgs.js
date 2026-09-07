@@ -32,9 +32,9 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const jsonData = flowStatus.parseJson.result
-        const schoolName = jsonData.DialogueInstance.Om_skjemaet.Hvilken_skole_er_du_elev?.Velg_fra_rullegardinen_
-        const school = schoolInfo.find(skoleinfo => schoolName && (skoleinfo.primaryLocation === schoolName || skoleinfo.officeLocation === schoolName))
-        if (!school) throw new Error('TFK-167: Could not resolve school from selected school name')
+        const schoolOrgNr = jsonData.SavedValues?.Dataset?.Velg_fra_rullegardinen_?.OrgNr
+        const school = schoolInfo.find(skoleinfo => skoleinfo.orgNr === Number(schoolOrgNr))
+        if (!school) throw new Error('TFK-167: Could not resolve school from organisation number')
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
