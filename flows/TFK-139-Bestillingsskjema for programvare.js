@@ -23,7 +23,20 @@ module.exports = {
     options: {},
     customJob: async (jobDef, flowStatus) => {
       const jsonData = flowStatus.parseJson.result.DialogueInstance
-      const emailTo = ['jon.kvist@telemarkfylke.no', 'anette.dordal@telemarkfylke.no', 'kaja.bergjensen@telemarkfylke.no', 'richard.dolven.nilsen@telemarkfylke.no', 'paal.are.solberg@telemarkfylke.no', 'anders.weston.roine@telemarkfylke.no', 'rune.almenning@telemarkfylke.no', '23e1ca10.telemarkfylke.no@no.teams.ms']
+      const brukesIUndervisning = jsonData.Informasjon_om_.Informasjon_om_.Skal_tjenesten_ === 'Ja'
+      const emailTo = [
+        'kaja.bergjensen@telemarkfylke.no',
+        'richard.dolven.nilsen@telemarkfylke.no',
+        'paal.are.solberg@telemarkfylke.no',
+        'anders.weston.roine@telemarkfylke.no',
+        'rune.almenning@telemarkfylke.no'
+      ]
+      if (brukesIUndervisning) {
+        emailTo.push('jon.kvist@telemarkfylke.no', 'anette.dordal@telemarkfylke.no')
+        emailTo.push('7e17e8f0.telemarkfylke.no@no.teams.ms')
+      } else {
+        emailTo.push('23e1ca10.telemarkfylke.no@no.teams.ms')
+      }
       const subject = 'Melding om nytt ønske om programvare'
       const body = `
       <h3>Nytt ønske om programvare</h3>
@@ -43,6 +56,9 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         const jsonData = flowStatus.parseJson.result.DialogueInstance
+        const informasjon = jsonData.Informasjon_om_
+        const tjenesten = informasjon.Tjenesten_skal_1
+        if (!tjenesten) throw new Error('TFK-139: Missing service information for SharePoint mapping')
         return [
           {
             testListUrl: 'https://telemarkfylke.sharepoint.com/sites/innsida-stottefunksjoner/Lists/Programvareoversikt/MaaFyllesUt.aspx',
@@ -55,17 +71,17 @@ module.exports = {
               Bestiller_x: jsonData.Informasjon_om_.Informasjon_om_.Brukernavn1, // Personoppslag
               Navnp_x00e5_virksomhet_x002c_sko: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_virksom, // Enkel linje med tekst
               Godkjenning_x: jsonData.Informasjon_om_.Informasjon_om_.Navn_på_nærmest, // Personoppslag
-              Brukes_x0020_i_x0020_undervisnin: jsonData.Informasjon_om_.Skal_tjenesten_, // Enkel linje med tekst
+              Brukes_x0020_i_x0020_undervisnin: jsonData.Informasjon_om_.Informasjon_om_.Skal_tjenesten_, // Enkel linje med tekst
               Antattkostnad: jsonData.Informasjon_om_.Annen_informasj.Antatt_kostnad, // Enkel linje med tekst
               // Systemeier_x: jsonData.Informasjon_om_.Annen_informasj.Navn_på_systema, // Personoppslag
-              Systemansvarlig_x: jsonData.Informasjon_om_.Annen_informasj.Navn_på_systema, // Personoppslag
+              Systemansvarlig_x: informasjon.Annen_informasj.Navn_på_systema, // Personoppslag
               Beskrivelse: jsonData.Informasjon_om_.Annen_informasj.Hva_er_formålet, // Lang tekst
-              Kategoriregistrerte_x: jsonData.Informasjon_om_.Annen_informasj.Hvem_skal_benyt1, // Valg
-              Autentisering_x: jsonData.Informasjon_om_.Annen_informasj.Hvilken_løsning, // Valg
+              Kategoriregistrerte_x: informasjon.Annen_informasj.Hvem_skal_benyt1, // Valg
+              Autentisering_x: informasjon.Annen_informasj.Hvilken_løsning, // Valg
               Kategoripersonvern_x: jsonData.Informasjon_om_.Annen_informasj.Hvilke_personop, //  Valg
-              H_x00e5_ndtererl_x00f8_sningenka: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni1 === 'Ja', // Sjekkboks
-              H_x00e5_ndtererl_x00f8_sningenel: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni === 'Ja', // Sjekkboks
-              H_x00e5_ndtererl_x00f8_sningenvu: jsonData.Informasjon_om_.Tjenesten_skal_1.Håndterer_løsni2 === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenka: tjenesten.Håndterer_løsni1 === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenel: tjenesten.Håndterer_løsni === 'Ja', // Sjekkboks
+              H_x00e5_ndtererl_x00f8_sningenvu: tjenesten.Håndterer_løsni2 === 'Ja', // Sjekkboks
               kontaktpersonleverand_x00f8_r: jsonData.Informasjon_om_.Annen_informasj.Lenke_til_tjene, // Lang tekst
               Kommentar: jsonData.Informasjon_om_.Annen_informasj.Annet_ // Lang tekst
             }
