@@ -18,11 +18,10 @@ module.exports = {
     }
   },
 
-  // Ground Control må tilpasses parseJson og avklares med mottakersystemet før aktivering.
-  // Dagens jobb krever parseXml og websak_hode-filen fra den gamle avleveringen.
-  // groundControl: {
-  //   enabled: true
-  // },
+  // Ground Control støtter nå parseJson - avleverer skjema, vedlegg og datafila (ingen websak_hode, mottakersystemet trenger den ikke)
+  groundControl: {
+    enabled: true
+  },
 
   // Synkroniser elevmappe
   syncElevmappe: {
