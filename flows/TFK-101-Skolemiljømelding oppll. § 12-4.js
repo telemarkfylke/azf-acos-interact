@@ -12,9 +12,16 @@ const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 const getSchool = (flowStatus) => {
   const orgNr = flowStatus.parseJson.result.SavedValues?.Dataset?.Skole?.OrgNr
   const school = schoolInfo.find(school => school.orgNr === Number(orgNr))
-  if (!school) throw new Error(`TFK-101: Could not resolve school from Dataset.Skole.OrgNr: ${orgNr}`)
+  if (!school?.primaryLocation) throw new Error(`TFK-101: Could not resolve school from Dataset.Skole.OrgNr: ${orgNr}`)
   return school
 }
+
+/**
+ * Hver skole har egne 12-4-prosjekter per skoleår. Prosjekttitlene i arkivet bruker bokmålsnavnet (primaryLocation),
+ * f.eks. "Bø videregående skole" - ikke officeLocation, som er nynorsk for Bø og Vest-Telemark
+ * @param {object} flowStatus
+ */
+const getProjectTitle = (flowStatus) => `§12-4 saker - ${getSchoolYear()} - ${getSchool(flowStatus).primaryLocation}`
 
 /**
  * Henter eleven meldingen gjelder (navn og fødselsnummer)
@@ -77,7 +84,7 @@ module.exports = {
     }
   },
 
-  // Hver skole har egne 12-4-prosjekter per skoleår. Samme tittel som varslingsskjema 9a-4 (TFK0269) slik at sakene havner i samme prosjekt
+  // Finner skolens 12-4-prosjekt for inneværende skoleår, eller oppretter det hvis det ikke finnes
   handleProject: {
     enabled: true,
     options: {
@@ -87,7 +94,7 @@ module.exports = {
           service: 'ProjectService',
           method: 'CreateProject',
           parameter: {
-            Title: `§12-4 saker - ${getSchoolYear()} - ${school.officeLocation}`,
+            Title: getProjectTitle(flowStatus),
             Contacts: [
               {
                 ReferenceNumber: school.orgNr,
@@ -98,11 +105,10 @@ module.exports = {
         }
       },
       getProjectParameter: (flowStatus) => {
-        const school = getSchool(flowStatus)
         return {
           // Må være identisk med tittelen i mapper over, ellers opprettes det nytt prosjekt for hver innsending
-          Title: `§12-4 saker - ${getSchoolYear()} - ${school.officeLocation}`,
-          ContactReferenceNumber: school.orgNr,
+          Title: getProjectTitle(flowStatus),
+          ContactReferenceNumber: getSchool(flowStatus).orgNr,
           StatusCode: 'Under utføring'
         }
       }
