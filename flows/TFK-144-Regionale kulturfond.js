@@ -1,10 +1,10 @@
-const description = 'Flerårig samarbeidsavtale'
+const description = 'Regionale kulturfond'
 const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: false
+    doNotRemoveBlobs: nodeEnv !== 'production'
   },
   parseJson: {
     enabled: true,
@@ -36,8 +36,8 @@ module.exports = {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '26-105' : '25-6',
-            Title: `Regionale kulturfond - søknad om midler 2026 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+            Project: nodeEnv === 'production' ? '26-537' : '25-6',
+            Title: `Regionale kulturfond - søknad om midler 2027 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             UnofficialTitle: '',
             Status: 'B',
             AccessCode: 'U',
@@ -58,7 +58,7 @@ module.exports = {
             ],
             Contacts: [],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
-            // ResponsiblePersonEmail: flowStatus.syncEmployee.result.archiveManager.email,
+            ResponsiblePersonRecno: nodeEnv === 'production' ? '208915' : undefined,
             AccessGroup: '' // Automatisk
           }
         }
@@ -106,7 +106,7 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'B',
-                Title: `Søknad om midler fra regionale kulturfond - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+                Title: `Søknad om midler fra regionale kulturfond 2027 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
                 UnofficialTitle: '',
                 VersionFormat: 'A'
               },
@@ -114,9 +114,9 @@ module.exports = {
             ],
             Paragraph: '',
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028',
-            ResponsiblePersonEmail: nodeEnv === 'production' ? 'ellen.rodvang@telemarkfylke.no' : 'tom.jarle.christiansen@telemarkfylke.no',
+            ResponsiblePersonRecno: nodeEnv === 'production' ? '208915' : undefined,
             Status: 'J',
-            Title: `Søknad om midler fra regionale kulturfond 2026 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
+            Title: `Søknad om midler fra regionale kulturfond 2027 - ${flowStatus.parseJson.result.DialogueInstance.Informasjon_om_.Informasjon_om_.Navn_på_organis}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber
           }
@@ -162,6 +162,7 @@ module.exports = {
               Utfyllende_besk: formData.Informasjon_om_.Søkertype___Hon.Utfyllende_besk,
               Utfyllende_besk1: formData.Informasjon_om_.Søkertype___Til.Utfyllende_besk1,
               Beskrivelse_av_1: formData.Informasjon_om_.Kunst__og_kultu1.Beskrivelse_av_1,
+              TittelProsjekt: formData.Informasjon_om_.Tilskudd_til_Ho.Tittel_på_prosjekt_,
               Beskrivelse_av_2: formData.Informasjon_om_.Tilskudd_til_Ho.Beskrivelse_av_2,
               Beskriv_hvordan2: formData.Informasjon_om_.Kunst__og_kultu1.Beskriv_hvordan2,
               Beskriv_hvordan3: formData.Informasjon_om_.Tilskudd_til_Ho.Beskriv_hvordan3,
