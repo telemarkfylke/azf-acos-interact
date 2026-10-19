@@ -164,6 +164,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        const privatePerson = flowStatus.syncPrivatePerson.result.privatePerson // Navn fra Folkeregisteret med riktig store/små bokstaver
         const dialogData = flowStatus.parseJson.result.DialogueInstance.P\u00E5melding_til_k
         const samtykkeData = flowStatus.parseJson.result.DialogueInstance.Samtykke
         const loginValues = flowStatus.parseJson.result.SavedValues.Login
@@ -174,10 +175,10 @@ module.exports = {
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: dialogData.Gruppe.Fornavn + ' ' + dialogData.Gruppe.Etternavn,
+              Title: privatePerson.firstName + ' ' + privatePerson.lastName,
               fnr: dialogData.Gruppe.Fodselsnummer,
-              fornavn: dialogData.Gruppe.Fornavn,
-              etternavn: dialogData.Gruppe.Etternavn,
+              fornavn: privatePerson.firstName,
+              etternavn: privatePerson.lastName,
               adresse: dialogData.Gruppe.Adresse,
               postnummer: dialogData.Gruppe.Postnummer_sted_postnr,
               poststed: dialogData.Gruppe.Postnummer_sted_poststed,

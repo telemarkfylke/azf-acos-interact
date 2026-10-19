@@ -145,6 +145,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        const privatePerson = flowStatus.syncPrivatePerson.result.privatePerson // Navn fra Folkeregisteret med riktig store/små bokstaver
         const personData = flowStatus.parseJson.result.SavedValues.Login
         const privatperson = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_
         const utdanning = privatperson.Utdanning
@@ -158,8 +159,8 @@ module.exports = {
             fields: {
               Title: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
               fnr: personData.UserID,
-              fornavn: personData.FirstName,
-              etternavn: personData.LastName,
+              fornavn: privatePerson.firstName,
+              etternavn: privatePerson.lastName,
               adresse: personData.Address,
               postnummer: personData.PostalCode,
               poststed: personData.PostalArea,

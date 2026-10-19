@@ -149,6 +149,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        const privatePerson = flowStatus.syncPrivatePerson.result.privatePerson // Navn fra Folkeregisteret med riktig store/små bokstaver
         const personData = flowStatus.parseJson.result.SavedValues.Login
         const skjemaData = flowStatus.parseJson.result.DialogueInstance.Soknad_om_EKOM___ENA_aut
         return [
@@ -158,11 +159,11 @@ module.exports = {
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: personData.FirstName + ' ' + personData.LastName,
+              Title: privatePerson.firstName + ' ' + privatePerson.lastName,
               soknadsreferanse: flowStatus.parseJson.result.Metadata.ReferenceId.Value,
               fdato: personData.UserID,
-              fornavn: personData.FirstName,
-              etternavn: personData.LastName,
+              fornavn: privatePerson.firstName,
+              etternavn: privatePerson.lastName,
               adresse: personData.Address,
               postnummer: personData.PostalCode,
               poststed: personData.PostalArea,
