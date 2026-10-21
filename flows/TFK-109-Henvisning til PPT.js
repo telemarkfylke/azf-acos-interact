@@ -3,6 +3,9 @@ const title = 'Henvisning til PPT'
 const nodeEnv = require('../config').nodeEnv
 const { schoolInfo } = require('../lib/data-sources/tfk-schools')
 
+// Har innsender valgt "Vet ikke" som skole, skal skjemaet ikke arkiveres - det går rett til Ground Control
+const skalArkiveres = (flowStatus) => flowStatus.parseJson.result.DialogueInstance.Informasjon_om_elev_kand.Skole.Skole5 !== 'Vet ikke'
+
 module.exports = {
   config: {
     enabled: true,
@@ -27,6 +30,7 @@ module.exports = {
   syncElevmappe: {
     enabled: true,
     options: {
+      condition: skalArkiveres,
       mapper: (flowStatus) => {
         const personalia = flowStatus.parseJson.result.DialogueInstance.Informasjon_om_elev_kand.Personalia
         const numberType = String(personalia.Velg_nummertype_for_id || '').toLowerCase().replace(/[-\s]/g, '')
@@ -48,6 +52,7 @@ module.exports = {
   archive: {
     enabled: true,
     options: {
+      condition: skalArkiveres,
       mapper: (flowStatus, base64, attachments) => {
         const schoolOrgNr = flowStatus.parseJson.result.SavedValues?.Dataset?.Skole5?.OrgNr
         const school = schoolInfo.find(school => school.orgNr === Number(schoolOrgNr))
