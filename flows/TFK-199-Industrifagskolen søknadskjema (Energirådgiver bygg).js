@@ -171,7 +171,8 @@ module.exports = {
               epostadresse: dialogData.Privatperson.E_post,
               utdanning: dialogData.Utdanning.Hvilken_utdanni,
               soknadsgrunnlag: dialogData.Utdanning.P\u00E5_hvilket_grun,
-              opptaksgrunnlag: dialogData.Utdanning.Hvilket_opptaks
+              opptaksgrunnlag: dialogData.Utdanning.Hvilket_opptaks,
+              samtykkeinfo: flowStatus.parseJson.result.DialogueInstance.Samtykke.Samtykke['Jeg_ønsker_å_mo']
             }
           }
         ]
