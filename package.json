@@ -2,6 +2,9 @@
   "name": "azf-acos-interact",
   "version": "3.25.5",
   "description": "Handles forms from Acos",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "func start",
     "test": "standard && jest --verbose"

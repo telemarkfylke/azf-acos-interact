@@ -85,7 +85,7 @@ module.exports = {
               kontaktpersonleverand_x00f8_r: jsonData.Informasjon_om_.Annen_informasj.Lenke_til_tjene, // Lang tekst
               Kommentar: jsonData.Informasjon_om_.Annen_informasj.Annet_, // Lang tekst
               LederGodkjent: informasjon.Annen_informasj.Leder_som_har_g, // Enkel linje med tekst
-              AntallBrukere: informasjon.Annen_informasj.Hvor_mange_skal, // Enkel linje med tekst
+              AntallBrukere0: informasjon.Annen_informasj.Hvor_mange_skal, // Enkel linje med tekst
               Leverandor: informasjon.Annen_informasj.Navn_på_leveran // Enkel linje med tekst
             }
           }
