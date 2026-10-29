@@ -54,9 +54,9 @@ module.exports = {
     options: {
       condition: skalArkiveres,
       mapper: (flowStatus, base64, attachments) => {
-        const schoolOrgNr = flowStatus.parseJson.result.SavedValues?.Dataset?.Skole5?.OrgNr
+        const schoolOrgNr = flowStatus.parseJson.result.SavedValues?.Dataset?.OF_Skoler_i_TFK?.OrgNr
         const school = schoolInfo.find(school => school.orgNr === Number(schoolOrgNr))
-        if (!school) throw new Error('TFK-109: Could not resolve school from Skole5.OrgNr')
+        if (!school) throw new Error(`TFK-109: Could not resolve school from Dataset.OF_Skoler_i_TFK.OrgNr: ${schoolOrgNr}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
