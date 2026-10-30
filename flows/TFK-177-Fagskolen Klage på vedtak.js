@@ -169,6 +169,7 @@ module.exports = {
               klagegrunn: skjemaData.Klagesak.Opplysninger_om1.Hva_gjelder_kla,
               emne: skjemaData.Klagesak.Opplysninger_om1.Navn_p\u00E5_emne,
               faglaerer: skjemaData.Klagesak.Opplysninger_om1.Navn_p\u00E5_fagl\u00E6re,
+              antForsok: skjemaData.Klagesak.Opplysninger_om1.Angi_om_klagen,
               klagebeskrivelse: skjemaData.Klagesak.Begrunnelse_for.Beskriv_hva_du_,
               bekreftelseTid: skjemaData.Klagesak.Begrunnelse_for.Jeg_bekrefter_a
             }
