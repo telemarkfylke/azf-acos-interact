@@ -54,9 +54,11 @@ module.exports = {
     options: {
       condition: skalArkiveres,
       mapper: (flowStatus, base64, attachments) => {
-        const schoolOrgNr = flowStatus.parseJson.result.SavedValues?.Dataset?.OF_Skoler_i_TFK?.OrgNr
+        // Acos lagrer datasettverdien under feltnavnet (Skole5) - OF_Skoler_i_TFK (datasettnavnet) beholdes som fallback
+        const dataset = flowStatus.parseJson.result.SavedValues?.Dataset
+        const schoolOrgNr = (dataset?.Skole5 ?? dataset?.OF_Skoler_i_TFK)?.OrgNr
         const school = schoolInfo.find(school => school.orgNr === Number(schoolOrgNr))
-        if (!school) throw new Error(`TFK-109: Could not resolve school from Dataset.OF_Skoler_i_TFK.OrgNr: ${schoolOrgNr}`)
+        if (!school) throw new Error(`TFK-109: Could not resolve school from Dataset.Skole5.OrgNr (or Dataset.OF_Skoler_i_TFK.OrgNr): ${schoolOrgNr}. Dataset keys: ${Object.keys(dataset || {}).join(', ') || '(none)'}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
