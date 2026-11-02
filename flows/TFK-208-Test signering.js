@@ -9,7 +9,7 @@
 
 module.exports = {
   config: {
-    enabled: false, // Testflyt - skru på ved behov
+    enabled: true, // Testflyt - skru på ved behov
     doNotRemoveBlobs: true
   },
   parseJson: {
@@ -31,6 +31,11 @@ module.exports = {
       }
     }
   },
+  // Sender til Ground Control - usignert skjema (kjøres før signDocument)
+  groundControlUnsigned: {
+    enabled: true
+  },
+
   signDocument: {
     enabled: true,
     options: {
@@ -89,6 +94,12 @@ module.exports = {
   downLoadSignDocument: {
     enabled: true
   },
+
+  // Signert skjema til Ground Control (kjøres etter downLoadSignDocument, tar med {refId}-signed.pdf)
+  groundControl: {
+    enabled: true
+  },
+
   // handleCase: {
   //   enabled: true,
   //   options: {

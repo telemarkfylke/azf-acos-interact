@@ -64,6 +64,23 @@ test('prefers parseXml when a flow somehow ran both parse jobs', () => {
   ])
 })
 
+test('includes the signed pdf when downLoadSignDocument has finished', () => {
+  const flowStatus = { ...jsonFlowStatus(), blobDir: 'TFK-109/1287554' }
+  flowStatus.downLoadSignDocument = { jobFinished: true, result: { blobName: '1287554-signed.pdf' } }
+  expect(getGroundControlFiles(flowStatus)).toEqual([
+    'TFK-109/1287554/1287554.pdf',
+    'TFK-109/1287554/Vedlegg.pdf',
+    'TFK-109/1287554/1287554_data.json',
+    'TFK-109/1287554/1287554-signed.pdf'
+  ])
+})
+
+test('does not include a signed pdf before downLoadSignDocument has finished', () => {
+  const flowStatus = { ...jsonFlowStatus(), blobDir: 'TFK-109/1287554' }
+  flowStatus.downLoadSignDocument = { jobFinished: false }
+  expect(getGroundControlFiles(flowStatus)).not.toContain('TFK-109/1287554/1287554-signed.pdf')
+})
+
 test('throws when the parse job finished without the metadata file', () => {
   const flowStatus = xmlFlowStatus()
   delete flowStatus.parseXml.result.websakHodeXmlFile
