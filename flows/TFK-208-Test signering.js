@@ -2,8 +2,8 @@
 // const nodeEnv = require('../config').nodeEnv
 
 /**
- * Først arkiver det usingerte dokumentet i P360, 
- * deretter sende det til signering i Signeringstjenesten. 
+ * Først arkiver det usingerte dokumentet i P360,
+ * deretter sende det til signering i Signeringstjenesten.
  * Når dokumentet er signert, så arkiveres det signerte dokumentet i P360.
  */
 
@@ -48,35 +48,35 @@ module.exports = {
           title: `${flowStatus.acosName} - ${flowStatus.refId}`,
           reference: flowStatus.refId,
           documents: [
-              {
-                title: `${flowStatus.acosName} - ${flowStatus.refId}`,
-                base64Content: base64,
-                fileType: "pdf"
-              },
-              ...documents
+            {
+              title: `${flowStatus.acosName} - ${flowStatus.refId}`,
+              base64Content: base64,
+              fileType: 'pdf'
+            },
+            ...documents
           ],
           initiatedBy: {
             name: `${personData.FirstName} ${personData.LastName}`,
             email: personData.Email,
             companyName: 'Test',
-            department: 'Test',
+            department: 'Test'
           },
           signers: [
-            { "personalIdentificationNumber": personData.UserID }
+            { personalIdentificationNumber: personData.UserID }
           ]
         }
       }
     }
   },
   /**
-   * Sjekker status på signeringsjobben i signeringstjenesten. 
+   * Sjekker status på signeringsjobben i signeringstjenesten.
    * Kjøres hvert 5. minutt etter signDocument jobben er kjørt,
-   * og sjekker status på signeringsjobben ved å bruke jobId som returneres fra signDocument jobben. 
+   * og sjekker status på signeringsjobben ved å bruke jobId som returneres fra signDocument jobben.
    * Når signeringen er fullført, så vil statusen være "Completed"
-   * Da kan man arkivere det signerte dokumentet i P360. Hvis signeringen feiler, 
+   * Da kan man arkivere det signerte dokumentet i P360. Hvis signeringen feiler,
    * så vil statusen være "Failed" og da kan man logge feilen og eventuelt sende en melding til brukeren om at signeringen feilet.
-   *  
-   */ 
+   *
+   */
   checkSignStatus: {
     enabled: true
   },
@@ -84,7 +84,7 @@ module.exports = {
   /**
    * Denne jobben er for å laste ned det signerte dokumentet fra blobStorage.
    * Når signeringen er fullført, så vil det signerte dokumentet bli lastet opp til blobStorage av azf-posten-sign.
-   * 
+   *
    */
   downLoadSignDocument: {
     enabled: true
