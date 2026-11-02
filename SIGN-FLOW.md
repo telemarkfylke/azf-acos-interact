@@ -28,7 +28,7 @@ graph TD
     — refId-signed.pdf
     — will-not-run-again.json")]
     FUNC["azf-acos-interact
-    BlobTriggerSign / Timer"]
+    Dispatcher (timer)"]
     DISP["dispatcher
     run-flow"]
     ENTRAID(["EntraID
@@ -39,7 +39,7 @@ graph TD
     GET  /sign/document/jobId"]
 
     ACOS -->|"delivers blobs"| BLOB
-    BLOB -->|"blob trigger / timer"| FUNC
+    BLOB -->|"timer"| FUNC
     FUNC --> DISP
     DISP <-->|"read / write flow state"| BLOB
     DISP -->|"authenticates via"| ENTRAID
@@ -53,13 +53,13 @@ graph TD
 
 ```mermaid
 flowchart TD
-    TRIGGER([BlobTrigger / Timer\nAzure Function fires])
+    TRIGGER([Dispatcher timer\nAzure Function fires])
     PARSE[parseJson / parseXml\nRead form data and file references\nfrom blob storage]
     SYNC[syncPrivatePerson\nLook up person by SSN\nfrom form data]
     SIGN[signDocument\n1. Fetch main doc type H → base64\n2. Fetch attachments type V\n3. Run mapper to build payload\n4. POST /sign/portal → jobId]
     CHECK[checkSignStatus\nGET /sign/status/jobId]
-    WAIT([Save flowStatus\nwaitingForJob = checkSignStatus\nDispatcher retries after N min])
-    FAILED([flowStatus.failed = true\nFlow stops])
+    WAIT([Save flowStatus\nwaitingForJob = checkSignStatus\nChecked again on next dispatcher run])
+    FAILED([flowStatus.failed = true\nwill-not-run-again.json created\nFlow stops])
     DOWNLOAD[downloadDocument\nGET /sign/document/jobId\nValidate PDF\nSave as refId-signed.pdf]
     OPTIONAL[archive / sharepoint / etc.\nOptional further steps\nusing the signed PDF]
     FINISH([finishFlow\nflowStatus.finished = true])
@@ -68,9 +68,9 @@ flowchart TD
     PARSE --> SYNC
     SYNC --> SIGN
     SIGN -->|jobId| CHECK
-    CHECK -->|Pending / InProgress| WAIT
+    CHECK -->|Created / InProgress| WAIT
     WAIT -->|next dispatcher run| CHECK
-    CHECK -->|Failed / Expired| FAILED
+    CHECK -->|Failed| FAILED
     CHECK -->|CompletedSuccessfully| DOWNLOAD
     DOWNLOAD --> OPTIONAL
     OPTIONAL --> FINISH
@@ -97,7 +97,7 @@ flowchart LR
     style STOP fill:#f8d7da,stroke:#dc3545,color:#000
 ```
 
-Intervals are configured via the `RETRY_INTERVALS_MINUTES` environment variable (comma-separated). The `checkSignStatus` job is treated specially: a non-terminal status (`Pending`, `InProgress`) does **not** count as a failure — it simply pauses the flow and retries on the next dispatcher cycle.
+Intervals are configured via the `RETRY_INTERVALS_MINUTES` environment variable (comma-separated). The `checkSignStatus` job is treated specially: a non-terminal status (`Created`, `InProgress`) does **not** count as a failure — it simply pauses the flow and retries on the next dispatcher cycle.
 
 ---
 
@@ -195,11 +195,9 @@ module.exports = {
 
 | File | Role |
 |------|------|
-| [BlobTriggerSign/index.js](BlobTriggerSign/index.js) | Azure Function — fires on new blob, delegates to dispatcher |
-| [BlobTriggerSign/function.json](BlobTriggerSign/function.json) | Binding config (container name from env) |
-| [lib/dispatcher.js](lib/dispatcher.js) | Finds matching flow for a blob, manages flow state, calls run-flow |
+| [lib/dispatcher.js](lib/dispatcher.js) | Finds blobs for each enabled flow, manages flow state, calls run-flow |
 | [lib/run-flow.js](lib/run-flow.js) | Executes each job in sequence, handles `checkSignStatus` polling loop |
-| [lib/call-document-sing.js](lib/call-document-sing.js) | HTTP client for the sign API (GET/POST with EntraID Bearer token) |
+| [lib/call-sign.js](lib/call-sign.js) | HTTP client for the sign API (GET/POST with EntraID Bearer token) |
 | [lib/jobs/sign-document.js](lib/jobs/sign-document.js) | Reads blobs, runs mapper, POSTs to `/sign/portal` |
 | [lib/jobs/check-sign-status.js](lib/jobs/check-sign-status.js) | GETs `/sign/status/{jobId}` |
 | [lib/jobs/download-document.js](lib/jobs/download-document.js) | GETs `/sign/document/{jobId}`, validates PDF, saves to blob |
@@ -226,8 +224,10 @@ module.exports = {
 
 | Status | Meaning | Flow action |
 |--------|---------|-------------|
-| `Pending` | Job created, user not yet notified | Wait and retry |
-| `InProgress` | User has started signing | Wait and retry |
+| `Created` | Job created in azf-posten-sign, no status change from Digipost yet | Wait and retry |
+| `InProgress` | Job is active in Digipost, not all signers have signed | Wait and retry |
 | `CompletedSuccessfully` | All signers have signed | Continue — download the PDF |
-| `Failed` | Signing job failed | Mark flow as failed, stop |
-| `Expired` | Job timed out before signing completed | Mark flow as failed, stop |
+| `Failed` | Job ended without being signed (rejected, expired, cancelled, etc.) | Mark flow as failed, create `will-not-run-again.json`, stop |
+| *anything else* | Unexpected value | Treated as a job error — normal retry intervals apply |
+
+`Created` is set by azf-posten-sign itself; the other values come from Digipost's `JobStatus` enum (`NoChanges` is never stored). Digipost has no `Expired` job status — the reason a job failed is found per signer in `signerStatuses`, e.g. `SignatureStatus: EXPIRED`, `SignatureStatus: REJECTED`, `SignatureStatus: CANCELLED`, `SignatureStatus: CONTACT_INFORMATION_MISSING`.

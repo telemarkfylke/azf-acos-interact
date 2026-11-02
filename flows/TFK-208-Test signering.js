@@ -1,8 +1,5 @@
-const { logger } = require('@vestfoldfylke/loglady')
-const { sign } = require('../config')
-
-const description = 'Test signering'
-const nodeEnv = require('../config').nodeEnv
+// const description = 'Test signering'
+// const nodeEnv = require('../config').nodeEnv
 
 /**
  * Først arkiver det usingerte dokumentet i P360, 
@@ -12,7 +9,7 @@ const nodeEnv = require('../config').nodeEnv
 
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false, // Testflyt - skru på ved behov
     doNotRemoveBlobs: true
   },
   parseJson: {
@@ -39,17 +36,13 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const personData = flowStatus.parseJson.result.SavedValues.Login
+        // sign-document-jobben filtrerer allerede bort vedlegg som ikke er pdf (signeringstjenesten godtar kun pdf)
         const documents = attachments.map(att => {
-          // Check if document is pdf, if not throw error, because signeringstjenesten only accepts pdf
-          if (att.format !== 'pdf') {
-            logger.error('Attachment {title} has format {format} which is not supported for signing. Only pdf is supported.', att.title, att.format)
-          } else {
-             return {
-              base64Content: att.base64,
-              title: att.title,
-              fileType: "pdf"
-            }
-          }         
+          return {
+            base64Content: att.base64,
+            title: att.title,
+            fileType: 'pdf'
+          }
         })
         return {
           title: `${flowStatus.acosName} - ${flowStatus.refId}`,
