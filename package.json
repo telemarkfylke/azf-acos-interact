@@ -1,6 +1,6 @@
 {
   "name": "azf-acos-interact",
-  "version": "3.27.1",
+  "version": "3.28.0",
   "description": "Handles forms from Acos",
   "engines": {
     "node": ">=22"
